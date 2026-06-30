@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Payment Report — Kootenay Lawn Doctor</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f0e8; color: #1a1a1a; font-size: 14px; }
+  .page { max-width: 860px; margin: 0 auto; padding: 24px 20px 48px; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+
+  .report-tabs { display: flex; gap: 0; margin-bottom: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #d6cfc0; width: fit-content; }
+  .report-tab { padding: 8px 20px; border: none; background: #ede8df; color: #666; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .report-tab:not(:last-child) { border-right: 1px solid #d6cfc0; }
+  .report-tab.active-prepay   { background: #c1440e; color: #fff; }
+  .report-tab.active-direct   { background: #2563eb; color: #fff; }
+  .report-tab.active-combined { background: #6b21a8; color: #fff; }
+  .report-tab.active-gst      { background: #0f7955; color: #fff; }
+  .report-tab:not([class*="active"]):hover { background: #ddd6c8; }
+
+  .period-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .period-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+  .period-group { display: flex; gap: 0; border-radius: 20px; overflow: hidden; border: 1px solid #d6cfc0; }
+  .period-btn { padding: 5px 13px; border: none; background: #ede8df; color: #555; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .period-btn:not(:last-child) { border-right: 1px solid #d6cfc0; }
+  .period-btn:hover:not(.active) { background: #ddd6c8; }
+  .period-btn.active { background: #1a1a1a; color: #fff; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .tab { padding: 5px 13px; border-radius: 20px; border: none; background: #e8e2d6; color: #555; font-size: 12px; cursor: pointer; font-weight: 500; transition: all 0.15s; }
+  .tab:hover { background: #ddd6c8; }
+  .tab.active-prepay   { background: #c1440e; color: #fff; }
+  .tab.active-direct   { background: #2563eb; color: #fff; }
+  .tab.active-combined { background: #6b21a8; color: #fff; }
+  .tab.active-gst      { background: #0f7955; color: #fff; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: #fff; border-radius: 10px; padding: 14px 16px; border: 1px solid #e8e2d6; }
+  .stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; color: #888; text-transform: uppercase; margin-bottom: 4px; }
+  .stat-value { font-size: 20px; font-weight: 700; color: #1a1a1a; line-height: 1.1; }
+  .stat-sub { font-size: 11px; color: #999; margin-top: 3px; }
+
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .chart-card { background: #fff; border-radius: 10px; padding: 18px; border: 1px solid #e8e2d6; }
+  .chart-full { grid-column: 1 / -1; }
+  .chart-title { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; color: #888; text-transform: uppercase; margin-bottom: 14px; }
+
+  /* Trend chart — always full width, standalone card */
+  .trend-card { background: #fff; border-radius: 10px; padding: 18px; border: 1px solid #e8e2d6; margin-bottom: 12px; }
+  .trend-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+
+  .stack-legend { display: flex; gap: 16px; flex-wrap: wrap; }
+  .stack-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #555; font-weight: 600; }
+  .stack-legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+  /* Payment method table card */
+  .pay-method-card { background: #fff; border-radius: 10px; padding: 18px; border: 1px solid #e8e2d6; margin-bottom: 12px; }
+
+  /* Service table */
+  .table-card { background: #fff; border-radius: 10px; padding: 18px; border: 1px solid #e8e2d6; }
+  .table-title { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; color: #888; text-transform: uppercase; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 11px; color: #999; font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid #f0ebe0; }
+  th:not(:first-child) { text-align: right; }
+  td { padding: 8px 0; border-bottom: 1px solid #f5f0e8; font-size: 13px; }
+  td:not(:first-child) { text-align: right; }
+  td.svc-name { color: #1a1a1a; font-weight: 500; max-width: 240px; }
+  td.svc-bar { width: 80px; padding-left: 12px; }
+  .mini-bar-bg { height: 5px; background: #f0ebe0; border-radius: 3px; overflow: hidden; }
+  .mini-bar-fill { height: 100%; border-radius: 3px; }
+  tfoot td { padding: 9px 0; font-weight: 700; font-size: 13px; border-top: 2px solid #e8e2d6; border-bottom: none; }
+  tfoot td:not(:first-child) { text-align: right; }
+
+  .combined-prepay { color: #c1440e !important; font-weight: 600; }
+  .combined-direct { color: #2563eb !important; font-weight: 600; }
+  .combined-total  { color: #6b21a8 !important; font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: repeat(2,1fr); }
+    .charts-row { grid-template-columns: 1fr; }
+    .stat-value { font-size: 16px; }
+    .charts-row .chart-full { grid-column: 1; }
+    .trend-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Payment Report — Kootenay Lawn Doctor</h1>
+
+  <div class="report-tabs">
+    <button class="report-tab active-prepay" onclick="setReport('prepay')">Prepayments</button>
+    <button class="report-tab" onclick="setReport('direct')">Direct Payments</button>
+    <button class="report-tab" onclick="setReport('combined')">Combined</button>
+    <button class="report-tab" onclick="setReport('gst')">GST</button>
+  </div>
+
+  <div class="period-row">
+    <span class="period-label">View by</span>
+    <div class="period-group">
+      <button class="period-btn active" id="btn-monthly"   onclick="setPeriod('monthly')">Monthly</button>
+      <button class="period-btn"        id="btn-quarterly" onclick="setPeriod('quarterly')">Quarterly</button>
+    </div>
+  </div>
+
+  <div class="tabs" id="tab-container"></div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card"><div class="stat-label" id="lbl-a">—</div><div class="stat-value" id="s-a">—</div><div class="stat-sub" id="s-a2">—</div></div>
+    <div class="stat-card" id="card-b"><div class="stat-label" id="lbl-b">—</div><div class="stat-value" id="s-b">—</div><div class="stat-sub" id="s-b2">—</div></div>
+    <div class="stat-card" id="card-c"><div class="stat-label" id="lbl-c">—</div><div class="stat-value" id="s-c">—</div><div class="stat-sub" id="s-c2">—</div></div>
+    <div class="stat-card"><div class="stat-label" id="lbl-d">—</div><div class="stat-value" id="s-d">—</div><div class="stat-sub" id="s-d2">—</div></div>
+  </div>
+
+  <!-- Service bar + donut/method panel -->
+  <div class="charts-row" id="charts-row">
+    <div class="chart-card" id="bar-card">
+      <div class="chart-title" id="bar-title">—</div>
+      <canvas id="barChart" height="220"></canvas>
+    </div>
+    <div class="chart-card" id="donut-card">
+      <div class="chart-title">Prepayments Collected by Method</div>
+      <canvas id="donutChart" height="160"></canvas>
+      <div id="donut-legend" style="display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px"></div>
+    </div>
+    <!-- Combined stacked bar -->
+    <div class="chart-card chart-full" id="stack-card" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+        <div class="chart-title" style="margin:0">REVENUE BY SERVICE — COMBINED</div>
+        <div class="stack-legend">
+          <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e"></div>Prepay Applied</div>
+          <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#2563eb"></div>Direct Billed</div>
+        </div>
+      </div>
+      <canvas id="stackChart" height="260"></canvas>
+    </div>
+  </div>
+
+  <!-- Month-over-Month Trend -->
+  <div class="trend-card">
+    <div class="trend-header">
+      <div class="chart-title" style="margin:0" id="trend-title">MONTH-OVER-MONTH REVENUE TREND</div>
+      <div class="stack-legend" id="trend-legend"></div>
+    </div>
+    <canvas id="trendChart" height="110"></canvas>
+  </div>
+
+  <!-- Payment Method Breakdown (prepay only) -->
+  <div class="pay-method-card" id="pay-method-card" style="display:none">
+    <div class="table-title">Prepayments Collected by Payment Method</div>
+    <table>
+      <thead><tr><th>Method</th><th>Payments</th><th>Amount</th><th>% of Total</th><th></th></tr></thead>
+      <tbody id="pay-method-tbody"></tbody>
+      <tfoot id="pay-method-tfoot"></tfoot>
+    </table>
+  </div>
+
+  <!-- Service Breakdown Table -->
+  <div class="table-card">
+    <div class="table-title" id="tbl-title">Service Breakdown — Alphabetical</div>
+    <table>
+      <thead id="tbl-head"></thead>
+      <tbody id="svc-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const APPLIED = {
+  "Nov 2025":{"total":317.1,"invoice_count":2,"services":{"Fall Clean-Up":{"revenue":5.25,"count":1},"Insect Control Turf":{"revenue":71.12,"count":1},"Lawn Spraying Package":{"revenue":240.73,"count":1}}},
+  "Dec 2025":{"total":0,"invoice_count":0,"services":{}},
+  "Jan 2026":{"total":0,"invoice_count":0,"services":{}},
+  "Feb 2026":{"total":0,"invoice_count":0,"services":{}},
+  "Mar 2026":{"total":5036.84,"invoice_count":19,"services":{"Insect Control Tree - Dormant Oil":{"revenue":3564.74,"count":12},"Kick Start Program":{"revenue":1264.2,"count":6},"Tree/Shrub Trimming":{"revenue":207.9,"count":1}}},
+  "Apr 2026":{"total":82643.74,"invoice_count":248,"services":{"Aeration - Spring":{"revenue":5966.37,"count":21},"Deep Root Fertilization":{"revenue":1470.0,"count":5},"Dethatch Elk Valley":{"revenue":1187.47,"count":1},"FW Round 1":{"revenue":28727.26,"count":111},"General Clean Up - Paved":{"revenue":207.9,"count":1},"Horticulture Labour":{"revenue":67.12,"count":1},"Irrigation Part(s)":{"revenue":76.5,"count":5},"Irrigation System Start-Up":{"revenue":7577.63,"count":28},"Kick Start Program":{"revenue":28863.76,"count":71},"Lawn Spraying Package":{"revenue":352.8,"count":1},"Mowing - Elk Valley":{"revenue":510.3,"count":1},"Mowing - Weekly Schedule":{"revenue":116.31,"count":1},"Power Broom":{"revenue":3008.92,"count":7},"Property Maintenance":{"revenue":2503.28,"count":1},"Spring Granular Fertilizer":{"revenue":2008.13,"count":6}}},
+  "May 2026":{"total":238791.39,"invoice_count":696,"services":{"Aeration - Spring":{"revenue":2794.75,"count":7},"FW Round 1":{"revenue":152196.03,"count":507},"General Clean Up - Landscape":{"revenue":245.19,"count":1},"Insect Control Tree -  Leaf Roller 1":{"revenue":5228.25,"count":15},"Irrigation Part(s)":{"revenue":613.77,"count":5},"Irrigation System Repair":{"revenue":34.65,"count":1},"Irrigation System Start-Up":{"revenue":9216.52,"count":26},"Kick Start Program":{"revenue":2874.9,"count":6},"Mowing - Bill Hourly":{"revenue":604.8,"count":2},"Mowing - Elk Valley":{"revenue":26051.72,"count":46},"Mowing - Weekly Schedule":{"revenue":26698.28,"count":93},"Property Maintenance":{"revenue":2755.28,"count":2},"Spring Granular Fertilizer":{"revenue":1704.1,"count":4},"Vegetation Control":{"revenue":7773.15,"count":27}}},
+  "Jun 2026":{"total":188135.42,"invoice_count":488,"services":{"FW Round 1":{"revenue":16502.7,"count":44},"FW Round 2":{"revenue":54952.71,"count":212},"Horticulture Labour":{"revenue":252.0,"count":1},"Insect Control Tree -  Leaf Roller 1":{"revenue":1356.6,"count":3},"Insect Control Turf":{"revenue":15560.87,"count":55},"Invasive Weed Application":{"revenue":2923.94,"count":7},"Irrigation Part(s)":{"revenue":723.51,"count":7},"Irrigation Parts":{"revenue":119.93,"count":1},"Irrigation System Repair":{"revenue":2013.26,"count":8},"Irrigation System Start-Up":{"revenue":721.75,"count":2},"Mowing - Bill Hourly":{"revenue":1451.1,"count":4},"Mowing - Elk Valley":{"revenue":49323.01,"count":43},"Mowing - Weekly Schedule":{"revenue":30379.54,"count":98},"Property Maintenance":{"revenue":2755.28,"count":2},"Spring Granular Fertilizer":{"revenue":1832.75,"count":1},"Supply & Install Topsoil & Sod":{"revenue":132.3,"count":1},"Vegetation Control":{"revenue":6655.37,"count":17},"Weed Control 1":{"revenue":478.8,"count":2}}}
+};
+
+const COLLECTED = {
+  "Nov 2025":{"prepayment_count":232,"prepayment_total":116912.5,"still_unused":64729.71,"by_method":{"Cash":{"amount":491.4,"count":1},"Cheque":{"amount":8808.7,"count":17},"E-Transfer":{"amount":37083.3,"count":77},"Gift Certificate/Voucher":{"amount":500.0,"count":5},"MasterCard":{"amount":8232.0,"count":19},"Terminal Payment":{"amount":1008.0,"count":4},"Visa":{"amount":60789.1,"count":109}}},
+  "Dec 2025":{"prepayment_count":319,"prepayment_total":177307.45,"still_unused":91805.34,"by_method":{"Cash":{"amount":1500.0,"count":1},"Cheque":{"amount":5247.9,"count":14},"E-Transfer":{"amount":44737.45,"count":84},"MasterCard":{"amount":23086.85,"count":39},"Terminal Payment":{"amount":4754.4,"count":5},"Visa":{"amount":97980.85,"count":176}}},
+  "Jan 2026":{"prepayment_count":19,"prepayment_total":11763.15,"still_unused":6279.52,"by_method":{"Cheque":{"amount":1474.2,"count":2},"E-Transfer":{"amount":3325.35,"count":5},"Visa":{"amount":6963.6,"count":12}}},
+  "Feb 2026":{"prepayment_count":57,"prepayment_total":29678.6,"still_unused":14975.23,"by_method":{"Cheque":{"amount":1178.1,"count":3},"E-Transfer":{"amount":12174.35,"count":25},"MasterCard":{"amount":4145.4,"count":8},"Terminal Payment":{"amount":604.8,"count":2},"Visa":{"amount":11575.95,"count":19}}},
+  "Mar 2026":{"prepayment_count":143,"prepayment_total":97709.51,"still_unused":56218.35,"by_method":{"American Express":{"amount":724.5,"count":1},"Cash":{"amount":367.5,"count":1},"Cheque":{"amount":4795.83,"count":7},"E-Transfer":{"amount":38568.06,"count":45},"MasterCard":{"amount":12973.26,"count":21},"Terminal Payment":{"amount":1436.4,"count":4},"Visa":{"amount":38843.96,"count":64}}},
+  "Apr 2026":{"prepayment_count":112,"prepayment_total":73198.79,"still_unused":43755.78,"by_method":{"American Express":{"amount":220.5,"count":1},"Cash":{"amount":462.0,"count":1},"Cheque":{"amount":6433.17,"count":8},"E-Transfer":{"amount":22678.8,"count":36},"EFT Payment":{"amount":2337.73,"count":1},"Gift Certificate/Voucher":{"amount":294.0,"count":1},"MasterCard":{"amount":9440.5,"count":10},"Terminal Payment":{"amount":5596.5,"count":10},"Visa":{"amount":25735.59,"count":44}}},
+  "May 2026":{"prepayment_count":76,"prepayment_total":40692.7,"still_unused":24608.25,"by_method":{"American Express":{"amount":2478.0,"count":1},"Cheque":{"amount":2641.0,"count":4},"E-Transfer":{"amount":10922.1,"count":21},"MasterCard":{"amount":3035.4,"count":5},"Terminal Payment":{"amount":1533.0,"count":4},"Visa":{"amount":20083.2,"count":41}}},
+  "Jun 2026":{"prepayment_count":40,"prepayment_total":36112.62,"still_unused":29202.08,"by_method":{"American Express":{"amount":252.0,"count":1},"Cash":{"amount":252.0,"count":1},"Cheque":{"amount":1529.35,"count":5},"E-Transfer":{"amount":23967.56,"count":15},"EFT Payment":{"amount":152.25,"count":1},"MasterCard":{"amount":215.5,"count":2},"Terminal Payment":{"amount":728.0,"count":3},"Visa":{"amount":9015.96,"count":12}}}
+};
+
+const DIRECT = {
+  "Nov 2025":{"invoice_count":17,"total":11864.48,"services":{"Education Services":{"revenue":1512,"count":3},"Fall Clean-Up":{"revenue":401.63,"count":3},"Property Maintenance":{"revenue":9950.85,"count":12}}},
+  "Dec 2025":{"invoice_count":16,"total":10455.9,"services":{"Property Maintenance":{"revenue":10140.9,"count":12},"Snow Removal - Shovel":{"revenue":147,"count":4},"Vegetation Control":{"revenue":168,"count":1}}},
+  "Jan 2026":{"invoice_count":17,"total":11592,"services":{"Property Maintenance":{"revenue":10140.9,"count":12},"Snow Removal - Plow":{"revenue":886.2,"count":3},"Snow Removal - Sanding":{"revenue":291.9,"count":1},"Snow Removal - Shovel":{"revenue":273,"count":7}}},
+  "Feb 2026":{"invoice_count":19,"total":11910.15,"services":{"Property Maintenance":{"revenue":10140.9,"count":12},"Snow Removal - Plow":{"revenue":1171.8,"count":4},"Snow Removal - Shovel":{"revenue":597.45,"count":11}}},
+  "Mar 2026":{"invoice_count":38,"total":15080.95,"services":{"Insect Control Tree - Dormant Oil":{"revenue":3637,"count":24},"Mowing - Weekly Schedule":{"revenue":1050,"count":1},"Property Maintenance":{"revenue":10393.95,"count":13}}},
+  "Apr 2026":{"invoice_count":199,"total":68889.01,"services":{"Aeration - Spring":{"revenue":6993.56,"count":19},"Deep Root Fertilization":{"revenue":3528,"count":6},"Dethatch Elk Valley":{"revenue":669.52,"count":4},"Education Services":{"revenue":2457,"count":3},"FW Round 1":{"revenue":6487.95,"count":50},"General Clean Up - Landscape":{"revenue":4552.2,"count":10},"Horticulture Labour":{"revenue":1502.17,"count":2},"Irrigation Part(s)":{"revenue":702,"count":5},"Irrigation System Repair":{"revenue":353.25,"count":2},"Irrigation System Start-Up":{"revenue":1837.5,"count":19},"Kick Start Program":{"revenue":25883.11,"count":55},"Machine + Operator":{"revenue":199.5,"count":1},"Mowing - Bill Hourly":{"revenue":141.75,"count":1},"Mowing - Elk Valley":{"revenue":210,"count":1},"Mowing - Weekly Schedule":{"revenue":525,"count":1},"Power Broom":{"revenue":2322.94,"count":17},"Property Maintenance":{"revenue":7999.88,"count":16},"Refund":{"revenue":529.2,"count":1},"Spring Aeration + Granular":{"revenue":777,"count":3},"Spring Granular Fertilizer":{"revenue":567,"count":5},"Tree/Shrub Trimming":{"revenue":650.48,"count":2}}},
+  "May 2026":{"invoice_count":839,"total":171944.95,"services":{"Aeration - Spring":{"revenue":1290.24,"count":8},"Deep Root Fertilization":{"revenue":661.5,"count":2},"Dethatch Elk Valley":{"revenue":178.55,"count":1},"Education Services":{"revenue":1890,"count":3},"FW Round 1":{"revenue":60566.87,"count":416},"Garden Bed Maintenance":{"revenue":94.5,"count":1},"General Clean Up - Landscape":{"revenue":1613.66,"count":5},"General Clean Up - Paved":{"revenue":476.46,"count":3},"Insect Control Tree -  Leaf Roller 1":{"revenue":2656.5,"count":20},"Invasive Weed Application":{"revenue":934.5,"count":3},"Irrigation Part(s)":{"revenue":617.4,"count":14},"Irrigation Parts":{"revenue":26.25,"count":1},"Irrigation System Installation":{"revenue":5649.23,"count":1},"Irrigation System Repair":{"revenue":1253.1,"count":9},"Irrigation System Start-Up":{"revenue":4283.8,"count":32},"Irrigation System Upgrade":{"revenue":2055.8,"count":2},"Kick Start Program":{"revenue":10295.01,"count":14},"Mowing - Bill Hourly":{"revenue":1646.2,"count":13},"Mowing - Elk Valley":{"revenue":14278.68,"count":114},"Mowing - Weekly Schedule":{"revenue":18871.16,"count":204},"Power Broom":{"revenue":913.28,"count":5},"Property Maintenance":{"revenue":11882.1,"count":22},"Refund":{"revenue":774.9,"count":3},"Spring Aeration + Granular":{"revenue":567,"count":2},"Spring Granular Fertilizer":{"revenue":5895.63,"count":14},"Supply & Install Topsoil & Seed":{"revenue":616.35,"count":1},"Tree/Shrub Trimming":{"revenue":94.5,"count":1},"Vegetation Control":{"revenue":21504.77,"count":69},"Weed Control 1":{"revenue":357,"count":3}}},
+  "Jun 2026":{"invoice_count":841,"total":220669.34,"services":{"Aeration - Spring":{"revenue":4667.25,"count":6},"Deer Repellant":{"revenue":367.5,"count":1},"FW Round 1":{"revenue":39610.15,"count":104},"FW Round 2":{"revenue":34491.36,"count":274},"FW Round 3":{"revenue":115.5,"count":1},"General Clean Up - Landscape":{"revenue":4541.47,"count":9},"General Clean Up - Paved":{"revenue":494.39,"count":4},"General Labour":{"revenue":260.04,"count":1},"Horticulture Labour":{"revenue":9735.94,"count":3},"Insect Control Tree -  Leaf Roller 1":{"revenue":409.5,"count":3},"Insect Control Turf":{"revenue":6349.5,"count":45},"Invasive Weed Application":{"revenue":11214,"count":31},"Irrigation Part(s)":{"revenue":2365.01,"count":15},"Irrigation Parts":{"revenue":665.07,"count":8},"Irrigation System Installation":{"revenue":9975,"count":1},"Irrigation System Labour":{"revenue":499.45,"count":2},"Irrigation System Repair":{"revenue":3151.27,"count":17},"Irrigation System Start-Up":{"revenue":942.71,"count":5},"Lawn Spraying Package":{"revenue":1039.5,"count":3},"Misc. Material":{"revenue":1752.65,"count":3},"Mowing - Bill Hourly":{"revenue":3452.25,"count":12},"Mowing - Elk Valley":{"revenue":4990.65,"count":51},"Mowing - Weekly Schedule":{"revenue":21157.04,"count":242},"Over Seeding":{"revenue":9765,"count":3},"Parking Lot Sweeping":{"revenue":614.82,"count":1},"Property Maintenance":{"revenue":15422.16,"count":24},"Refund":{"revenue":1617.12,"count":5},"Spring Granular Fertilizer":{"revenue":4272.02,"count":2},"Supply & Install Sod":{"revenue":3525.9,"count":2},"Supply & Install Topsoil & Seed":{"revenue":210,"count":1},"Supply & Install Trees/Shrubs":{"revenue":781.73,"count":1},"Tree/Shrub Trimming":{"revenue":1967.61,"count":3},"Vegetation Control":{"revenue":20193.27,"count":63}}}
+};
+
+const DONUT_COLORS = {
+  "American Express":"#8b6914","Cash":"#b5a080","Cheque":"#8b7355",
+  "E-Transfer":"#b5651d","EFT Payment":"#a0856b","Gift Certificate/Voucher":"#7a9e7e",
+  "MasterCard":"#6b4c2a","Terminal Payment":"#d4a96a","Visa":"#4a3728"
+};
+
+const ALL_MONTHS = ["Nov 2025","Dec 2025","Jan 2026","Feb 2026","Mar 2026","Apr 2026","May 2026","Jun 2026"];
+const QUARTERS = {
+  "Q1 (Nov–Jan)": ["Nov 2025","Dec 2025","Jan 2026"],
+  "Q2 (Feb–Apr)": ["Feb 2026","Mar 2026","Apr 2026"],
+  "Q3 (May–Jun)": ["May 2026","Jun 2026"]
+};
+const QUARTER_KEYS = Object.keys(QUARTERS);
+
+// ── State ────────────────────────────────────────────────────────────────────
+let currentReport = 'prepay';
+let currentPeriod = 'monthly';
+let currentTab    = 'Jun 2026';
+let barChart = null, donutChart = null, stackChart = null, trendChart = null;
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+const fmt  = n => '$' + Number(n).toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtK = n => n >= 1000 ? '$' + (n/1000).toFixed(0) + 'k' : '$' + Number(n).toFixed(0);
+const r2   = n => Math.round(n*100)/100;
+const show = (id, v=true) => { const el=document.getElementById(id); if(el) el.style.display=v?'':'none'; };
+const hide = id => show(id, false);
+
+function acumSvcs(dest, src) {
+  for (const [s,v] of Object.entries(src||{})) {
+    if (!dest[s]) dest[s]={revenue:0,count:0};
+    dest[s].revenue += v.revenue;
+    dest[s].count   += v.count;
+  }
+}
+
+function mergeMonths(months) {
+  const a={total:0,invoice_count:0,services:{}};
+  const c={prepayment_count:0,prepayment_total:0,still_unused:0,by_method:{}};
+  const d={total:0,invoice_count:0,services:{}};
+  for (const m of months) {
+    const ad=APPLIED[m]||{}, cd=COLLECTED[m]||{}, dd=DIRECT[m]||{};
+    a.total += ad.total||0; a.invoice_count += ad.invoice_count||0;
+    acumSvcs(a.services, ad.services);
+    c.prepayment_count += cd.prepayment_count||0;
+    c.prepayment_total += cd.prepayment_total||0;
+    c.still_unused     += cd.still_unused||0;
+    for (const [mt,v] of Object.entries(cd.by_method||{})) {
+      if (!c.by_method[mt]) c.by_method[mt]={amount:0,count:0};
+      c.by_method[mt].amount += v.amount;
+      c.by_method[mt].count  += v.count;
+    }
+    d.total += dd.total||0; d.invoice_count += dd.invoice_count||0;
+    acumSvcs(d.services, dd.services);
+  }
+  return {applied:a, collected:c, direct:d};
+}
+
+function getMonthsForTab(tab) {
+  if (currentPeriod === 'quarterly') {
+    if (tab === 'All') return ALL_MONTHS;
+    return QUARTERS[tab] || [];
+  }
+  if (tab === 'All Months') return ALL_MONTHS;
+  return [tab];
+}
+
+function setCard(lId, l, vId, v, sId, s) {
+  document.getElementById(lId).textContent = l;
+  document.getElementById(vId).textContent = v;
+  document.getElementById(sId).textContent = s;
+}
+
+// ── Main render ──────────────────────────────────────────────────────────────
+function render() {
+  const months = getMonthsForTab(currentTab);
+  const {applied:a, collected:c, direct:d} = mergeMonths(months);
+  const rp  = currentReport;
+  const col = rp==='prepay' ? '#c1440e' : rp==='direct' ? '#2563eb' : '#6b21a8';
+
+  // ── Stat tiles ──
+  if (rp === 'prepay') {
+    setCard('lbl-a','REVENUE APPLIED',   's-a', fmt(a.total),            's-a2', a.invoice_count+' invoices');
+    setCard('lbl-b','PREPAYS COLLECTED', 's-b', fmt(c.prepayment_total), 's-b2', c.prepayment_count+' payments');
+    setCard('lbl-c','STILL UNUSED',      's-c', fmt(c.still_unused),     's-c2', (c.prepayment_total>0?(c.still_unused/c.prepayment_total*100).toFixed(1):0)+'% of collected');
+    setCard('lbl-d','NET EARNED',        's-d', fmt(a.total),            's-d2', 'by invoice date');
+    show('card-b'); show('card-c');
+  } else if (rp === 'direct') {
+    setCard('lbl-a','DIRECT INVOICED',   's-a', fmt(d.total),            's-a2', d.invoice_count+' invoices');
+    setCard('lbl-b','AVG PER INVOICE',   's-b', d.invoice_count>0?fmt(r2(d.total/d.invoice_count)):'—', 's-b2', 'per invoice');
+    hide('card-c');
+    setCard('lbl-d','TOTAL INVOICED',    's-d', fmt(d.total),            's-d2', 'direct billing');
+    show('card-b');
+  } else {
+    const comb = a.total + d.total;
+    setCard('lbl-a','PREPAY APPLIED',    's-a', fmt(a.total),            's-a2', a.invoice_count+' prepay invoices');
+    setCard('lbl-b','DIRECT BILLED',     's-b', fmt(d.total),            's-b2', d.invoice_count+' direct invoices');
+    setCard('lbl-c','PREPAYS COLLECTED', 's-c', fmt(c.prepayment_total), 's-c2', c.prepayment_count+' payments');
+    setCard('lbl-d','TOTAL REVENUE',     's-d', fmt(comb),               's-d2', 'prepay + direct');
+    show('card-b'); show('card-c');
+  }
+
+  // ── GST tab ──
+  if (rp === 'gst') {
+    const gstRate = 5/105;
+    const prepayGST   = a.total * gstRate;
+    const directGST   = d.total * gstRate;
+    const combinedGST = prepayGST + directGST;
+    const prepayNet   = a.total - prepayGST;
+    const directNet   = d.total - directGST;
+    setCard('lbl-a','GST ON PREPAY',    's-a', fmt(prepayGST),   's-a2', fmt(prepayNet)+' net');
+    setCard('lbl-b','GST ON DIRECT',    's-b', fmt(directGST),   's-b2', fmt(directNet)+' net');
+    setCard('lbl-c','TOTAL GST',        's-c', fmt(combinedGST), 's-c2', '5% of gross revenue');
+    setCard('lbl-d','GROSS REVENUE',    's-d', fmt(a.total+d.total), 's-d2', 'before GST extraction');
+    show('card-b'); show('card-c');
+    hide('bar-card'); hide('donut-card'); hide('stack-card');
+    hide('pay-method-card');
+    renderGSTTrend();
+    renderGSTTable(a.services, d.services);
+    return;
+  }
+
+  // ── Service bar / stacked ──
+  if (rp === 'combined') {
+    hide('bar-card'); hide('donut-card');
+    show('stack-card');
+    renderStackChart(a.services, d.services);
+  } else {
+    show('bar-card'); hide('stack-card');
+    const title = rp==='prepay'
+      ? 'PREPAYMENTS APPLIED TO SERVICES INVOICED'
+      : 'REVENUE BY SERVICE';
+    document.getElementById('bar-title').textContent = title;
+    renderBarChart(rp==='prepay' ? a.services : d.services, col);
+    if (rp==='prepay') { show('donut-card'); renderDonut(c); }
+    else { hide('donut-card'); if(donutChart){donutChart.destroy();donutChart=null;} }
+  }
+
+  // ── MoM trend (always visible, adapts to report type) ──
+  renderTrendChart(rp);
+
+  // ── Payment method table (prepay only) ──
+  if (rp === 'prepay') { show('pay-method-card'); renderPayMethodTable(c); }
+  else hide('pay-method-card');
+
+  // ── Service breakdown table ──
+  if (rp === 'combined') renderCombinedTable(a.services, d.services);
+  else renderTable(rp==='prepay' ? a.services : d.services, col);
+}
+
+// ── Chart renderers ──────────────────────────────────────────────────────────
+function renderBarChart(svcData, col) {
+  const top = Object.entries(svcData).sort((a,b)=>b[1].revenue-a[1].revenue).slice(0,10);
+  if (barChart) barChart.destroy();
+  barChart = new Chart(document.getElementById('barChart'),{
+    type:'bar',
+    data:{
+      labels: top.map(([n])=>n.length>24?n.slice(0,24)+'…':n),
+      datasets:[{data:top.map(([,v])=>v.revenue),backgroundColor:col,borderRadius:3,barThickness:14,hoverBackgroundColor:col,borderWidth:0}]
+    },
+    options:{indexAxis:'y',responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+fmt(ctx.raw)}}},
+      scales:{
+        x:{ticks:{callback:v=>fmtK(v),font:{size:10},color:'#999'},grid:{color:'#f0ebe0'},border:{display:false}},
+        y:{ticks:{font:{size:11},color:'#444'},grid:{display:false},border:{display:false}}
+      }}
+  });
+}
+
+function renderStackChart(aSvcs, dSvcs) {
+  const all = new Set([...Object.keys(aSvcs),...Object.keys(dSvcs)]);
+  const rows = [...all].map(s=>({
+    name:s, prepay:aSvcs[s]?.revenue||0, direct:dSvcs[s]?.revenue||0,
+    total:(aSvcs[s]?.revenue||0)+(dSvcs[s]?.revenue||0)
+  })).sort((a,b)=>b.total-a.total).slice(0,12);
+  if (stackChart) stackChart.destroy();
+  stackChart = new Chart(document.getElementById('stackChart'),{
+    type:'bar',
+    data:{
+      labels: rows.map(r=>r.name.length>26?r.name.slice(0,26)+'…':r.name),
+      datasets:[
+        {label:'Prepay Applied',data:rows.map(r=>r.prepay),backgroundColor:'#c1440e',borderRadius:0,barThickness:16,borderWidth:0,hoverBackgroundColor:'#c1440e'},
+        {label:'Direct Billed', data:rows.map(r=>r.direct),backgroundColor:'#2563eb',borderRadius:3,barThickness:16,borderWidth:0,hoverBackgroundColor:'#2563eb'}
+      ]
+    },
+    options:{indexAxis:'y',responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': '+fmt(ctx.raw)}}},
+      scales:{
+        x:{stacked:true,ticks:{callback:v=>fmtK(v),font:{size:10},color:'#999'},grid:{color:'#f0ebe0'},border:{display:false}},
+        y:{stacked:true,ticks:{font:{size:11},color:'#444'},grid:{display:false},border:{display:false}}
+      }}
+  });
+}
+
+function renderDonut(c) {
+  const methods = Object.entries(c.by_method).sort((a,b)=>b[1].amount-a[1].amount);
+  const dL=methods.map(([n])=>n), dV=methods.map(([,v])=>v.amount), dC=dL.map(l=>DONUT_COLORS[l]||'#ccc');
+  if (donutChart) donutChart.destroy();
+  donutChart = new Chart(document.getElementById('donutChart'),{
+    type:'doughnut',
+    data:{labels:dL,datasets:[{data:dV,backgroundColor:dC,borderWidth:0,hoverBorderWidth:0}]},
+    options:{cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.label+': '+fmt(ctx.raw)}}}}
+  });
+  document.getElementById('donut-legend').innerHTML = dL.map((l,i)=>
+    `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#555">
+      <div style="width:10px;height:10px;border-radius:2px;background:${dC[i]};flex-shrink:0"></div>${l}
+    </div>`).join('');
+}
+
+function renderTrendChart(rp) {
+  const shortLabels = ALL_MONTHS.map(m => m.replace(' 20', " '"));
+  let datasets = [];
+
+  if (rp === 'prepay') {
+    document.getElementById('trend-title').textContent = 'MONTH-OVER-MONTH TREND — PREPAYMENTS';
+    const appliedVals   = ALL_MONTHS.map(m => APPLIED[m]?.total||0);
+    const collectedVals = ALL_MONTHS.map(m => COLLECTED[m]?.prepayment_total||0);
+    datasets = [
+      {label:'Applied to Invoices', data:appliedVals,   borderColor:'#c1440e', backgroundColor:'rgba(193,68,14,0.08)',  tension:0.35, fill:true,  pointRadius:4, pointBackgroundColor:'#c1440e', borderWidth:2, borderDash:[]},
+      {label:'Collected (Cash In)', data:collectedVals, borderColor:'#b5651d', backgroundColor:'transparent',           tension:0.35, fill:false, pointRadius:4, pointBackgroundColor:'#b5651d', borderWidth:2, borderDash:[5,3]}
+    ];
+    document.getElementById('trend-legend').innerHTML = `
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e"></div>Applied to Invoices</div>
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#b5651d;opacity:0.8"></div>Collected (Cash In)</div>`;
+  } else if (rp === 'direct') {
+    document.getElementById('trend-title').textContent = 'MONTH-OVER-MONTH TREND — DIRECT PAYMENTS';
+    datasets = [{
+      label:'Direct Invoiced', data:ALL_MONTHS.map(m=>DIRECT[m]?.total||0),
+      borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,0.08)', tension:0.35, fill:true,
+      pointRadius:4, pointBackgroundColor:'#2563eb', borderWidth:2, borderDash:[]
+    }];
+    document.getElementById('trend-legend').innerHTML = `<div class="stack-legend-item"><div class="stack-legend-dot" style="background:#2563eb"></div>Direct Invoiced</div>`;
+  } else {
+    document.getElementById('trend-title').textContent = 'MONTH-OVER-MONTH TREND — COMBINED';
+    const app = ALL_MONTHS.map(m=>APPLIED[m]?.total||0);
+    const dir = ALL_MONTHS.map(m=>DIRECT[m]?.total||0);
+    const com = ALL_MONTHS.map((_,i)=>app[i]+dir[i]);
+    datasets = [
+      {label:'Combined',      data:com, borderColor:'#6b21a8', backgroundColor:'rgba(107,33,168,0.08)', tension:0.35, fill:true,  pointRadius:4, pointBackgroundColor:'#6b21a8', borderWidth:2.5, borderDash:[]},
+      {label:'Prepay Applied',data:app, borderColor:'#c1440e', backgroundColor:'transparent',           tension:0.35, fill:false, pointRadius:3, pointBackgroundColor:'#c1440e', borderWidth:1.5, borderDash:[4,3]},
+      {label:'Direct Billed', data:dir, borderColor:'#2563eb', backgroundColor:'transparent',           tension:0.35, fill:false, pointRadius:3, pointBackgroundColor:'#2563eb', borderWidth:1.5, borderDash:[4,3]}
+    ];
+    document.getElementById('trend-legend').innerHTML = `
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#6b21a8"></div>Combined</div>
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e;opacity:0.8"></div>Prepay</div>
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#2563eb;opacity:0.8"></div>Direct</div>`;
+  }
+
+  if (trendChart) trendChart.destroy();
+  trendChart = new Chart(document.getElementById('trendChart'),{
+    type:'line',
+    data:{labels:shortLabels, datasets},
+    options:{
+      responsive:true,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': '+fmt(ctx.raw)}}},
+      scales:{
+        x:{ticks:{font:{size:11},color:'#888'},grid:{color:'#f0ebe0'},border:{display:false}},
+        y:{ticks:{callback:v=>fmtK(v),font:{size:10},color:'#999'},grid:{color:'#f0ebe0'},border:{display:false}}
+      }
+    }
+  });
+}
+
+function renderPayMethodTable(c) {
+  if (!c || c.prepayment_total === 0) return;
+  const methods = Object.entries(c.by_method).sort((a,b)=>b[1].amount-a[1].amount);
+  const total   = c.prepayment_total;
+  const max     = methods.length ? methods[0][1].amount : 1;
+  document.getElementById('pay-method-tbody').innerHTML = methods.map(([name,v])=>{
+    const pct  = total>0 ? (v.amount/total*100).toFixed(1) : '0.0';
+    const barW = Math.round(v.amount/max*100);
+    return `<tr>
+      <td class="svc-name">${name}</td>
+      <td style="color:#888">${v.count}</td>
+      <td style="font-weight:700;color:#b5651d">${fmt(v.amount)}</td>
+      <td style="color:#999">${pct}%</td>
+      <td class="svc-bar"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${barW}%;background:#b5651d"></div></div></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('pay-method-tfoot').innerHTML = `<tr>
+    <td>Total</td>
+    <td style="color:#888">${c.prepayment_count}</td>
+    <td style="color:#c1440e">${fmt(total)}</td>
+    <td style="color:#999">100%</td>
+    <td></td>
+  </tr>`;
+}
+
+function renderTable(svcData, col) {
+  document.getElementById('tbl-title').textContent = 'Service Breakdown — Alphabetical';
+  document.getElementById('tbl-head').innerHTML = `<tr><th>Service</th><th>Jobs</th><th>Revenue</th><th></th></tr>`;
+  const all = Object.entries(svcData).sort((a,b)=>a[0].localeCompare(b[0]));
+  const max = all.reduce((m,[,v])=>Math.max(m,v.revenue),1);
+  document.getElementById('svc-tbody').innerHTML = all.map(([name,v])=>`
+    <tr>
+      <td class="svc-name">${name}</td>
+      <td style="color:#888">${v.count}</td>
+      <td style="font-weight:700;color:${col}">${fmt(v.revenue)}</td>
+      <td class="svc-bar"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${Math.round(v.revenue/max*100)}%;background:${col}"></div></div></td>
+    </tr>`).join('');
+}
+
+function renderCombinedTable(aSvcs, dSvcs) {
+  document.getElementById('tbl-title').textContent = 'Combined Service Breakdown — Alphabetical';
+  document.getElementById('tbl-head').innerHTML = `<tr>
+    <th>Service</th>
+    <th style="text-align:right;color:#c1440e">Prepay Applied</th>
+    <th style="text-align:right;color:#2563eb">Direct Billed</th>
+    <th style="text-align:right;color:#6b21a8">Total</th>
+    <th></th>
+  </tr>`;
+  const all = new Set([...Object.keys(aSvcs),...Object.keys(dSvcs)]);
+  const rows = [...all].sort().map(s=>({
+    name:s, prepay:aSvcs[s]?.revenue||0, direct:dSvcs[s]?.revenue||0,
+    total:(aSvcs[s]?.revenue||0)+(dSvcs[s]?.revenue||0)
+  }));
+  const max = rows.reduce((m,r)=>Math.max(m,r.total),1);
+  document.getElementById('svc-tbody').innerHTML = rows.map(r=>`
+    <tr>
+      <td class="svc-name">${r.name}</td>
+      <td class="combined-prepay">${r.prepay>0?fmt(r.prepay):'—'}</td>
+      <td class="combined-direct">${r.direct>0?fmt(r.direct):'—'}</td>
+      <td class="combined-total">${fmt(r.total)}</td>
+      <td class="svc-bar"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${Math.round(r.total/max*100)}%;background:#6b21a8"></div></div></td>
+    </tr>`).join('');
+}
+
+
+// ── GST Renderers ─────────────────────────────────────────────────────────────
+const GST_RATE = 5/105;
+
+function renderGSTTrend() {
+  document.getElementById('trend-title').textContent = 'MONTH-OVER-MONTH GST COLLECTED';
+  const shortLabels = ALL_MONTHS.map(m => m.replace(' 20', " '"));
+  const prepayGST = ALL_MONTHS.map(m => (APPLIED[m]?.total||0) * GST_RATE);
+  const directGST = ALL_MONTHS.map(m => (DIRECT[m]?.total||0)  * GST_RATE);
+  const totalGST  = ALL_MONTHS.map((_,i) => prepayGST[i] + directGST[i]);
+  document.getElementById('trend-legend').innerHTML = `
+    <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#0f7955"></div>Total GST</div>
+    <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e;opacity:0.8"></div>GST on Prepay</div>
+    <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#2563eb;opacity:0.8"></div>GST on Direct</div>`;
+  if (trendChart) trendChart.destroy();
+  trendChart = new Chart(document.getElementById('trendChart'),{
+    type:'line',
+    data:{labels:shortLabels, datasets:[
+      {label:'Total GST',    data:totalGST,  borderColor:'#0f7955', backgroundColor:'rgba(15,121,85,0.08)', tension:0.35, fill:true,  pointRadius:4, pointBackgroundColor:'#0f7955', borderWidth:2.5, borderDash:[]},
+      {label:'GST on Prepay',data:prepayGST, borderColor:'#c1440e', backgroundColor:'transparent',          tension:0.35, fill:false, pointRadius:3, pointBackgroundColor:'#c1440e', borderWidth:1.5, borderDash:[4,3]},
+      {label:'GST on Direct',data:directGST, borderColor:'#2563eb', backgroundColor:'transparent',          tension:0.35, fill:false, pointRadius:3, pointBackgroundColor:'#2563eb', borderWidth:1.5, borderDash:[4,3]}
+    ]},
+    options:{
+      responsive:true,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': '+fmt(ctx.raw)}}},
+      scales:{
+        x:{ticks:{font:{size:11},color:'#888'},grid:{color:'#f0ebe0'},border:{display:false}},
+        y:{ticks:{callback:v=>fmtK(v),font:{size:10},color:'#999'},grid:{color:'#f0ebe0'},border:{display:false}}
+      }
+    }
+  });
+}
+
+function renderGSTTable(aSvcs, dSvcs) {
+  document.getElementById('tbl-title').textContent = 'GST by Service — Alphabetical (5% GST-inclusive rate)';
+  document.getElementById('tbl-head').innerHTML = `<tr>
+    <th>Service</th>
+    <th style="text-align:right;color:#c1440e">Prepay GST</th>
+    <th style="text-align:right;color:#2563eb">Direct GST</th>
+    <th style="text-align:right;color:#0f7955">Total GST</th>
+    <th style="text-align:right">Gross Revenue</th>
+    <th style="text-align:right;color:#555">Net Revenue</th>
+    <th></th>
+  </tr>`;
+  const all = new Set([...Object.keys(aSvcs),...Object.keys(dSvcs)]);
+  const rows = [...all].sort().map(s=>({
+    name:    s,
+    prepay:  aSvcs[s]?.revenue||0,
+    direct:  dSvcs[s]?.revenue||0,
+    gross:   (aSvcs[s]?.revenue||0)+(dSvcs[s]?.revenue||0),
+    prepayGST: (aSvcs[s]?.revenue||0)*GST_RATE,
+    directGST: (dSvcs[s]?.revenue||0)*GST_RATE,
+    totalGST:  ((aSvcs[s]?.revenue||0)+(dSvcs[s]?.revenue||0))*GST_RATE
+  }));
+  const maxGST = rows.reduce((m,r)=>Math.max(m,r.totalGST),1);
+
+  // Totals row
+  const totPrepayGST = rows.reduce((s,r)=>s+r.prepayGST,0);
+  const totDirectGST = rows.reduce((s,r)=>s+r.directGST,0);
+  const totGST       = totPrepayGST + totDirectGST;
+  const totGross     = rows.reduce((s,r)=>s+r.gross,0);
+
+  document.getElementById('svc-tbody').innerHTML = rows.map(r=>`
+    <tr>
+      <td class="svc-name">${r.name}</td>
+      <td style="color:#c1440e;font-weight:600">${r.prepayGST>0?fmt(r.prepayGST):'—'}</td>
+      <td style="color:#2563eb;font-weight:600">${r.directGST>0?fmt(r.directGST):'—'}</td>
+      <td style="color:#0f7955;font-weight:700">${fmt(r.totalGST)}</td>
+      <td style="color:#888">${fmt(r.gross)}</td>
+      <td style="color:#555;font-weight:600">${fmt(r.gross - r.totalGST)}</td>
+      <td class="svc-bar"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${Math.round(r.totalGST/maxGST*100)}%;background:#0f7955"></div></div></td>
+    </tr>`).join('')
+  + `<tr style="border-top:2px solid #e8e2d6;font-weight:700">
+      <td class="svc-name">Total</td>
+      <td style="color:#c1440e;font-weight:700">${fmt(totPrepayGST)}</td>
+      <td style="color:#2563eb;font-weight:700">${fmt(totDirectGST)}</td>
+      <td style="color:#0f7955;font-weight:700">${fmt(totGST)}</td>
+      <td style="color:#888;font-weight:700">${fmt(totGross)}</td>
+      <td style="color:#555;font-weight:700">${fmt(totGross - totGST)}</td>
+      <td></td>
+    </tr>`;
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function buildTabs() {
+  const cls = `active-${currentReport}`;
+  const tabs = currentPeriod==='monthly' ? ['All Months',...ALL_MONTHS] : ['All',...QUARTER_KEYS];
+  document.getElementById('tab-container').innerHTML = tabs.map(t=>
+    `<button class="tab ${t===currentTab?cls:''}" onclick="selectTab('${t}')">${t}</button>`).join('');
+}
+
+function selectTab(t)  { currentTab=t; buildTabs(); render(); }
+
+function setPeriod(p) {
+  currentPeriod = p;
+  currentTab = p==='monthly' ? 'Jun 2026' : 'Q3 (May–Jun)';
+  document.getElementById('btn-monthly').classList.toggle('active',   p==='monthly');
+  document.getElementById('btn-quarterly').classList.toggle('active', p==='quarterly');
+  buildTabs(); render();
+}
+
+function setReport(r) {
+  currentReport = r;
+  document.querySelectorAll('.report-tab').forEach((btn,i)=>{
+    btn.className = 'report-tab';
+    if ((i===0&&r==='prepay')||(i===1&&r==='direct')||(i===2&&r==='combined')||(i===3&&r==='gst'))
+      btn.classList.add('active-'+r);
+  });
+  buildTabs(); render();
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+buildTabs();
+render();
+</script>
+</body>
+</html>
