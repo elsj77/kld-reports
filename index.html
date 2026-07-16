@@ -37125,7 +37125,7 @@ const RECORDS = {
     }
   ],
   "generated_at": "2026-07-16T19:37:27.759405"
-};
+}
 
 // ── PERIOD DEFINITIONS ────────────────────────────────────────────────────────
 const CALENDAR_MONTHS = [
@@ -37346,15 +37346,12 @@ function renderCombinedTable(aSvcs,dSvcs){
 // ── GST (always calendar months) ────────────────────────────────────────────
 const GST_RATE=5/105;
 function renderGST(){
-  const oldP=currentPeriod,oldT=currentTab;
-  currentPeriod='monthly';
-  const aK='All Months';
-  if(currentTab==='All Fiscal'||currentTab==='All')currentTab='All Months';
   const{applied,direct}=getAggregated();
-  const mKeys=CALENDAR_MONTHS.map(p=>p.key);
-  const activeM=mKeys.filter(k=>{const a=applied[k],d=direct[k];return(a&&a.total>0)||(d&&d.total>0);});
-  const a=applied[currentTab]||applied['All Months']||{total:0,services:{}};
-  const d=direct[currentTab]||direct['All Months']||{total:0,services:{}};
+  const pKeys=getPeriodKeys();
+  const aK=getAllKey();
+  const activeM=pKeys.filter(k=>{const a=applied[k],d=direct[k];return(a&&a.total>0)||(d&&d.total>0);});
+  const a=applied[currentTab]||applied[aK]||{total:0,services:{}};
+  const d=direct[currentTab]||direct[aK]||{total:0,services:{}};
   const gross=a.total+d.total,gst=gross*GST_RATE;
   set('lbl-a','GROSS REVENUE');set('s-a',fmt(gross));set('s-a2','Prepay + Direct');
   set('lbl-b','GST COLLECTED');set('s-b',fmt(gst));set('s-b2','5% GST-inclusive');show('card-b');
@@ -37362,7 +37359,6 @@ function renderGST(){
   set('lbl-d','GST ON PREPAY');set('s-d',fmt(a.total*GST_RATE));set('s-d2','GST on Direct: '+fmt(d.total*GST_RATE));
   hide('bar-card');hide('donut-card');hide('stack-card');hide('pay-method-card');
   renderGSTTrend(applied,direct,activeM);renderGSTTable(a.services,d.services);
-  currentPeriod=oldP;currentTab=oldT;
 }
 function renderGSTTrend(applied,direct,mKeys){
   set('trend-title','GST COLLECTED BY PERIOD');
@@ -37383,7 +37379,7 @@ function renderGSTTable(aSvcs,dSvcs){
 // ── Navigation ────────────────────────────────────────────────────────────────
 function buildTabs(){
   const cls=`active-${currentReport}`;let tabs;
-  if(currentReport==='gst'||currentPeriod==='monthly')tabs=['All Months',...CALENDAR_MONTHS.map(p=>p.key)];
+  if(currentPeriod==='monthly')tabs=['All Months',...CALENDAR_MONTHS.map(p=>p.key)];
   else if(currentPeriod==='quarterly')tabs=['All',...QUARTER_KEYS];
   else if(currentPeriod==='fiscal')tabs=['All Fiscal',...FISCAL_PERIODS.map(p=>p.key)];
   else if(currentPeriod==='custom'){tabs=customFrom&&customTo?['Custom Range']:['All'];}
@@ -37391,7 +37387,7 @@ function buildTabs(){
 }
 function selectTab(t){currentTab=t;buildTabs();if(currentReport==='gst')renderGST();else render();}
 function setPeriod(p){
-  if(currentReport==='gst'&&(p==='fiscal'||p==='custom'))return;
+  // Fiscal and Custom now enabled for GST too
   currentPeriod=p;
   if(p==='monthly')currentTab='All Months';else if(p==='quarterly')currentTab='All';else if(p==='fiscal')currentTab='All Fiscal';else if(p==='custom')currentTab='All';
   document.getElementById('btn-monthly').classList.toggle('active',p==='monthly');
@@ -37425,12 +37421,12 @@ function clearCustomRange(){
 }
 function setReport(r){
   currentReport=r;
-  if(r==='gst'&&(currentPeriod==='fiscal'||currentPeriod==='custom')){currentPeriod='monthly';currentTab='All Months';document.getElementById('btn-monthly').classList.add('active');document.getElementById('btn-fiscal').classList.remove('active');document.getElementById('btn-custom').classList.remove('active');document.getElementById('date-range-row').classList.remove('visible');customFrom=null;customTo=null;}
+  // GST now supports fiscal and custom periods too
   updateFiscalBtn();
   document.querySelectorAll('.report-tab').forEach((btn,i)=>{btn.className='report-tab';if((i===0&&r==='prepay')||(i===1&&r==='direct')||(i===2&&r==='combined')||(i===3&&r==='gst'))btn.classList.add('active-'+r);});
   buildTabs();if(r==='gst')renderGST();else render();
 }
-function updateFiscalBtn(){const fBtn=document.getElementById('btn-fiscal');const cBtn=document.getElementById('btn-custom');if(currentReport==='gst'){fBtn.disabled=true;fBtn.title='Fiscal periods not available for GST view';cBtn.disabled=true;cBtn.title='Custom range not available for GST view';}else{fBtn.disabled=false;fBtn.title='';cBtn.disabled=false;cBtn.title='';}}
+function updateFiscalBtn(){const fBtn=document.getElementById('btn-fiscal');const cBtn=document.getElementById('btn-custom');fBtn.disabled=false;fBtn.title='';cBtn.disabled=false;cBtn.title='';}
 // ── Init ────────────────────────────────────────────────────────────────────
 updateFiscalBtn();buildTabs();render();
 </script>
