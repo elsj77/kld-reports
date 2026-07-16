@@ -13476,6 +13476,11 @@ const RECORDS = {
     },
     {
       "d": "2026-07-16",
+      "s": "IC/TURF",
+      "r": 130.0
+    },
+    {
+      "d": "2026-07-16",
       "s": "Mowing - Weekly Schedule",
       "r": 50.0
     },
@@ -14658,6 +14663,11 @@ const RECORDS = {
     },
     {
       "d": "2026-04-28",
+      "s": "HCL",
+      "r": 25.0
+    },
+    {
+      "d": "2026-04-28",
       "s": "ELKTHATCH",
       "r": 167.54
     },
@@ -14667,16 +14677,6 @@ const RECORDS = {
       "r": 190.0
     },
     {
-      "d": "2026-04-28",
-      "s": "HCL",
-      "r": 25.0
-    },
-    {
-      "d": "2026-04-27",
-      "s": "Power Broom",
-      "r": 90.0
-    },
-    {
       "d": "2026-04-27",
       "s": "General Clean Up - Landscape",
       "r": 90.0
@@ -14684,12 +14684,17 @@ const RECORDS = {
     {
       "d": "2026-04-27",
       "s": "Power Broom",
-      "r": 90.04
+      "r": 90.0
     },
     {
       "d": "2026-04-27",
       "s": "ELKTHATCH",
       "r": 167.54
+    },
+    {
+      "d": "2026-04-27",
+      "s": "Power Broom",
+      "r": 90.04
     },
     {
       "d": "2026-04-27",
@@ -20259,22 +20264,22 @@ const RECORDS = {
     {
       "d": "2026-05-26",
       "s": "Mowing - Elk Valley",
+      "r": 73.0
+    },
+    {
+      "d": "2026-05-26",
+      "s": "Mowing - Elk Valley",
+      "r": 73.0
+    },
+    {
+      "d": "2026-05-26",
+      "s": "Mowing - Elk Valley",
+      "r": 73.0
+    },
+    {
+      "d": "2026-05-26",
+      "s": "Mowing - Elk Valley",
       "r": 142.12
-    },
-    {
-      "d": "2026-05-26",
-      "s": "Mowing - Elk Valley",
-      "r": 73.0
-    },
-    {
-      "d": "2026-05-26",
-      "s": "Mowing - Elk Valley",
-      "r": 73.0
-    },
-    {
-      "d": "2026-05-26",
-      "s": "Mowing - Elk Valley",
-      "r": 73.0
     },
     {
       "d": "2026-05-26",
@@ -20869,12 +20874,12 @@ const RECORDS = {
     {
       "d": "2026-05-28",
       "s": "FW Round 1",
-      "r": 475.0
+      "r": 1805.0
     },
     {
       "d": "2026-05-28",
       "s": "FW Round 1",
-      "r": 1805.0
+      "r": 475.0
     },
     {
       "d": "2026-05-28",
@@ -24434,11 +24439,6 @@ const RECORDS = {
     {
       "d": "2026-06-16",
       "s": "Mowing - Elk Valley",
-      "r": 73.0
-    },
-    {
-      "d": "2026-06-16",
-      "s": "Mowing - Elk Valley",
       "r": 142.12
     },
     {
@@ -24459,12 +24459,17 @@ const RECORDS = {
     {
       "d": "2026-06-16",
       "s": "Mowing - Elk Valley",
-      "r": 189.5
+      "r": 73.0
     },
     {
       "d": "2026-06-16",
       "s": "Mowing - Elk Valley",
       "r": 73.0
+    },
+    {
+      "d": "2026-06-16",
+      "s": "Mowing - Elk Valley",
+      "r": 189.5
     },
     {
       "d": "2026-06-16",
@@ -32193,11 +32198,6 @@ const RECORDS = {
     },
     {
       "d": "2026-07-16",
-      "s": "IC/TURF",
-      "r": 130.0
-    },
-    {
-      "d": "2026-07-16",
       "s": "Mowing - Weekly Schedule",
       "r": 60.0
     },
@@ -32388,7 +32388,7 @@ const RECORDS = {
     }
   ],
   "collected": [],
-  "generated_at": "2026-07-16T20:04:47.388775"
+  "generated_at": "2026-07-16T20:08:29.464673"
 };
 
 // ── PERIOD DEFINITIONS ────────────────────────────────────────────────────────
@@ -32649,7 +32649,7 @@ function renderGSTTable(aSvcs,dSvcs){
   const tPG=rows.reduce((s,r)=>s+r.prepayGST,0),tDG=rows.reduce((s,r)=>s+r.directGST,0),tG=tPG+tDG,tGr=rows.reduce((s,r)=>s+r.gross,0);
   document.getElementById('svc-tbody').innerHTML=rows.map(r=>`<tr><td class="svc-name">${r.name}</td><td style="color:#c1440e;font-weight:600">${r.prepayGST>0?fmt(r.prepayGST):'—'}</td><td style="color:#2563eb;font-weight:600">${r.directGST>0?fmt(r.directGST):'—'}</td><td style="color:#0f7955;font-weight:700">${fmt(r.totalGST)}</td><td style="color:#888">${fmt(r.gross)}</td><td style="color:#555;font-weight:600">${fmt(r.gross-r.totalGST)}</td><td class="svc-bar"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${Math.round(r.totalGST/maxGST*100)}%;background:#0f7955"></div></div></td></tr>`).join('')+`<tr style="border-top:2px solid #e8e2d6;font-weight:700"><td class="svc-name">Total</td><td style="color:#c1440e;font-weight:700">${fmt(tPG)}</td><td style="color:#2563eb;font-weight:700">${fmt(tDG)}</td><td style="color:#0f7955;font-weight:700">${fmt(tG)}</td><td style="color:#888;font-weight:700">${fmt(tGr)}</td><td style="color:#555;font-weight:700">${fmt(tGr-tG)}</td><td></td></tr>`;
   // Add refund info row if refunds exist in this period
-  const refP=aSvcs['REFUND']?.revenue||0,refD=dSvcs['REFUND']?.revenue||0,refT=refP+refD;
+  const refP=a.refunds||0,refD=d.refunds||0,refT=refP+refD;
   if(refT>0){
     document.getElementById('svc-tbody').innerHTML+=`<tr style="background:#fff8f0;border-top:2px solid #e8e2d6"><td class="svc-name" style="color:#a05a2c">↳ Prepayment Refunds (not GST sales)</td><td style="color:#c1440e">${refP>0?'-'+fmt(refP):'—'}</td><td style="color:#2563eb">${refD>0?'-'+fmt(refD):'—'}</td><td style="color:#999">—</td><td style="color:#999">—</td><td style="color:#999">—</td><td></td></tr>`;
   }
