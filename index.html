@@ -26,6 +26,12 @@
   .period-btn:hover:not(.active):not(:disabled) { background: #ddd6c8; }
   .period-btn.active { background: #1a1a1a; color: #fff; }
   .period-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .date-range-row { display: none; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .date-range-row.visible { display: flex; }
+  .date-range-row label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+  .date-range-row input[type="date"] { padding: 5px 10px; border: 1px solid #d6cfc0; border-radius: 6px; font-size: 12px; color: #555; background: #fff; }
+  .date-range-row .clear-btn { padding: 5px 12px; border: 1px solid #d6cfc0; border-radius: 6px; background: #ede8df; color: #555; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .date-range-row .clear-btn:hover { background: #ddd6c8; }
   .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
   .tab { padding: 5px 13px; border-radius: 20px; border: none; background: #e8e2d6; color: #555; font-size: 12px; cursor: pointer; font-weight: 500; transition: all 0.15s; }
   .tab:hover { background: #ddd6c8; }
@@ -88,7 +94,15 @@
       <button class="period-btn active" id="btn-monthly"   onclick="setPeriod('monthly')">Monthly</button>
       <button class="period-btn"        id="btn-quarterly" onclick="setPeriod('quarterly')">Quarterly</button>
       <button class="period-btn"        id="btn-fiscal"    onclick="setPeriod('fiscal')">Fiscal</button>
+      <button class="period-btn"        id="btn-custom"    onclick="setPeriod('custom')">Custom</button>
     </div>
+  </div>
+  <div class="date-range-row" id="date-range-row">
+    <label>From</label>
+    <input type="date" id="custom-from" min="2025-11-01" max="2026-10-31" onchange="onCustomDateChange()" />
+    <label>To</label>
+    <input type="date" id="custom-to" min="2025-11-01" max="2026-10-31" onchange="onCustomDateChange()" />
+    <button class="clear-btn" onclick="clearCustomRange()">Clear</button>
   </div>
   <div class="tabs" id="tab-container"></div>
   <div class="stats">
@@ -37110,7 +37124,7 @@ const RECORDS = {
       "a": 1015.64
     }
   ],
-  "generated_at": "2026-07-16T19:31:50.719287"
+  "generated_at": "2026-07-16T19:37:27.759405"
 };
 
 // ── PERIOD DEFINITIONS ────────────────────────────────────────────────────────
@@ -37196,14 +37210,30 @@ function aggregateCollectedQuarters(cR,aR,allKey){
   return result;
 }
 
+// ── Custom Date Range Aggregation ──
+function aggregateCustomRevenue(records,from,to){
+  let total=0,count=0;const svcs={};
+  for(const r of records){if(r.d>=from&&r.d<=to){total+=r.r;count++;if(!svcs[r.s])svcs[r.s]={revenue:0,count:0};svcs[r.s].revenue+=r.r;svcs[r.s].count++;}}
+  return{total:round2(total),invoice_count:count,services:svcs};
+}
+function aggregateCustomCollected(cR,aR,from,to){
+  let pT=0,pC=0;const bM={};
+  for(const r of cR){if(r.d>=from&&r.d<=to){pT+=r.a;pC++;if(!bM[r.m])bM[r.m]={amount:0,count:0};bM[r.m].amount+=r.a;bM[r.m].count++;}}
+  let pA=0;for(const r of aR){if(r.d<=to)pA+=r.r;}
+  let cumC=0;for(const r of cR){if(r.d<=to)cumC+=r.a;}
+  return{prepayment_count:pC,prepayment_total:round2(pT),still_unused:round2(cumC-pA),by_method:bM};
+}
+
 // ── STATE ────────────────────────────────────────────────────────────────────
 let currentReport='prepay',currentPeriod='monthly',currentTab='All Months';
-function getPeriodKeys(){if(currentPeriod==='monthly')return CALENDAR_MONTHS.map(p=>p.key);if(currentPeriod==='fiscal')return FISCAL_PERIODS.map(p=>p.key);if(currentPeriod==='quarterly')return QUARTER_KEYS;return[];}
-function getAllKey(){if(currentPeriod==='monthly')return'All Months';if(currentPeriod==='quarterly')return'All';if(currentPeriod==='fiscal')return'All Fiscal';return'All';}
+let customFrom=null,customTo=null;
+function getPeriodKeys(){if(currentPeriod==='monthly')return CALENDAR_MONTHS.map(p=>p.key);if(currentPeriod==='fiscal')return FISCAL_PERIODS.map(p=>p.key);if(currentPeriod==='quarterly')return QUARTER_KEYS;if(currentPeriod==='custom')return['Custom Range'];return[];}
+function getAllKey(){if(currentPeriod==='monthly')return'All Months';if(currentPeriod==='quarterly')return'All';if(currentPeriod==='fiscal')return'All Fiscal';if(currentPeriod==='custom')return'All';return'All';}
 function getAggregated(){
   const aK=getAllKey();let applied,direct,collected;
   if(currentPeriod==='monthly'){applied=aggregateRevenue(RECORDS.applied,CALENDAR_MONTHS,aK);direct=aggregateRevenue(RECORDS.direct,CALENDAR_MONTHS,aK);collected=aggregateCollected(RECORDS.collected,RECORDS.applied,CALENDAR_MONTHS,aK);}
   else if(currentPeriod==='fiscal'){applied=aggregateRevenue(RECORDS.applied,FISCAL_PERIODS,aK);direct=aggregateRevenue(RECORDS.direct,FISCAL_PERIODS,aK);collected=aggregateCollected(RECORDS.collected,RECORDS.applied,FISCAL_PERIODS,aK);}
+  else if(currentPeriod==='custom'&&customFrom&&customTo){applied={'Custom Range':aggregateCustomRevenue(RECORDS.applied,customFrom,customTo),'All':aggregateCustomRevenue(RECORDS.applied,customFrom,customTo)};direct={'Custom Range':aggregateCustomRevenue(RECORDS.direct,customFrom,customTo),'All':aggregateCustomRevenue(RECORDS.direct,customFrom,customTo)};collected={'Custom Range':aggregateCustomCollected(RECORDS.collected,RECORDS.applied,customFrom,customTo),'All':aggregateCustomCollected(RECORDS.collected,RECORDS.applied,customFrom,customTo)};}
   else{applied=aggregateQuarters(RECORDS.applied,aK);direct=aggregateQuarters(RECORDS.direct,aK);collected=aggregateCollectedQuarters(RECORDS.collected,RECORDS.applied,aK);}
   return{applied,direct,collected,allKey:aK};
 }
@@ -37355,27 +37385,52 @@ function buildTabs(){
   const cls=`active-${currentReport}`;let tabs;
   if(currentReport==='gst'||currentPeriod==='monthly')tabs=['All Months',...CALENDAR_MONTHS.map(p=>p.key)];
   else if(currentPeriod==='quarterly')tabs=['All',...QUARTER_KEYS];
-  else tabs=['All Fiscal',...FISCAL_PERIODS.map(p=>p.key)];
+  else if(currentPeriod==='fiscal')tabs=['All Fiscal',...FISCAL_PERIODS.map(p=>p.key)];
+  else if(currentPeriod==='custom'){tabs=customFrom&&customTo?['Custom Range']:['All'];}
   document.getElementById('tab-container').innerHTML=tabs.map(t=>`<button class="tab ${t===currentTab?cls:''}" onclick="selectTab('${t}')">${t}</button>`).join('');
 }
 function selectTab(t){currentTab=t;buildTabs();if(currentReport==='gst')renderGST();else render();}
 function setPeriod(p){
-  if(currentReport==='gst'&&p==='fiscal')return;
+  if(currentReport==='gst'&&(p==='fiscal'||p==='custom'))return;
   currentPeriod=p;
-  if(p==='monthly')currentTab='All Months';else if(p==='quarterly')currentTab='All';else if(p==='fiscal')currentTab='All Fiscal';
+  if(p==='monthly')currentTab='All Months';else if(p==='quarterly')currentTab='All';else if(p==='fiscal')currentTab='All Fiscal';else if(p==='custom')currentTab='All';
   document.getElementById('btn-monthly').classList.toggle('active',p==='monthly');
   document.getElementById('btn-quarterly').classList.toggle('active',p==='quarterly');
   document.getElementById('btn-fiscal').classList.toggle('active',p==='fiscal');
+  document.getElementById('btn-custom').classList.toggle('active',p==='custom');
+  // Show/hide date range row
+  document.getElementById('date-range-row').classList.toggle('visible',p==='custom');
+  // Clear custom filters when switching away from custom
+  if(p!=='custom'){customFrom=null;customTo=null;}
   updateFiscalBtn();buildTabs();if(currentReport==='gst')renderGST();else render();
+}
+function onCustomDateChange(){
+  customFrom=document.getElementById('custom-from').value||null;
+  customTo=document.getElementById('custom-to').value||null;
+  if(!customFrom&&!customTo){clearCustomRange();return;}
+  // If only one date is set, use it as both
+  if(customFrom&&!customTo)customTo=customFrom;
+  if(customTo&&!customFrom)customFrom=customTo;
+  // Show all data if no dates
+  if(!customFrom&&!customTo){currentTab='All';}
+  else{currentTab='Custom Range';}
+  buildTabs();render();
+}
+function clearCustomRange(){
+  document.getElementById('custom-from').value='';
+  document.getElementById('custom-to').value='';
+  customFrom=null;customTo=null;
+  currentTab='All';
+  buildTabs();render();
 }
 function setReport(r){
   currentReport=r;
-  if(r==='gst'&&currentPeriod==='fiscal'){currentPeriod='monthly';currentTab='All Months';document.getElementById('btn-monthly').classList.add('active');document.getElementById('btn-fiscal').classList.remove('active');}
+  if(r==='gst'&&(currentPeriod==='fiscal'||currentPeriod==='custom')){currentPeriod='monthly';currentTab='All Months';document.getElementById('btn-monthly').classList.add('active');document.getElementById('btn-fiscal').classList.remove('active');document.getElementById('btn-custom').classList.remove('active');document.getElementById('date-range-row').classList.remove('visible');customFrom=null;customTo=null;}
   updateFiscalBtn();
   document.querySelectorAll('.report-tab').forEach((btn,i)=>{btn.className='report-tab';if((i===0&&r==='prepay')||(i===1&&r==='direct')||(i===2&&r==='combined')||(i===3&&r==='gst'))btn.classList.add('active-'+r);});
   buildTabs();if(r==='gst')renderGST();else render();
 }
-function updateFiscalBtn(){const btn=document.getElementById('btn-fiscal');if(currentReport==='gst'){btn.disabled=true;btn.title='Fiscal periods not available for GST view';}else{btn.disabled=false;btn.title='';}}
+function updateFiscalBtn(){const fBtn=document.getElementById('btn-fiscal');const cBtn=document.getElementById('btn-custom');if(currentReport==='gst'){fBtn.disabled=true;fBtn.title='Fiscal periods not available for GST view';cBtn.disabled=true;cBtn.title='Custom range not available for GST view';}else{fBtn.disabled=false;fBtn.title='';cBtn.disabled=false;cBtn.title='';}}
 // ── Init ────────────────────────────────────────────────────────────────────
 updateFiscalBtn();buildTabs();render();
 </script>
