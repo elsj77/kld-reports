@@ -239,10 +239,10 @@ function getAggregated(){
     let aA=0;for(const r of fA)aA+=r.r;
     collected={'Custom':{prepayment_count:cC,prepayment_total:round2(cT),still_unused:round2(cT-aA),by_method:bM}};
   } else {
-    const fA=filterByDateRange(RECORDS.applied),fD=filterByDateRange(RECORDS.direct),fC=filterByDateRange(RECORDS.collected);
-    if(currentPeriod==='monthly'){applied=aggregateRevenue(fA,CALENDAR_MONTHS,aK);direct=aggregateRevenue(fD,CALENDAR_MONTHS,aK);collected=aggregateCollected(fC,fA,CALENDAR_MONTHS,aK);}
-    else if(currentPeriod==='fiscal'){applied=aggregateRevenue(fA,FISCAL_PERIODS,aK);direct=aggregateRevenue(fD,FISCAL_PERIODS,aK);collected=aggregateCollected(fC,fA,FISCAL_PERIODS,aK);}
-    else{applied=aggregateQuarters(fA,aK);direct=aggregateQuarters(fD,aK);collected=aggregateCollectedQuarters(fC,fA,aK);}
+    // Only apply date range filter for custom period - not for monthly/quarterly/fiscal
+    if(currentPeriod==='monthly'){applied=aggregateRevenue(RECORDS.applied,CALENDAR_MONTHS,aK);direct=aggregateRevenue(RECORDS.direct,CALENDAR_MONTHS,aK);collected=aggregateCollected(RECORDS.collected,RECORDS.applied,CALENDAR_MONTHS,aK);}
+    else if(currentPeriod==='fiscal'){applied=aggregateRevenue(RECORDS.applied,FISCAL_PERIODS,aK);direct=aggregateRevenue(RECORDS.direct,FISCAL_PERIODS,aK);collected=aggregateCollected(RECORDS.collected,RECORDS.applied,FISCAL_PERIODS,aK);}
+    else{applied=aggregateQuarters(RECORDS.applied,aK);direct=aggregateQuarters(RECORDS.direct,aK);collected=aggregateCollectedQuarters(RECORDS.collected,RECORDS.applied,aK);}
   }
   return{applied,direct,collected,allKey:aK};
 }
@@ -401,6 +401,13 @@ function buildTabs(){
 function selectTab(t){currentTab=t;buildTabs();if(currentReport==='gst')renderGST();else render();}
 function setPeriod(p){
   if(currentReport==='gst'&&(p==='fiscal'||p==='custom'))return;
+  // Clear custom date range when switching away from custom
+  if(p!=='custom'){
+    customDateFrom=null;customDateTo=null;
+    const df=document.getElementById('date-from');const dt=document.getElementById('date-to');
+    if(df)df.value='';if(dt)dt.value='';
+    const cb=document.getElementById('btn-clear-range');if(cb)cb.style.display='none';
+  }
   currentPeriod=p;
   if(p==='monthly')currentTab='All Months';else if(p==='quarterly')currentTab='All';else if(p==='fiscal')currentTab='All Fiscal';else if(p==='custom')currentTab='Custom';
   document.getElementById('btn-monthly').classList.toggle('active',p==='monthly');
@@ -413,7 +420,7 @@ function setPeriod(p){
 }
 function setReport(r){
   currentReport=r;
-  if(r==='gst'&&(currentPeriod==='fiscal'||currentPeriod==='custom')){currentPeriod='monthly';currentTab='All Months';document.getElementById('btn-monthly').classList.add('active');document.getElementById('btn-fiscal').classList.remove('active');document.getElementById('btn-custom').classList.remove('active');document.getElementById('date-range-row').style.display='none';document.getElementById('tab-container').style.display='flex';}
+  if(r==='gst'&&(currentPeriod==='fiscal'||currentPeriod==='custom')){currentPeriod='monthly';currentTab='All Months';customDateFrom=null;customDateTo=null;document.getElementById('btn-monthly').classList.add('active');document.getElementById('btn-fiscal').classList.remove('active');document.getElementById('btn-custom').classList.remove('active');document.getElementById('date-range-row').style.display='none';document.getElementById('tab-container').style.display='flex';}
   updateFiscalBtn();
   document.querySelectorAll('.report-tab').forEach((btn,i)=>{btn.className='report-tab';if((i===0&&r==='prepay')||(i===1&&r==='direct')||(i===2&&r==='combined')||(i===3&&r==='gst'))btn.classList.add('active-'+r);});
   buildTabs();if(r==='gst')renderGST();else render();
