@@ -37410,14 +37410,14 @@ function onCustomDateChange(){
   // Show all data if no dates
   if(!customFrom&&!customTo){currentTab='All';}
   else{currentTab='Custom Range';}
-  buildTabs();render();
+  buildTabs();if(currentReport==='gst')renderGST();else render();
 }
 function clearCustomRange(){
   document.getElementById('custom-from').value='';
   document.getElementById('custom-to').value='';
   customFrom=null;customTo=null;
   currentTab='All';
-  buildTabs();render();
+  buildTabs();if(currentReport==='gst')renderGST();else render();
 }
 function setReport(r){
   currentReport=r;
