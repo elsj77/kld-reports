@@ -26,6 +26,12 @@
   .period-btn:hover:not(.active):not(:disabled) { background: #ddd6c8; }
   .period-btn.active { background: #1a1a1a; color: #fff; }
   .period-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  
+  .date-range-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .date-input { padding: 4px 8px; border: 1px solid #d6cfc0; border-radius: 4px; font-size: 12px; color: #555; background: #fff; }
+  .date-sep { color: #999; font-size: 12px; }
+  #btn-clear-range { margin-left: 4px; }
+
   .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
   .tab { padding: 5px 13px; border-radius: 20px; border: none; background: #e8e2d6; color: #555; font-size: 12px; cursor: pointer; font-weight: 500; transition: all 0.15s; }
   .tab:hover { background: #ddd6c8; }
@@ -89,6 +95,13 @@
       <button class="period-btn"        id="btn-quarterly" onclick="setPeriod('quarterly')">Quarterly</button>
       <button class="period-btn"        id="btn-fiscal"    onclick="setPeriod('fiscal')">Fiscal</button>
     </div>
+  </div>
+  <div class="date-range-row" id="date-range-row">
+    <span class="period-label">Custom Range</span>
+    <input type="date" id="date-from" class="date-input" onchange="onDateRangeChange()"/>
+    <span class="date-sep">→</span>
+    <input type="date" id="date-to" class="date-input" onchange="onDateRangeChange()"/>
+    <button class="period-btn" id="btn-clear-range" onclick="clearDateRange()" style="font-size:11px;padding:4px 10px">Clear</button>
   </div>
   <div class="tabs" id="tab-container"></div>
   <div class="stats">
@@ -194,14 +207,39 @@ function aggregateCollectedQuarters(cR,aR,allKey){
 }
 
 // ── STATE ────────────────────────────────────────────────────────────────────
+
+let customDateFrom=null,customDateTo=null;
+function onDateRangeChange(){
+  const f=document.getElementById('date-from').value;
+  const t=document.getElementById('date-to').value;
+  customDateFrom=f||null;customDateTo=t||null;
+  document.getElementById('btn-clear-range').style.display=(f||t)?'':'none';
+  if(currentReport==='gst')renderGST();else render();
+}
+function clearDateRange(){
+  document.getElementById('date-from').value='';document.getElementById('date-to').value='';
+  customDateFrom=null;customDateTo=null;
+  document.getElementById('btn-clear-range').style.display='none';
+  if(currentReport==='gst')renderGST();else render();
+}
+function filterByDateRange(records){
+  if(!customDateFrom&&!customDateTo)return records;
+  return records.filter(r=>{
+    if(customDateFrom&&r.d<customDateFrom)return false;
+    if(customDateTo&&r.d>customDateTo)return false;
+    return true;
+  });
+}
+
 let currentReport='prepay',currentPeriod='monthly',currentTab='All Months';
 function getPeriodKeys(){if(currentPeriod==='monthly')return CALENDAR_MONTHS.map(p=>p.key);if(currentPeriod==='fiscal')return FISCAL_PERIODS.map(p=>p.key);if(currentPeriod==='quarterly')return QUARTER_KEYS;return[];}
 function getAllKey(){if(currentPeriod==='monthly')return'All Months';if(currentPeriod==='quarterly')return'All';if(currentPeriod==='fiscal')return'All Fiscal';return'All';}
 function getAggregated(){
   const aK=getAllKey();let applied,direct,collected;
-  if(currentPeriod==='monthly'){applied=aggregateRevenue(RECORDS.applied,CALENDAR_MONTHS,aK);direct=aggregateRevenue(RECORDS.direct,CALENDAR_MONTHS,aK);collected=aggregateCollected(RECORDS.collected,RECORDS.applied,CALENDAR_MONTHS,aK);}
-  else if(currentPeriod==='fiscal'){applied=aggregateRevenue(RECORDS.applied,FISCAL_PERIODS,aK);direct=aggregateRevenue(RECORDS.direct,FISCAL_PERIODS,aK);collected=aggregateCollected(RECORDS.collected,RECORDS.applied,FISCAL_PERIODS,aK);}
-  else{applied=aggregateQuarters(RECORDS.applied,aK);direct=aggregateQuarters(RECORDS.direct,aK);collected=aggregateCollectedQuarters(RECORDS.collected,RECORDS.applied,aK);}
+  const fA=filterByDateRange(RECORDS.applied),fD=filterByDateRange(RECORDS.direct),fC=filterByDateRange(RECORDS.collected);
+  if(currentPeriod==='monthly'){applied=aggregateRevenue(fA,CALENDAR_MONTHS,aK);direct=aggregateRevenue(fD,CALENDAR_MONTHS,aK);collected=aggregateCollected(fC,fA,CALENDAR_MONTHS,aK);}
+  else if(currentPeriod==='fiscal'){applied=aggregateRevenue(fA,FISCAL_PERIODS,aK);direct=aggregateRevenue(fD,FISCAL_PERIODS,aK);collected=aggregateCollected(fC,fA,FISCAL_PERIODS,aK);}
+  else{applied=aggregateQuarters(fA,aK);direct=aggregateQuarters(fD,aK);collected=aggregateCollectedQuarters(fC,fA,aK);}
   return{applied,direct,collected,allKey:aK};
 }
 
@@ -375,6 +413,11 @@ function setReport(r){
 function updateFiscalBtn(){const btn=document.getElementById('btn-fiscal');if(currentReport==='gst'){btn.disabled=true;btn.title='Fiscal periods not available for GST view';}else{btn.disabled=false;btn.title='';}}
 // ── Init ────────────────────────────────────────────────────────────────────
 updateFiscalBtn();buildTabs();render();
+// Set date input min/max from RECORDS data
+(function(){
+  const all=[...RECORDS.applied,...RECORDS.direct,...RECORDS.collected].map(r=>r.d).filter(Boolean);
+  if(all.length){all.sort();document.getElementById('date-from').min=all[0];document.getElementById('date-from').max=all[all.length-1];document.getElementById('date-to').min=all[0];document.getElementById('date-to').max=all[all.length-1];}
+})();
 </script>
 </body>
 </html>
