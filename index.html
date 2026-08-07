@@ -131,7 +131,7 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
         <div class="chart-title" style="margin:0">REVENUE BY SERVICE — COMBINED</div>
         <div class="stack-legend">
-          <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e"></div>Prepay Applied</div>
+          <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e"></div>Prepay-Classified</div>
           <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#2563eb"></div>Direct Billed</div>
         </div>
       </div>
@@ -357,7 +357,7 @@ function renderStackChart(aSvcs, dSvcs) {
     data:{
       labels: rows.map(r=>r.name.length>26?r.name.slice(0,26)+'…':r.name),
       datasets:[
-        {label:'Prepay Applied',data:rows.map(r=>r.prepay),backgroundColor:'#c1440e',borderRadius:0,barThickness:16,borderWidth:0,hoverBackgroundColor:'#c1440e'},
+        {label:'Prepay-Classified',data:rows.map(r=>r.prepay),backgroundColor:'#c1440e',borderRadius:0,barThickness:16,borderWidth:0,hoverBackgroundColor:'#c1440e'},
         {label:'Direct Billed', data:rows.map(r=>r.direct),backgroundColor:'#2563eb',borderRadius:3,barThickness:16,borderWidth:0,hoverBackgroundColor:'#2563eb'}
       ]
     },
