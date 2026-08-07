@@ -1,0 +1,36 @@
+name: Live Payment Report Contract
+
+on:
+  pull_request_target:
+    branches: [main]
+    paths:
+      - 'data/prepay_data.json'
+      - 'index.html'
+      - 'prepay_report.html'
+      - 'reports/prepay_report.html'
+      - 'release_manifest.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-payment-report-contract:
+    name: live-payment-report-contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # pull_request_target intentionally loads this workflow and validator from
+      # protected main, while candidate files are checked out into /candidate.
+      - name: Checkout immutable validator from main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: validator
+      - name: Checkout pull request candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+      - name: Validate candidate accounting contract, embedded data, and checksums
+        run: python validator/scripts/validate_live_payment_report.py candidate

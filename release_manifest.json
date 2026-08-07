@@ -1,0 +1,33 @@
+{
+  "release_version": "2026-08-07T19:35:00Z-8e7e65c",
+  "generated_at": "2026-08-07T19:35:00Z",
+  "contract_version": "2026-08-07.1",
+  "source_repository": "elsj77/kld-automations",
+  "source_commit": "8e7e65c",
+  "publication_mode": "validated_pull_request",
+  "artifacts": {
+    "data/prepay_data.json": {
+      "sha256": "19884c52cc622577d5bba412aa51f65e2be8bc16e9ae7c23b3d565bee02e7cd3",
+      "size_bytes": 51102
+    },
+    "prepay_report.html": {
+      "sha256": "6ae1f680c5f776f9e2850359997c2ea83a651751bda2bd0ae2c87b4d65e66491",
+      "size_bytes": 56741
+    },
+    "index.html": {
+      "sha256": "6ae1f680c5f776f9e2850359997c2ea83a651751bda2bd0ae2c87b4d65e66491",
+      "size_bytes": 56741
+    },
+    "reports/prepay_report.html": {
+      "sha256": "6ae1f680c5f776f9e2850359997c2ea83a651751bda2bd0ae2c87b4d65e66491",
+      "size_bytes": 56741
+    }
+  },
+  "accounting_controls": {
+    "invoice_count": 7003,
+    "combined_revenue": 1364687.25,
+    "combined_gst": 64942.64,
+    "refund_total": 5917.67,
+    "service_credit_total": 3304.89
+  }
+}
