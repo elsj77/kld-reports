@@ -293,7 +293,7 @@ function render() {
     hide('bar-card'); hide('donut-card'); hide('stack-card');
     hide('pay-method-card');
     renderGSTTrend();
-    renderGSTTable(a.services, d.services);
+    renderGSTTable(a.services, d.services, a.gst_total||0, d.gst_total||0, a.total+d.total);
     return;
   }
 
@@ -537,7 +537,7 @@ function renderGSTTrend() {
   });
 }
 
-function renderGSTTable(aSvcs, dSvcs) {
+function renderGSTTable(aSvcs, dSvcs, exactPrepayGST, exactDirectGST, exactGross) {
   document.getElementById('tbl-title').textContent = 'GST by Service — Exact SAP SalesTax Allocation';
   document.getElementById('tbl-head').innerHTML = `<tr>
     <th>Service</th>
@@ -561,10 +561,11 @@ function renderGSTTable(aSvcs, dSvcs) {
   const maxGST = rows.reduce((m,r)=>Math.max(m,r.totalGST),1);
 
   // Totals row
-  const totPrepayGST = rows.reduce((s,r)=>s+r.prepayGST,0);
-  const totDirectGST = rows.reduce((s,r)=>s+r.directGST,0);
-  const totGST       = totPrepayGST + totDirectGST;
-  const totGross     = rows.reduce((s,r)=>s+r.gross,0);
+  // Footer uses exact invoice-level controls, not the sum of rounded service allocations.
+  const totPrepayGST = exactPrepayGST;
+  const totDirectGST = exactDirectGST;
+  const totGST       = exactPrepayGST + exactDirectGST;
+  const totGross     = exactGross;
 
   document.getElementById('svc-tbody').innerHTML = rows.map(r=>`
     <tr>
