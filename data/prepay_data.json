@@ -1666,16 +1666,16 @@
       }
     },
     "Aug 2026": {
-      "invoice_count": 705,
-      "total": 113263.3,
-      "gst_total": 5393.53,
+      "invoice_count": 706,
+      "total": 113341.09,
+      "gst_total": 5397.23,
       "refund_total": 0.0,
       "service_credit_total": 560.0,
       "services": {
         "Mowing - Elk Valley": {
-          "revenue": 3158.28,
-          "count": 36,
-          "gst": 150.37
+          "revenue": 3236.07,
+          "count": 37,
+          "gst": 154.07
         },
         "Property Maintenance": {
           "revenue": 15443.16,
@@ -1786,10 +1786,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 7856,
-    "sap_grand_total": 1469856.18,
-    "combined_revenue": 1469856.18,
-    "combined_gst": 69950.67,
+    "invoice_count": 7857,
+    "sap_grand_total": 1469933.97,
+    "combined_revenue": 1469933.97,
+    "combined_gst": 69954.37,
     "refund_total": 6500.42,
     "service_credit_total": 3524.89,
     "refund_rows": [
