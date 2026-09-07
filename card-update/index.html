@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Update Your Card — Lawn Doctor</title>
+<style>
+  body{font-family:Segoe UI,Arial,sans-serif;background:#f4f6f8;margin:0;padding:24px 16px;}
+  .wrap{max-width:640px;margin:0 auto;}
+  .brand{font-size:22px;font-weight:700;color:#0f2338;margin-bottom:12px;}
+  .card{background:#fff;border-radius:10px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.08);margin-bottom:20px;}
+  h1{color:#0f2338;font-size:22px;margin:0 0 10px;}
+  p{color:#444;font-size:15px;line-height:1.5;}
+  .btn{background-color:#0f2338;color:#fff;padding:14px 28px;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+  .btn:hover{background-color:#1a3a5c;}
+  .small{font-size:13px;color:#777;}
+  .shield{display:inline-block;margin-right:8px;}
+  .spinner{display:inline-block;width:18px;height:18px;border:3px solid #d7dee7;border-top-color:#0f2338;border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle;margin-right:10px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  ul.pick{list-style:none;padding:0;margin:0;}
+  ul.pick a{display:block;background:#f1f5f9;border:1px solid #d7dee7;border-radius:8px;padding:14px 18px;color:#0f2338;font-size:16px;font-weight:600;text-decoration:none;margin:14px 0;}
+</style>
+</head><body><div class="wrap">
+<div class="card" id="main">
+  <div class="brand">Lawn Doctor / Mow &amp; Snow / Blue Spruce</div>
+  <h1>Update Your Card on File</h1>
+  <p id="status"><span class="spinner"></span>Taking you to the secure card form&hellip;</p>
+  <p class="small"><span class="shield">&#128274;</span>Card details are entered on Authorize.net's bank-grade encrypted form. Your card information never touches our systems and is stored directly on your account.</p>
+  <form id="ccform" method="post" action="#"><input type="hidden" name="token" value=""/></form>
+  <p id="fallback" style="display:none;margin-top:16px;"><a id="fbbtn" href="#" class="btn">Add / Update My Card &nbsp;&rarr;</a></p>
+</div>
+<div class="card"><p class="small" style="margin:0;">Questions? Call us at 250-489-2031.</p></div>
+</div>
+<script>
+(function(){
+  var API = 'https://doc-pro-781789de.base44.app/functions/cardCapturePage';
+  var qs = new URLSearchParams(location.search);
+  var email = (qs.get('e')||'').toLowerCase().trim();
+  var pick = qs.get('pick')||'';
+  var statusEl = document.getElementById('status');
+  var fb = document.getElementById('fallback');
+  var fbbtn = document.getElementById('fbbtn');
+
+  function showError(msg){
+    statusEl.innerHTML = '<span style="color:#b91c1c;font-weight:600;">' + msg + '</span>';
+    fb.style.display = 'none';
+  }
+
+  if(!email || email.indexOf('@') < 0){ showError('This link is missing required information. Please call our office at 250-489-2031.'); return; }
+
+  // fallback button = the Base44 one-click page (works without JS)
+  fbbtn.href = 'https://doc-pro-781789de.base44.app/functions/cardCapturePage?e=' + encodeURIComponent(email);
+
+  var url = API + '?e=' + encodeURIComponent(email) + '&mode=json';
+  if(pick) url += '&pick=' + encodeURIComponent(pick);
+
+  fetch(url).then(function(r){ return r.json(); }).then(function(j){
+    if(j.error){
+      if(j.error === 'not_found') showError('We couldn\'t locate your account with this email address. Please call our office at 250-489-2031.');
+      else if(j.error === 'anet_unavailable') { statusEl.innerHTML = '<span style="color:#b91c1c;font-weight:600;">We couldn\'t load the secure card form right now.</span> <span class="small">Please try again in a few minutes.</span>'; fb.style.display='block'; }
+      else showError('Something went wrong. Please call our office at 250-489-2031.');
+      return;
+    }
+    if(j.choose){
+      var list = '<p style="color:#0f2338;font-weight:600;margin-bottom:6px;">We found more than one account with this email.</p><p class="small" style="margin-bottom:8px;">Please select your account:</p><ul class="pick">';
+      j.choose.forEach(function(m){
+        var label = (m.client_name||'') + (m.service_city ? ' — ' + m.service_city : '');
+        var esc = label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        list += '<li><a href="?e=' + encodeURIComponent(email) + '&pick=' + encodeURIComponent(m.customer_id) + '">' + esc + ' &nbsp;&rarr;</a></li>';
+      });
+      list += '</ul><p class="small" style="margin-top:18px;">Don\'t see your account? Call us at 250-489-2031.</p>';
+      statusEl.innerHTML = list;
+      fb.style.display = 'none';
+      return;
+    }
+    if(j.actionUrl && j.token){
+      var form = document.getElementById('ccform');
+      form.action = j.actionUrl;
+      form.querySelector('input[name=token]').value = j.token;
+      fb.style.display = 'block';
+      form.submit();
+      return;
+    }
+    showError('Something went wrong. Please call our office at 250-489-2031.');
+  }).catch(function(){
+    statusEl.innerHTML = '<span style="color:#b91c1c;font-weight:600;">We couldn\'t load the secure card form right now.</span> <span class="small">Please try again in a few minutes, or call us at 250-489-2031.</span>';
+    fb.style.display = 'block';
+  });
+})();
+</script>
+</body></html>
