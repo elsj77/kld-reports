@@ -1927,9 +1927,9 @@
       }
     },
     "Sep 2026": {
-      "invoice_count": 238,
-      "total": 37133.23,
-      "gst_total": 1768.29,
+      "invoice_count": 239,
+      "total": 37237.18,
+      "gst_total": 1773.24,
       "refund_total": 0.0,
       "service_credit_total": 110.0,
       "services": {
@@ -1949,9 +1949,9 @@
           "gst": 150.16
         },
         "FW Round 4": {
-          "revenue": 15241.8,
-          "count": 129,
-          "gst": 725.8
+          "revenue": 15345.75,
+          "count": 130,
+          "gst": 730.75
         },
         "Insect Control Turf": {
           "revenue": 735.0,
@@ -1992,10 +1992,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 8797,
-    "sap_grand_total": 1659941.43,
-    "combined_revenue": 1659941.43,
-    "combined_gst": 79002.43,
+    "invoice_count": 8798,
+    "sap_grand_total": 1660045.38,
+    "combined_revenue": 1660045.38,
+    "combined_gst": 79007.38,
     "refund_total": 8878.42,
     "service_credit_total": 3954.89,
     "refund_rows": [
