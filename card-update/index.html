@@ -19,6 +19,9 @@
   @keyframes spin{to{transform:rotate(360deg);}}
   ul.pick{list-style:none;padding:0;margin:0;}
   ul.pick a{display:block;background:#f1f5f9;border:1px solid #d7dee7;border-radius:8px;padding:14px 18px;color:#0f2338;font-size:16px;font-weight:600;text-decoration:none;margin:14px 0;}
+  .emailform{margin-top:10px;}
+  .emailform input[type=email]{width:100%;max-width:380px;padding:13px 14px;border:1px solid #b8c4d0;border-radius:6px;font-size:16px;box-sizing:border-box;display:block;margin:12px 0;}
+  .emailform input[type=email]:focus{outline:2px solid #0f2338;border-color:#0f2338;}
 </style>
 </head><body><div class="wrap">
 <div class="card" id="main">
@@ -27,6 +30,14 @@
   <p id="status"><span class="spinner"></span>Taking you to the secure card form&hellip;</p>
   <p class="small"><span class="shield">&#128274;</span>Card details are entered on Authorize.net's bank-grade encrypted form. Your card information never touches our systems and is stored directly on your account.</p>
   <form id="ccform" method="post" action="#"><input type="hidden" name="token" value=""/></form>
+  <div id="entryform" class="emailform" style="display:none;">
+    <form id="eform" onsubmit="return false;">
+      <label for="eaddr" style="font-weight:600;color:#0f2338;">Enter the email address on your account:</label>
+      <input type="email" id="eaddr" name="eaddr" placeholder="you@example.com" autocomplete="email" required>
+      <button type="button" id="gobtn" class="btn">Continue &nbsp;&rarr;</button>
+    </form>
+    <p class="small" style="margin-top:14px;">We'll look up your account and take you straight to our secure card form.</p>
+  </div>
   <p id="fallback" style="display:none;margin-top:16px;"><a id="fbbtn" href="#" class="btn">Add / Update My Card &nbsp;&rarr;</a></p>
 </div>
 <div class="card"><p class="small" style="margin:0;">Questions? Call us at 250-489-2031.</p></div>
@@ -46,7 +57,24 @@
     fb.style.display = 'none';
   }
 
-  if(!email || email.indexOf('@') < 0){ showError('This link is missing required information. Please call our office at 250-489-2031.'); return; }
+  if(!email || email.indexOf('@') < 0 || email.indexOf('[') >= 0){
+    // bare link, or an unresolved merge tag (template preview) - let the visitor self-identify
+    statusEl.innerHTML = 'Enter the email on your account and we\'ll take you to the secure card form.';
+    document.getElementById('entryform').style.display = 'block';
+    var goBtn = document.getElementById('gobtn');
+    var doGo = function(){
+      var v = (document.getElementById('eaddr').value||'').toLowerCase().trim();
+      if(!v || v.indexOf('@') < 0){ document.getElementById('eaddr').focus(); return; }
+      var p = new URLSearchParams(); p.set('e', v);
+      var keep = new URLSearchParams(location.search).get('pick');
+      if(keep) p.set('pick', keep);
+      location.search = p.toString();
+    };
+    goBtn.addEventListener('click', doGo);
+    document.getElementById('eform').addEventListener('submit', doGo);
+    document.getElementById('eaddr').focus();
+    return;
+  }
 
   // fallback button = the Base44 one-click page (works without JS)
   fbbtn.href = 'https://doc-pro-781789de.base44.app/functions/cardCapturePage?e=' + encodeURIComponent(email);
