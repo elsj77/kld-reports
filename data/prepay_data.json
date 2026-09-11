@@ -554,9 +554,9 @@
       }
     },
     "Sep 2026": {
-      "invoice_count": 99,
-      "total": 9403.12,
-      "gst_total": 447.77,
+      "invoice_count": 106,
+      "total": 9738.16,
+      "gst_total": 463.72,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -567,7 +567,7 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 6,
+          "count": 8,
           "gst": 0.0
         },
         "Insect Control Turf": {
@@ -591,9 +591,9 @@
           "gst": 5.76
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 1596.21,
-          "count": 25,
-          "gst": 76.01
+          "revenue": 1774.71,
+          "count": 28,
+          "gst": 84.51
         },
         "FW Round 4": {
           "revenue": 4810.46,
@@ -601,9 +601,9 @@
           "gst": 229.07
         },
         "Mowing - Elk Valley": {
-          "revenue": 1280.11,
-          "count": 16,
-          "gst": 60.95
+          "revenue": 1436.65,
+          "count": 18,
+          "gst": 68.4
         },
         "Vegetation Control": {
           "revenue": 336.0,
@@ -756,10 +756,10 @@
     "Mar 2026": {
       "prepayment_count": 73,
       "prepayment_total": 60114.91,
-      "applied_amount": 42602.16,
+      "applied_amount": 42679.95,
       "refunds_issued": 0.0,
       "net_collected": 60114.91,
-      "still_unused": 17512.75,
+      "still_unused": 17434.96,
       "by_method": {
         "Visa": {
           "amount": 23589.86,
@@ -794,10 +794,10 @@
     "Apr 2026": {
       "prepayment_count": 56,
       "prepayment_total": 42239.83,
-      "applied_amount": 27845.71,
+      "applied_amount": 27924.46,
       "refunds_issued": 529.2,
       "net_collected": 41710.63,
-      "still_unused": 13864.92,
+      "still_unused": 13786.17,
       "by_method": {
         "Visa": {
           "amount": 11759.54,
@@ -1591,8 +1591,8 @@
     },
     "Jul 2026": {
       "invoice_count": 1350,
-      "total": 306789.14,
-      "gst_total": 14587.2,
+      "total": 306391.19,
+      "gst_total": 14568.25,
       "refund_total": 0.0,
       "service_credit_total": 720.0,
       "services": {
@@ -1623,7 +1623,7 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 96,
+          "count": 97,
           "gst": 0.0
         },
         "Irrigation System Installation": {
@@ -1637,9 +1637,9 @@
           "gst": 89.89
         },
         "Irrigation System Repair": {
-          "revenue": 13182.25,
-          "count": 43,
-          "gst": 627.81
+          "revenue": 12784.3,
+          "count": 42,
+          "gst": 608.86
         },
         "Lawn Spraying Package": {
           "revenue": 693.0,
@@ -1938,9 +1938,9 @@
       }
     },
     "Sep 2026": {
-      "invoice_count": 373,
-      "total": 50397.04,
-      "gst_total": 2399.89,
+      "invoice_count": 393,
+      "total": 51829.33,
+      "gst_total": 2468.09,
       "refund_total": 0.0,
       "service_credit_total": 220.0,
       "services": {
@@ -1950,14 +1950,14 @@
           "gst": 713.31
         },
         "Mowing - Elk Valley": {
-          "revenue": 1363.47,
-          "count": 14,
-          "gst": 64.92
+          "revenue": 1520.01,
+          "count": 16,
+          "gst": 72.37
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 4084.5,
-          "count": 58,
-          "gst": 194.5
+          "revenue": 5045.25,
+          "count": 71,
+          "gst": 240.25
         },
         "FW Round 4": {
           "revenue": 25695.61,
@@ -1970,13 +1970,13 @@
           "gst": 35.0
         },
         "Vegetation Control": {
-          "revenue": 966.0,
-          "count": 4,
-          "gst": 46.0
+          "revenue": 1281.0,
+          "count": 5,
+          "gst": 61.0
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 34,
+          "count": 38,
           "gst": 0.0
         },
         "Irrigation System Repair": {
@@ -2013,15 +2013,20 @@
           "revenue": 189.0,
           "count": 1,
           "gst": 9.0
+        },
+        "Veg Control Follow-up": {
+          "revenue": 0.0,
+          "count": 1,
+          "gst": 0.0
         }
       }
     }
   },
   "AUDIT": {
-    "invoice_count": 8976,
-    "sap_grand_total": 1676036.41,
-    "combined_revenue": 1676036.41,
-    "combined_gst": 79768.84,
+    "invoice_count": 9003,
+    "sap_grand_total": 1677405.79,
+    "combined_revenue": 1677405.79,
+    "combined_gst": 79834.04,
     "refund_total": 8878.42,
     "service_credit_total": 4064.89,
     "refund_rows": [
