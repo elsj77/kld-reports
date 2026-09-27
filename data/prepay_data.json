@@ -2299,36 +2299,6 @@
         "sales_tax": 0.0
       },
       {
-        "date": "2026-09-15",
-        "invoice": "REFUND 139895",
-        "client": "Moss, Mark",
-        "name": "Refund",
-        "amount": 113.4,
-        "absolute": 113.4,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-09-18",
-        "invoice": "REFUND 140096",
-        "client": "Lynch, David & Shirley",
-        "name": "Refund",
-        "amount": 103.95,
-        "absolute": 103.95,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-09-21",
-        "invoice": "REFUND 140161",
-        "client": "Beaugrand, Scott",
-        "name": "Refund",
-        "amount": 63.0,
-        "absolute": 63.0,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
         "date": "2026-06-23",
         "invoice": "REFUND 121687467515",
         "client": "Barry, Derick",
@@ -2355,6 +2325,36 @@
         "name": "Refund",
         "amount": 147.0,
         "absolute": 147.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-09-15",
+        "invoice": "REFUND 139895",
+        "client": "Moss, Mark",
+        "name": "Refund",
+        "amount": 113.4,
+        "absolute": 113.4,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-09-18",
+        "invoice": "REFUND 140096",
+        "client": "Lynch, David & Shirley",
+        "name": "Refund",
+        "amount": 103.95,
+        "absolute": 103.95,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-09-21",
+        "invoice": "REFUND 140161",
+        "client": "Beaugrand, Scott",
+        "name": "Refund",
+        "amount": 63.0,
+        "absolute": 63.0,
         "taxable": "E",
         "sales_tax": 0.0
       }
