@@ -576,9 +576,9 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 5,
-      "total": 605.32,
-      "gst_total": 28.83,
+      "invoice_count": 12,
+      "total": 1423.8,
+      "gst_total": 67.81,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -593,9 +593,14 @@
           "gst": 13.25
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 94.5,
+          "revenue": 714.0,
+          "count": 11,
+          "gst": 34.0
+        },
+        "Mowing - Bill Hourly": {
+          "revenue": 198.98,
           "count": 1,
-          "gst": 4.5
+          "gst": 9.48
         }
       }
     }
@@ -944,16 +949,16 @@
       }
     },
     "Oct 2026": {
-      "prepayment_count": 8,
-      "prepayment_total": 8457.06,
-      "applied_amount": 0.0,
-      "refunds_issued": 0.0,
-      "net_collected": 8457.06,
-      "still_unused": 8457.06,
+      "prepayment_count": 9,
+      "prepayment_total": 9964.34,
+      "applied_amount": -14.7,
+      "refunds_issued": 14.7,
+      "net_collected": 9949.64,
+      "still_unused": 9964.34,
       "by_method": {
         "Authorize.net": {
-          "amount": 8457.06,
-          "count": 8
+          "amount": 9964.34,
+          "count": 9
         }
       }
     }
@@ -2124,20 +2129,20 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 32,
-      "total": 17094.6,
-      "gst_total": 814.04,
+      "invoice_count": 90,
+      "total": 595420.72,
+      "gst_total": 28353.38,
       "refund_total": 0.0,
-      "service_credit_total": 0.0,
+      "service_credit_total": 120.0,
       "services": {
         "Mowing - Elk Valley": {
-          "revenue": 364.95,
-          "count": 3,
-          "gst": 17.38
+          "revenue": 443.7,
+          "count": 4,
+          "gst": 21.13
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 1,
+          "count": 5,
           "gst": 0.0
         },
         "Property Maintenance": {
@@ -2146,35 +2151,45 @@
           "gst": 685.16
         },
         "Irrigation System Winterize": {
-          "revenue": 451.5,
-          "count": 3,
-          "gst": 21.5
+          "revenue": 3298.26,
+          "count": 19,
+          "gst": 157.06
         },
         "Fall Granular Fertilizer": {
-          "revenue": 325.5,
-          "count": 2,
-          "gst": 15.5
+          "revenue": 1428.0,
+          "count": 10,
+          "gst": 68.0
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 393.75,
-          "count": 5,
-          "gst": 18.75
+          "revenue": 1937.25,
+          "count": 30,
+          "gst": 92.25
         },
         "Aeration - Fall": {
-          "revenue": 1170.75,
+          "revenue": 573227.66,
+          "count": 8,
+          "gst": 27296.56
+        },
+        "General Clean Up - Landscape": {
+          "revenue": 445.7,
           "count": 1,
-          "gst": 55.75
+          "gst": 21.22
+        },
+        "Fall Aeration + Granular": {
+          "revenue": 252.0,
+          "count": 1,
+          "gst": 12.0
         }
       }
     }
   },
   "AUDIT": {
-    "invoice_count": 10001,
-    "sap_grand_total": 1922075.95,
-    "combined_revenue": 1922075.95,
-    "combined_gst": 91484.9,
-    "refund_total": 309.75,
-    "service_credit_total": 4404.89,
+    "invoice_count": 10066,
+    "sap_grand_total": 2501220.55,
+    "combined_revenue": 2501220.55,
+    "combined_gst": 119063.22,
+    "refund_total": 324.45,
+    "service_credit_total": 4524.89,
     "refund_rows": [
       {
         "date": "2026-08-05",
@@ -2193,6 +2208,16 @@
         "name": "Refund",
         "amount": 205.8,
         "absolute": 205.8,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-02",
+        "invoice": "REFUND 140697",
+        "client": "Fabro, Virginia",
+        "name": "Refund",
+        "amount": 14.7,
+        "absolute": 14.7,
         "taxable": "E",
         "sales_tax": 0.0
       }
@@ -2555,6 +2580,16 @@
         "name": "Service Credit",
         "amount": -110.0,
         "absolute": 110.0,
+        "taxable": "GST",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-02",
+        "invoice": "140707",
+        "client": "Johnston, Chris",
+        "name": "Service Credit",
+        "amount": -120.0,
+        "absolute": 120.0,
         "taxable": "GST",
         "sales_tax": 0.0
       }
