@@ -57,31 +57,31 @@
       }
     },
     "Apr 2026": {
-      "invoice_count": 102,
-      "total": 26904.96,
-      "gst_total": 1281.2,
+      "invoice_count": 98,
+      "total": 26441.32,
+      "gst_total": 1259.12,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
         "Kick Start Program": {
-          "revenue": 16991.11,
-          "count": 38,
-          "gst": 809.11
+          "revenue": 16623.61,
+          "count": 37,
+          "gst": 791.61
         },
         "Aeration - Spring": {
-          "revenue": 766.5,
-          "count": 7,
-          "gst": 36.5
+          "revenue": 651.0,
+          "count": 6,
+          "gst": 31.0
         },
         "FW Round 1": {
-          "revenue": 2094.75,
-          "count": 17,
-          "gst": 99.75
+          "revenue": 2028.6,
+          "count": 16,
+          "gst": 96.6
         },
         "Irrigation System Start-Up": {
-          "revenue": 2379.37,
-          "count": 25,
-          "gst": 113.3
+          "revenue": 2284.87,
+          "count": 24,
+          "gst": 108.8
         },
         "Property Maintenance": {
           "revenue": 278.15,
@@ -94,9 +94,9 @@
           "gst": 34.19
         },
         "Deep Root Fertilization": {
-          "revenue": 798.0,
-          "count": 4,
-          "gst": 38.0
+          "revenue": 703.5,
+          "count": 3,
+          "gst": 33.5
         },
         "Irrigation Part(s)": {
           "revenue": 147.0,
@@ -104,19 +104,19 @@
           "gst": 7.0
         },
         "Power Broom": {
-          "revenue": 574.46,
-          "count": 6,
-          "gst": 27.36
+          "revenue": 670.41,
+          "count": 7,
+          "gst": 31.92
+        },
+        "Dethatch Elk Valley": {
+          "revenue": 535.65,
+          "count": 3,
+          "gst": 25.5
         },
         "General Clean Up - Landscape": {
           "revenue": 1195.23,
           "count": 1,
           "gst": 56.92
-        },
-        "Dethatch Elk Valley": {
-          "revenue": 357.1,
-          "count": 2,
-          "gst": 17.0
         },
         "General Clean Up - Paved": {
           "revenue": 236.25,
@@ -131,9 +131,9 @@
       }
     },
     "May 2026": {
-      "invoice_count": 312,
-      "total": 36748.18,
-      "gst_total": 1749.89,
+      "invoice_count": 294,
+      "total": 34592.53,
+      "gst_total": 1647.24,
       "refund_total": 0.0,
       "service_credit_total": 230.0,
       "services": {
@@ -143,19 +143,19 @@
           "gst": 13.25
         },
         "FW Round 1": {
-          "revenue": 17554.63,
-          "count": 157,
-          "gst": 835.94
+          "revenue": 16627.48,
+          "count": 148,
+          "gst": 791.79
         },
         "Irrigation System Start-Up": {
-          "revenue": 3677.73,
-          "count": 37,
-          "gst": 175.13
+          "revenue": 3467.73,
+          "count": 35,
+          "gst": 165.13
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 5145.0,
-          "count": 77,
-          "gst": 245.0
+          "revenue": 4893.0,
+          "count": 73,
+          "gst": 233.0
         },
         "(Unknown)": {
           "revenue": 0.0,
@@ -168,9 +168,9 @@
           "gst": 4.5
         },
         "Kick Start Program": {
-          "revenue": 866.25,
-          "count": 2,
-          "gst": 41.25
+          "revenue": 446.25,
+          "count": 1,
+          "gst": 21.25
         },
         "Aeration - Spring": {
           "revenue": 304.5,
@@ -208,9 +208,9 @@
           "gst": 8.65
         },
         "Insect Control Tree -  Leaf Roller 1": {
-          "revenue": 2184.0,
-          "count": 12,
-          "gst": 104.0
+          "revenue": 1837.5,
+          "count": 10,
+          "gst": 87.5
         },
         "Irrigation System Repair": {
           "revenue": 283.5,
@@ -220,9 +220,9 @@
       }
     },
     "Jun 2026": {
-      "invoice_count": 322,
-      "total": 38965.4,
-      "gst_total": 1855.45,
+      "invoice_count": 307,
+      "total": 37562.07,
+      "gst_total": 1788.62,
       "refund_total": 0.0,
       "service_credit_total": 160.0,
       "services": {
@@ -247,9 +247,9 @@
           "gst": 111.0
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 6083.16,
-          "count": 92,
-          "gst": 289.67
+          "revenue": 5768.16,
+          "count": 87,
+          "gst": 274.67
         },
         "FW Round 1": {
           "revenue": 1992.9,
@@ -262,9 +262,9 @@
           "gst": 11.4
         },
         "Irrigation System Repair": {
-          "revenue": 1708.62,
-          "count": 10,
-          "gst": 81.37
+          "revenue": 1509.64,
+          "count": 9,
+          "gst": 71.89
         },
         "Irrigation Parts": {
           "revenue": 0.0,
@@ -282,14 +282,14 @@
           "gst": 11.5
         },
         "Insect Control Turf": {
-          "revenue": 3916.5,
-          "count": 28,
-          "gst": 186.5
+          "revenue": 3790.5,
+          "count": 27,
+          "gst": 180.5
         },
         "FW Round 2": {
-          "revenue": 12862.52,
-          "count": 110,
-          "gst": 612.51
+          "revenue": 12099.17,
+          "count": 102,
+          "gst": 576.16
         },
         "Invasive Weed Application": {
           "revenue": 1344.0,
@@ -319,9 +319,9 @@
       }
     },
     "Jul 2026": {
-      "invoice_count": 306,
-      "total": 33949.88,
-      "gst_total": 1616.6,
+      "invoice_count": 294,
+      "total": 32903.03,
+      "gst_total": 1566.75,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -331,9 +331,9 @@
           "gst": 13.25
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 5848.5,
-          "count": 87,
-          "gst": 278.5
+          "revenue": 5596.5,
+          "count": 83,
+          "gst": 266.5
         },
         "Mowing - Elk Valley": {
           "revenue": 6626.92,
@@ -341,9 +341,9 @@
           "gst": 315.46
         },
         "FW Round 2": {
-          "revenue": 8824.2,
-          "count": 77,
-          "gst": 420.2
+          "revenue": 8594.25,
+          "count": 75,
+          "gst": 409.25
         },
         "(Unknown)": {
           "revenue": 0.0,
@@ -401,9 +401,9 @@
           "gst": 4.5
         },
         "FW Round 3": {
-          "revenue": 5034.75,
-          "count": 44,
-          "gst": 239.75
+          "revenue": 4469.85,
+          "count": 38,
+          "gst": 212.85
         },
         "Insect Control Tree -  Tent Caterpillar": {
           "revenue": 850.5,
@@ -413,9 +413,9 @@
       }
     },
     "Aug 2026": {
-      "invoice_count": 306,
-      "total": 31768.88,
-      "gst_total": 1512.78,
+      "invoice_count": 292,
+      "total": 30677.93,
+      "gst_total": 1460.83,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -425,14 +425,14 @@
           "gst": 13.25
         },
         "FW Round 3": {
-          "revenue": 14386.06,
-          "count": 125,
-          "gst": 685.06
+          "revenue": 13968.16,
+          "count": 121,
+          "gst": 665.16
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 4305.0,
-          "count": 64,
-          "gst": 205.0
+          "revenue": 4053.0,
+          "count": 60,
+          "gst": 193.0
         },
         "Irrigation System Repair": {
           "revenue": 726.24,
@@ -451,7 +451,7 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 28,
+          "count": 27,
           "gst": 0.0
         },
         "Tree/Shrub Trimming": {
@@ -465,24 +465,19 @@
           "gst": 65.38
         },
         "Summer Granular Fertilizer": {
-          "revenue": 614.25,
-          "count": 6,
-          "gst": 29.25
+          "revenue": 510.3,
+          "count": 5,
+          "gst": 24.3
         },
         "Veg Control Follow-up": {
           "revenue": 0.0,
           "count": 2,
           "gst": 0.0
         },
-        "Insect Control Turf": {
-          "revenue": 73.5,
-          "count": 1,
-          "gst": 3.5
-        },
         "FW Round 4": {
-          "revenue": 3795.23,
-          "count": 36,
-          "gst": 180.73
+          "revenue": 3551.63,
+          "count": 33,
+          "gst": 169.13
         },
         "Insect Control Tree -  Tent Caterpillar": {
           "revenue": 94.5,
@@ -492,9 +487,9 @@
       }
     },
     "Sep 2026": {
-      "invoice_count": 254,
-      "total": 25827.1,
-      "gst_total": 1229.69,
+      "invoice_count": 246,
+      "total": 24949.3,
+      "gst_total": 1187.89,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -519,24 +514,19 @@
           "gst": 5.76
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 4632.72,
-          "count": 69,
-          "gst": 220.61
+          "revenue": 4506.72,
+          "count": 67,
+          "gst": 214.61
         },
         "FW Round 4": {
-          "revenue": 15047.83,
-          "count": 128,
-          "gst": 716.57
+          "revenue": 14516.53,
+          "count": 123,
+          "gst": 691.27
         },
         "Mowing - Elk Valley": {
           "revenue": 4194.63,
           "count": 52,
           "gst": 199.69
-        },
-        "Over Seeding": {
-          "revenue": 220.5,
-          "count": 1,
-          "gst": 10.5
         },
         "Weed Control 2": {
           "revenue": 299.25,
@@ -576,9 +566,9 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 12,
-      "total": 1423.8,
-      "gst_total": 67.81,
+      "invoice_count": 7,
+      "total": 731.32,
+      "gst_total": 34.83,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -593,34 +583,29 @@
           "gst": 13.25
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 714.0,
-          "count": 11,
-          "gst": 34.0
-        },
-        "Mowing - Bill Hourly": {
-          "revenue": 198.98,
-          "count": 1,
-          "gst": 9.48
+          "revenue": 220.5,
+          "count": 3,
+          "gst": 10.5
         }
       }
     }
   },
   "COLLECTED": {
     "Nov 2025": {
-      "prepayment_count": 53,
-      "prepayment_total": 31145.25,
-      "applied_amount": 21667.58,
+      "prepayment_count": 51,
+      "prepayment_total": 30345.15,
+      "applied_amount": 21119.48,
       "refunds_issued": 0.0,
-      "net_collected": 31145.25,
-      "still_unused": 9477.67,
+      "net_collected": 30345.15,
+      "still_unused": 9225.67,
       "by_method": {
         "E-Transfer": {
-          "amount": 10643.25,
-          "count": 17
+          "amount": 9969.15,
+          "count": 16
         },
         "Visa": {
-          "amount": 16970.1,
-          "count": 28
+          "amount": 16844.1,
+          "count": 27
         },
         "MasterCard": {
           "amount": 1121.4,
@@ -645,28 +630,24 @@
       }
     },
     "Dec 2025": {
-      "prepayment_count": 78,
-      "prepayment_total": 57415.3,
-      "applied_amount": 45452.2,
+      "prepayment_count": 73,
+      "prepayment_total": 54401.8,
+      "applied_amount": 43099.15,
       "refunds_issued": 0.0,
-      "net_collected": 57415.3,
-      "still_unused": 11963.1,
+      "net_collected": 54401.8,
+      "still_unused": 11302.65,
       "by_method": {
         "E-Transfer": {
           "amount": 17214.85,
           "count": 22
         },
         "Visa": {
-          "amount": 30907.45,
-          "count": 42
+          "amount": 29439.55,
+          "count": 39
         },
         "MasterCard": {
-          "amount": 7260.2,
-          "count": 10
-        },
-        "Terminal Payment": {
-          "amount": 762.3,
-          "count": 1
+          "amount": 6476.9,
+          "count": 9
         },
         "Cheque": {
           "amount": 1270.5,
@@ -727,12 +708,12 @@
       }
     },
     "Mar 2026": {
-      "prepayment_count": 29,
-      "prepayment_total": 34655.74,
-      "applied_amount": 25752.03,
+      "prepayment_count": 28,
+      "prepayment_total": 34235.74,
+      "applied_amount": 25811.19,
       "refunds_issued": 0.0,
-      "net_collected": 34655.74,
-      "still_unused": 8903.71,
+      "net_collected": 34235.74,
+      "still_unused": 8424.55,
       "by_method": {
         "Cheque": {
           "amount": 3176.73,
@@ -751,26 +732,26 @@
           "count": 2
         },
         "E-Transfer": {
-          "amount": 16377.25,
-          "count": 10
+          "amount": 15957.25,
+          "count": 9
         }
       }
     },
     "Apr 2026": {
-      "prepayment_count": 23,
-      "prepayment_total": 20112.13,
-      "applied_amount": 12278.67,
+      "prepayment_count": 22,
+      "prepayment_total": 19650.13,
+      "applied_amount": 11942.67,
       "refunds_issued": 0.0,
-      "net_collected": 20112.13,
-      "still_unused": 7833.46,
+      "net_collected": 19650.13,
+      "still_unused": 7707.46,
       "by_method": {
         "E-Transfer": {
           "amount": 5124.69,
           "count": 7
         },
         "Terminal Payment": {
-          "amount": 1963.5,
-          "count": 4
+          "amount": 1501.5,
+          "count": 3
         },
         "MasterCard": {
           "amount": 2416.0,
@@ -825,20 +806,20 @@
       }
     },
     "Jun 2026": {
-      "prepayment_count": 17,
-      "prepayment_total": 9805.69,
+      "prepayment_count": 16,
+      "prepayment_total": 9553.69,
       "applied_amount": 7494.62,
       "refunds_issued": 0.0,
-      "net_collected": 9805.69,
-      "still_unused": 2311.07,
+      "net_collected": 9553.69,
+      "still_unused": 2059.07,
       "by_method": {
         "E-Transfer": {
           "amount": 4512.86,
           "count": 6
         },
         "Visa": {
-          "amount": 1765.65,
-          "count": 5
+          "amount": 1513.65,
+          "count": 4
         },
         "Terminal Payment": {
           "amount": 497.0,
@@ -859,28 +840,24 @@
       }
     },
     "Jul 2026": {
-      "prepayment_count": 11,
-      "prepayment_total": 7607.64,
-      "applied_amount": 3182.24,
+      "prepayment_count": 9,
+      "prepayment_total": 7250.64,
+      "applied_amount": 3035.24,
       "refunds_issued": 0.0,
-      "net_collected": 7607.64,
-      "still_unused": 4425.4,
+      "net_collected": 7250.64,
+      "still_unused": 4215.4,
       "by_method": {
         "Visa": {
           "amount": 2012.14,
           "count": 3
-        },
-        "MasterCard": {
-          "amount": 220.5,
-          "count": 1
         },
         "E-Transfer": {
           "amount": 3954.09,
           "count": 3
         },
         "Cheque": {
-          "amount": 832.91,
-          "count": 2
+          "amount": 696.41,
+          "count": 1
         },
         "Terminal Payment": {
           "amount": 588.0,
@@ -915,12 +892,12 @@
       }
     },
     "Sep 2026": {
-      "prepayment_count": 12,
-      "prepayment_total": 6190.77,
+      "prepayment_count": 11,
+      "prepayment_total": 6012.27,
       "applied_amount": 4642.93,
       "refunds_issued": 0.0,
-      "net_collected": 6190.77,
-      "still_unused": 1547.84,
+      "net_collected": 6012.27,
+      "still_unused": 1369.34,
       "by_method": {
         "Visa": {
           "amount": 389.0,
@@ -931,8 +908,8 @@
           "count": 2
         },
         "E-Transfer": {
-          "amount": 357.0,
-          "count": 2
+          "amount": 178.5,
+          "count": 1
         },
         "Cash": {
           "amount": 190.0,
@@ -949,16 +926,16 @@
       }
     },
     "Oct 2026": {
-      "prepayment_count": 9,
-      "prepayment_total": 9964.34,
-      "applied_amount": -14.7,
-      "refunds_issued": 14.7,
-      "net_collected": 9949.64,
-      "still_unused": 9964.34,
+      "prepayment_count": 10,
+      "prepayment_total": 11755.9,
+      "applied_amount": 0.0,
+      "refunds_issued": 0.0,
+      "net_collected": 11755.9,
+      "still_unused": 11755.9,
       "by_method": {
         "Authorize.net": {
-          "amount": 9964.34,
-          "count": 9
+          "amount": 11755.9,
+          "count": 10
         }
       }
     }
@@ -1115,9 +1092,9 @@
       }
     },
     "Apr 2026": {
-      "invoice_count": 371,
-      "total": 93121.73,
-      "gst_total": 4430.58,
+      "invoice_count": 375,
+      "total": 93585.37,
+      "gst_total": 4452.66,
       "refund_total": 0.0,
       "service_credit_total": 244.89,
       "services": {
@@ -1142,24 +1119,24 @@
           "gst": 0.0
         },
         "Kick Start Program": {
-          "revenue": 37777.63,
-          "count": 89,
-          "gst": 1798.94
+          "revenue": 38145.13,
+          "count": 90,
+          "gst": 1816.44
         },
         "Aeration - Spring": {
-          "revenue": 8661.76,
-          "count": 34,
-          "gst": 412.46
+          "revenue": 8777.26,
+          "count": 35,
+          "gst": 417.96
         },
         "FW Round 1": {
-          "revenue": 18218.58,
-          "count": 145,
-          "gst": 867.55
+          "revenue": 18284.73,
+          "count": 146,
+          "gst": 870.7
         },
         "Irrigation System Start-Up": {
-          "revenue": 1999.8,
-          "count": 21,
-          "gst": 95.23
+          "revenue": 2094.3,
+          "count": 22,
+          "gst": 99.73
         },
         "Irrigation System Repair": {
           "revenue": 850.5,
@@ -1182,29 +1159,29 @@
           "gst": 37.0
         },
         "Deep Root Fertilization": {
-          "revenue": 3685.5,
-          "count": 7,
-          "gst": 175.5
+          "revenue": 3780.0,
+          "count": 8,
+          "gst": 180.0
         },
         "Power Broom": {
-          "revenue": 2321.48,
-          "count": 17,
-          "gst": 110.55
+          "revenue": 2225.52,
+          "count": 16,
+          "gst": 105.98
         },
         "General Clean Up - Landscape": {
           "revenue": 4977.37,
           "count": 9,
           "gst": 237.02
         },
-        "Dethatch Elk Valley": {
-          "revenue": 490.97,
-          "count": 3,
-          "gst": 23.38
-        },
         "Tree/Shrub Trimming": {
           "revenue": 650.48,
           "count": 2,
           "gst": 30.98
+        },
+        "Dethatch Elk Valley": {
+          "revenue": 312.42,
+          "count": 2,
+          "gst": 14.88
         },
         "Horticulture Labour": {
           "revenue": 26.25,
@@ -1234,9 +1211,9 @@
       }
     },
     "May 2026": {
-      "invoice_count": 1615,
-      "total": 284928.1,
-      "gst_total": 13568.06,
+      "invoice_count": 1633,
+      "total": 287083.75,
+      "gst_total": 13670.71,
       "refund_total": 0.0,
       "service_credit_total": 760.0,
       "services": {
@@ -1251,9 +1228,9 @@
           "gst": 1156.83
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 23296.91,
-          "count": 269,
-          "gst": 1109.37
+          "revenue": 23548.91,
+          "count": 273,
+          "gst": 1121.37
         },
         "(Unknown)": {
           "revenue": 0.0,
@@ -1261,9 +1238,9 @@
           "gst": 0.0
         },
         "FW Round 1": {
-          "revenue": 126224.49,
-          "count": 962,
-          "gst": 6010.71
+          "revenue": 127151.64,
+          "count": 971,
+          "gst": 6054.86
         },
         "General Clean Up - Landscape": {
           "revenue": 1585.31,
@@ -1276,14 +1253,14 @@
           "gst": 154.44
         },
         "Kick Start Program": {
-          "revenue": 12248.01,
-          "count": 18,
-          "gst": 583.23
+          "revenue": 12668.01,
+          "count": 19,
+          "gst": 603.23
         },
         "Irrigation System Start-Up": {
-          "revenue": 7634.14,
-          "count": 47,
-          "gst": 363.54
+          "revenue": 7844.14,
+          "count": 49,
+          "gst": 373.54
         },
         "Power Broom": {
           "revenue": 1112.25,
@@ -1296,9 +1273,9 @@
           "gst": 90.0
         },
         "Insect Control Tree -  Leaf Roller 1": {
-          "revenue": 4042.5,
-          "count": 31,
-          "gst": 192.5
+          "revenue": 4389.0,
+          "count": 33,
+          "gst": 209.0
         },
         "General Clean Up - Paved": {
           "revenue": 476.46,
@@ -1413,9 +1390,9 @@
       }
     },
     "Jun 2026": {
-      "invoice_count": 1710,
-      "total": 367417.05,
-      "gst_total": 17479.08,
+      "invoice_count": 1725,
+      "total": 368820.38,
+      "gst_total": 17545.91,
       "refund_total": 0.0,
       "service_credit_total": 850.0,
       "services": {
@@ -1430,9 +1407,9 @@
           "gst": 1945.2
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 30583.79,
-          "count": 346,
-          "gst": 1439.25
+          "revenue": 30898.79,
+          "count": 351,
+          "gst": 1454.25
         },
         "FW Round 1": {
           "revenue": 52234.65,
@@ -1465,9 +1442,9 @@
           "gst": 142.81
         },
         "Irrigation System Repair": {
-          "revenue": 4324.97,
-          "count": 20,
-          "gst": 205.97
+          "revenue": 4523.95,
+          "count": 21,
+          "gst": 215.45
         },
         "(Unknown)": {
           "revenue": 0.0,
@@ -1500,9 +1477,9 @@
           "gst": 32.92
         },
         "FW Round 2": {
-          "revenue": 83750.02,
-          "count": 715,
-          "gst": 3988.11
+          "revenue": 84513.37,
+          "count": 723,
+          "gst": 4024.46
         },
         "Horticulture Labour": {
           "revenue": 2069.39,
@@ -1515,9 +1492,9 @@
           "gst": 27.22
         },
         "Insect Control Turf": {
-          "revenue": 14540.03,
-          "count": 107,
-          "gst": 692.39
+          "revenue": 14666.03,
+          "count": 108,
+          "gst": 698.39
         },
         "Invasive Weed Application": {
           "revenue": 14287.22,
@@ -1597,9 +1574,9 @@
       }
     },
     "Jul 2026": {
-      "invoice_count": 1624,
-      "total": 339718.53,
-      "gst_total": 16155.32,
+      "invoice_count": 1636,
+      "total": 340765.38,
+      "gst_total": 16205.17,
       "refund_total": 0.0,
       "service_credit_total": 720.0,
       "services": {
@@ -1614,14 +1591,14 @@
           "gst": 1853.43
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 30196.97,
-          "count": 343,
-          "gst": 1420.83
+          "revenue": 30448.97,
+          "count": 347,
+          "gst": 1432.83
         },
         "FW Round 2": {
-          "revenue": 114345.5,
-          "count": 608,
-          "gst": 5440.28
+          "revenue": 114575.45,
+          "count": 610,
+          "gst": 5451.23
         },
         "Vegetation Control": {
           "revenue": 31585.03,
@@ -1749,9 +1726,9 @@
           "gst": 58.33
         },
         "FW Round 3": {
-          "revenue": 41785.0,
-          "count": 347,
-          "gst": 1989.76
+          "revenue": 42349.9,
+          "count": 353,
+          "gst": 2016.66
         },
         "Irrigation Timer Adjustment": {
           "revenue": 0.0,
@@ -1766,9 +1743,9 @@
       }
     },
     "Aug 2026": {
-      "invoice_count": 1684,
-      "total": 299139.86,
-      "gst_total": 14244.89,
+      "invoice_count": 1698,
+      "total": 300230.81,
+      "gst_total": 14296.84,
       "refund_total": 0.0,
       "service_credit_total": 880.0,
       "services": {
@@ -1783,14 +1760,14 @@
           "gst": 1225.01
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 20819.51,
-          "count": 237,
-          "gst": 991.41
+          "revenue": 21071.51,
+          "count": 241,
+          "gst": 1003.41
         },
         "FW Round 3": {
-          "revenue": 107803.18,
-          "count": 752,
-          "gst": 5133.52
+          "revenue": 108221.08,
+          "count": 756,
+          "gst": 5153.42
         },
         "Horticulture Labour": {
           "revenue": 1464.46,
@@ -1804,7 +1781,7 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 223,
+          "count": 224,
           "gst": 0.0
         },
         "Irrigation Part(s)": {
@@ -1813,14 +1790,14 @@
           "gst": 129.58
         },
         "FW Round 4": {
-          "revenue": 32644.41,
-          "count": 286,
-          "gst": 1554.5
+          "revenue": 32888.01,
+          "count": 289,
+          "gst": 1566.1
         },
         "Insect Control Turf": {
-          "revenue": 5145.0,
-          "count": 9,
-          "gst": 245.0
+          "revenue": 5218.5,
+          "count": 10,
+          "gst": 248.5
         },
         "Over Seeding": {
           "revenue": 6195.0,
@@ -1853,9 +1830,9 @@
           "gst": 153.74
         },
         "Summer Granular Fertilizer": {
-          "revenue": 1184.23,
-          "count": 8,
-          "gst": 56.39
+          "revenue": 1288.18,
+          "count": 9,
+          "gst": 61.34
         },
         "Veg Control Follow-up": {
           "revenue": 1187.87,
@@ -1950,9 +1927,9 @@
       }
     },
     "Sep 2026": {
-      "invoice_count": 1210,
-      "total": 260694.73,
-      "gst_total": 12414.12,
+      "invoice_count": 1196,
+      "total": 254415.22,
+      "gst_total": 12115.07,
       "refund_total": 0.0,
       "service_credit_total": 560.0,
       "services": {
@@ -1962,19 +1939,19 @@
           "gst": 1225.01
         },
         "Mowing - Elk Valley": {
-          "revenue": 21620.87,
-          "count": 172,
-          "gst": 1029.59
+          "revenue": 16650.71,
+          "count": 145,
+          "gst": 792.89
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 25622.3,
-          "count": 242,
-          "gst": 1220.11
+          "revenue": 25748.3,
+          "count": 244,
+          "gst": 1226.11
         },
         "FW Round 4": {
-          "revenue": 96555.56,
-          "count": 734,
-          "gst": 4597.89
+          "revenue": 97086.86,
+          "count": 739,
+          "gst": 4623.19
         },
         "Insect Control Turf": {
           "revenue": 871.5,
@@ -1991,20 +1968,15 @@
           "count": 8,
           "gst": 90.0
         },
-        "Irrigation System Winterize": {
-          "revenue": 6338.64,
-          "count": 19,
-          "gst": 301.84
-        },
         "(Unknown)": {
           "revenue": 0.0,
           "count": 85,
           "gst": 0.0
         },
-        "Garden Bed Maintenance": {
-          "revenue": 8466.41,
-          "count": 2,
-          "gst": 403.16
+        "Irrigation System Winterize": {
+          "revenue": 4350.2,
+          "count": 15,
+          "gst": 207.15
         },
         "Summer Granular Fertilizer": {
           "revenue": 113.4,
@@ -2023,13 +1995,13 @@
         },
         "General Clean Up - Landscape": {
           "revenue": 283.5,
-          "count": 4,
+          "count": 3,
           "gst": 13.5
         },
         "Over Seeding": {
-          "revenue": 105.0,
-          "count": 1,
-          "gst": 5.0
+          "revenue": 325.5,
+          "count": 2,
+          "gst": 15.5
         },
         "Insect Control Turf Round 2": {
           "revenue": 304.5,
@@ -2106,6 +2078,11 @@
           "count": 2,
           "gst": 335.0
         },
+        "Garden Bed Maintenance": {
+          "revenue": 8267.7,
+          "count": 1,
+          "gst": 393.7
+        },
         "Supply & Install Trees/Shrubs": {
           "revenue": 4725.0,
           "count": 1,
@@ -2129,11 +2106,11 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 90,
-      "total": 595420.72,
-      "gst_total": 28353.38,
+      "invoice_count": 52,
+      "total": 21457.35,
+      "gst_total": 1021.79,
       "refund_total": 0.0,
-      "service_credit_total": 120.0,
+      "service_credit_total": 0.0,
       "services": {
         "Mowing - Elk Valley": {
           "revenue": 443.7,
@@ -2142,7 +2119,7 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 5,
+          "count": 2,
           "gst": 0.0
         },
         "Property Maintenance": {
@@ -2151,45 +2128,35 @@
           "gst": 685.16
         },
         "Irrigation System Winterize": {
-          "revenue": 3298.26,
-          "count": 19,
-          "gst": 157.06
+          "revenue": 1396.5,
+          "count": 8,
+          "gst": 66.5
         },
         "Fall Granular Fertilizer": {
-          "revenue": 1428.0,
-          "count": 10,
-          "gst": 68.0
+          "revenue": 724.5,
+          "count": 5,
+          "gst": 34.5
         },
         "Mowing - Weekly Schedule": {
-          "revenue": 1937.25,
-          "count": 30,
-          "gst": 92.25
+          "revenue": 840.0,
+          "count": 11,
+          "gst": 40.0
         },
         "Aeration - Fall": {
-          "revenue": 573227.66,
-          "count": 8,
-          "gst": 27296.56
-        },
-        "General Clean Up - Landscape": {
-          "revenue": 445.7,
-          "count": 1,
-          "gst": 21.22
-        },
-        "Fall Aeration + Granular": {
-          "revenue": 252.0,
-          "count": 1,
-          "gst": 12.0
+          "revenue": 3664.5,
+          "count": 5,
+          "gst": 174.5
         }
       }
     }
   },
   "AUDIT": {
-    "invoice_count": 10066,
-    "sap_grand_total": 2501220.55,
-    "combined_revenue": 2501220.55,
-    "combined_gst": 119063.22,
-    "refund_total": 324.45,
-    "service_credit_total": 4524.89,
+    "invoice_count": 10001,
+    "sap_grand_total": 1919407.39,
+    "combined_revenue": 1919407.39,
+    "combined_gst": 91357.8,
+    "refund_total": 309.75,
+    "service_credit_total": 4404.89,
     "refund_rows": [
       {
         "date": "2026-08-05",
@@ -2208,16 +2175,6 @@
         "name": "Refund",
         "amount": 205.8,
         "absolute": 205.8,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-10-02",
-        "invoice": "REFUND 140697",
-        "client": "Fabro, Virginia",
-        "name": "Refund",
-        "amount": 14.7,
-        "absolute": 14.7,
         "taxable": "E",
         "sales_tax": 0.0
       }
@@ -2580,16 +2537,6 @@
         "name": "Service Credit",
         "amount": -110.0,
         "absolute": 110.0,
-        "taxable": "GST",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-10-02",
-        "invoice": "140707",
-        "client": "Johnston, Chris",
-        "name": "Service Credit",
-        "amount": -120.0,
-        "absolute": 120.0,
         "taxable": "GST",
         "sales_tax": 0.0
       }
