@@ -13,11 +13,18 @@ import sys
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
-CONTRACT_VERSION = "2026-08-07.1"
+# Transition validator (2026-10-14): accepts both the legacy provenance set
+# and the post-migration set. The prepay/direct invoice classification basis
+# moved from client PrepaymentBalance to actual prepay payment applications
+# (contract 2026-10-14.1). Once the migration release is on main, tighten this
+# back to the single new set.
+ALLOWED_CONTRACT_VERSIONS = {"2026-08-07.1", "2026-10-14.1"}
+ALLOWED_PREPAY_CLASSIFICATIONS = {
+    "invoice_prepayment_balance_display_only",        # legacy basis
+    "prepayment_applied_invoices_display_only",      # 2026-10-14: application-based
+}
 REQUIRED_PROVENANCE = {
-    "contract_version": CONTRACT_VERSION,
     "refund_source": "verified_invoice_refund_lines",
-    "prepay_classification": "invoice_prepayment_balance_display_only",
     "gst_source": "invoice_overlay_sales_tax",
     "cash_bridge": "gross_collected=applied_to_invoices+refunds_issued+currently_unused",
 }
@@ -83,6 +90,10 @@ def validate(candidate: Path):
     for key, expected in REQUIRED_PROVENANCE.items():
         if audit.get(key) != expected:
             raise ValueError(f"audit.{key} must be {expected!r}")
+    if audit.get("contract_version") not in ALLOWED_CONTRACT_VERSIONS:
+        raise ValueError(f"audit.contract_version must be one of {sorted(ALLOWED_CONTRACT_VERSIONS)}")
+    if audit.get("prepay_classification") not in ALLOWED_PREPAY_CLASSIFICATIONS:
+        raise ValueError(f"audit.prepay_classification must be one of {sorted(ALLOWED_PREPAY_CLASSIFICATIONS)}")
     if audit.get("detail_errors"):
         raise ValueError("invoice detail errors are present")
 
@@ -134,7 +145,7 @@ def validate(candidate: Path):
         if banned in html:
             raise ValueError(f"legacy/banned phrase present: {banned}")
 
-    if manifest.get("contract_version") != CONTRACT_VERSION:
+    if manifest.get("contract_version") not in ALLOWED_CONTRACT_VERSIONS:
         raise ValueError("release manifest contract version is wrong")
     artifacts = manifest.get("artifacts") or {}
     expected_files = {
@@ -158,7 +169,7 @@ def validate(candidate: Path):
     if controls != expected_controls:
         raise ValueError(f"manifest controls differ: {controls} != {expected_controls}")
 
-    print(json.dumps({"status": "PASS", "contract_version": CONTRACT_VERSION, **expected_controls}, indent=2))
+    print(json.dumps({"status": "PASS", "contract_version": manifest.get("contract_version"), **expected_controls}, indent=2))
 
 
 if __name__ == "__main__":
