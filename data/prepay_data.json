@@ -131,9 +131,9 @@
       }
     },
     "May 2026": {
-      "invoice_count": 230,
-      "total": 26910.83,
-      "gst_total": 1281.43,
+      "invoice_count": 229,
+      "total": 26797.43,
+      "gst_total": 1276.03,
       "refund_total": 0.0,
       "service_credit_total": 230.0,
       "services": {
@@ -148,9 +148,9 @@
           "gst": 116.13
         },
         "FW Round 1": {
-          "revenue": 12338.22,
-          "count": 107,
-          "gst": 587.53
+          "revenue": 12224.82,
+          "count": 106,
+          "gst": 582.13
         },
         "Mowing - Weekly Schedule": {
           "revenue": 3927.0,
@@ -314,9 +314,9 @@
       }
     },
     "Jul 2026": {
-      "invoice_count": 217,
-      "total": 22953.23,
-      "gst_total": 1092.94,
+      "invoice_count": 216,
+      "total": 22839.83,
+      "gst_total": 1087.54,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -336,9 +336,9 @@
           "gst": 244.96
         },
         "FW Round 2": {
-          "revenue": 5938.8,
-          "count": 50,
-          "gst": 282.8
+          "revenue": 5825.4,
+          "count": 49,
+          "gst": 277.4
         },
         "(Unknown)": {
           "revenue": 0.0,
@@ -393,9 +393,9 @@
       }
     },
     "Aug 2026": {
-      "invoice_count": 214,
-      "total": 23539.71,
-      "gst_total": 1120.89,
+      "invoice_count": 213,
+      "total": 23426.31,
+      "gst_total": 1115.49,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -420,9 +420,9 @@
           "gst": 46.68
         },
         "FW Round 3": {
-          "revenue": 10122.53,
-          "count": 84,
-          "gst": 482.03
+          "revenue": 10009.13,
+          "count": 83,
+          "gst": 476.63
         },
         "Mowing - Elk Valley": {
           "revenue": 3692.68,
@@ -462,9 +462,9 @@
       }
     },
     "Sep 2026": {
-      "invoice_count": 189,
-      "total": 19029.52,
-      "gst_total": 905.98,
+      "invoice_count": 188,
+      "total": 18916.12,
+      "gst_total": 900.58,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -494,9 +494,9 @@
           "gst": 180.61
         },
         "FW Round 4": {
-          "revenue": 10362.2,
-          "count": 85,
-          "gst": 493.44
+          "revenue": 10248.8,
+          "count": 84,
+          "gst": 488.04
         },
         "Mowing - Elk Valley": {
           "revenue": 3179.08,
@@ -536,7 +536,7 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 39,
+      "invoice_count": 40,
       "total": 5014.79,
       "gst_total": 238.8,
       "refund_total": 0.0,
@@ -569,7 +569,7 @@
         },
         "Irrigation System Winterize": {
           "revenue": 1439.87,
-          "count": 9,
+          "count": 10,
           "gst": 68.56
         },
         "Fall Granular Fertilizer": {
@@ -592,308 +592,392 @@
   },
   "COLLECTED": {
     "Nov 2025": {
-      "prepayment_count": 37,
-      "prepayment_total": 21824.4,
-      "applied_amount": 16009.13,
+      "prepayment_count": 263,
+      "prepayment_total": 124265.0,
+      "applied_amount": 118449.73,
       "refunds_issued": 0.0,
-      "net_collected": 21824.4,
+      "net_collected": 124265.0,
       "still_unused": 5815.27,
       "by_method": {
         "E-Transfer": {
-          "amount": 5965.5,
-          "count": 10
+          "amount": 39743.7,
+          "count": 88
         },
         "Visa": {
-          "amount": 12994.8,
-          "count": 20
+          "amount": 63307.0,
+          "count": 117
         },
         "MasterCard": {
-          "amount": 453.6,
-          "count": 1
+          "amount": 8400.0,
+          "count": 20
         },
         "Cash": {
           "amount": 491.4,
           "count": 1
         },
         "Cheque": {
-          "amount": 1367.1,
-          "count": 1
+          "amount": 10246.9,
+          "count": 23
         },
         "Gift Certificate/Voucher": {
-          "amount": 300.0,
-          "count": 3
+          "amount": 900.0,
+          "count": 9
         },
         "Terminal Payment": {
-          "amount": 252.0,
-          "count": 1
+          "amount": 1176.0,
+          "count": 5
         }
-      }
+      },
+      "active_count": 37,
+      "active_total": 21824.4
     },
     "Dec 2025": {
-      "prepayment_count": 42,
-      "prepayment_total": 32064.1,
-      "applied_amount": 26047.15,
+      "prepayment_count": 351,
+      "prepayment_total": 186172.15,
+      "applied_amount": 180302.2,
       "refunds_issued": 0.0,
-      "net_collected": 32064.1,
-      "still_unused": 6016.95,
+      "net_collected": 186172.15,
+      "still_unused": 5869.95,
       "by_method": {
         "E-Transfer": {
-          "amount": 9683.2,
-          "count": 12
+          "amount": 48304.45,
+          "count": 95
         },
         "Visa": {
-          "amount": 18938.5,
-          "count": 24
+          "amount": 101166.55,
+          "count": 190
         },
         "Cheque": {
-          "amount": 680.4,
-          "count": 2
+          "amount": 6400.8,
+          "count": 18
         },
         "MasterCard": {
-          "amount": 2762.0,
-          "count": 4
+          "amount": 23219.15,
+          "count": 40
+        },
+        "Terminal Payment": {
+          "amount": 4981.2,
+          "count": 6
+        },
+        "Cash": {
+          "amount": 2100.0,
+          "count": 2
         }
-      }
+      },
+      "active_count": 41,
+      "active_total": 31671.4
     },
     "Jan 2026": {
-      "prepayment_count": 6,
-      "prepayment_total": 4855.2,
-      "applied_amount": 4008.9,
+      "prepayment_count": 24,
+      "prepayment_total": 12859.35,
+      "applied_amount": 12013.05,
       "refunds_issued": 0.0,
-      "net_collected": 4855.2,
+      "net_collected": 12859.35,
       "still_unused": 846.3,
       "by_method": {
         "Visa": {
-          "amount": 2841.3,
-          "count": 4
+          "amount": 7608.3,
+          "count": 15
         },
         "E-Transfer": {
-          "amount": 2013.9,
-          "count": 2
+          "amount": 3419.85,
+          "count": 6
+        },
+        "Cheque": {
+          "amount": 1831.2,
+          "count": 3
         }
-      }
+      },
+      "active_count": 6,
+      "active_total": 4855.2
     },
     "Feb 2026": {
-      "prepayment_count": 12,
-      "prepayment_total": 9209.75,
-      "applied_amount": 7771.2,
+      "prepayment_count": 68,
+      "prepayment_total": 33015.5,
+      "applied_amount": 31576.95,
       "refunds_issued": 0.0,
-      "net_collected": 9209.75,
+      "net_collected": 33015.5,
       "still_unused": 1438.55,
       "by_method": {
         "Visa": {
-          "amount": 5731.95,
-          "count": 7
+          "amount": 13558.35,
+          "count": 24
         },
         "E-Transfer": {
-          "amount": 2285.0,
-          "count": 3
+          "amount": 13245.35,
+          "count": 29
         },
         "MasterCard": {
-          "amount": 1003.8,
-          "count": 1
+          "amount": 4145.4,
+          "count": 8
         },
         "Terminal Payment": {
-          "amount": 189.0,
-          "count": 1
+          "amount": 604.8,
+          "count": 2
+        },
+        "Cheque": {
+          "amount": 1461.6,
+          "count": 5
         }
-      }
+      },
+      "active_count": 12,
+      "active_total": 9209.75
     },
     "Mar 2026": {
-      "prepayment_count": 21,
-      "prepayment_total": 26314.52,
-      "applied_amount": 19851.84,
+      "prepayment_count": 187,
+      "prepayment_total": 112012.65,
+      "applied_amount": 105549.97,
       "refunds_issued": 0.0,
-      "net_collected": 26314.52,
+      "net_collected": 112012.65,
       "still_unused": 6462.68,
       "by_method": {
         "Cheque": {
-          "amount": 3176.73,
-          "count": 3
+          "amount": 4795.83,
+          "count": 7
         },
         "Visa": {
-          "amount": 10060.2,
-          "count": 11
+          "amount": 43776.61,
+          "count": 77
         },
         "E-Transfer": {
-          "amount": 11108.33,
-          "count": 6
+          "amount": 45901.62,
+          "count": 67
         },
         "MasterCard": {
-          "amount": 1969.26,
+          "amount": 14569.19,
+          "count": 28
+        },
+        "Terminal Payment": {
+          "amount": 1877.4,
+          "count": 6
+        },
+        "American Express": {
+          "amount": 724.5,
+          "count": 1
+        },
+        "Cash": {
+          "amount": 367.5,
           "count": 1
         }
-      }
+      },
+      "active_count": 21,
+      "active_total": 26314.52
     },
     "Apr 2026": {
-      "prepayment_count": 20,
-      "prepayment_total": 17051.63,
-      "applied_amount": 11098.47,
+      "prepayment_count": 145,
+      "prepayment_total": 79770.52,
+      "applied_amount": 73817.36,
       "refunds_issued": 529.2,
-      "net_collected": 16522.43,
+      "net_collected": 79241.32,
       "still_unused": 5423.96,
       "by_method": {
         "E-Transfer": {
-          "amount": 4526.19,
-          "count": 6
+          "amount": 24405.47,
+          "count": 47
         },
         "Terminal Payment": {
-          "amount": 1501.5,
-          "count": 3
+          "amount": 6183.5,
+          "count": 14
         },
         "MasterCard": {
-          "amount": 2416.0,
-          "count": 2
+          "amount": 9940.5,
+          "count": 11
         },
         "EFT Payment": {
           "amount": 2337.73,
           "count": 1
         },
         "Visa": {
-          "amount": 4635.54,
-          "count": 6
+          "amount": 27705.75,
+          "count": 53
         },
         "Cheque": {
-          "amount": 1340.67,
-          "count": 1
+          "amount": 7539.57,
+          "count": 12
         },
         "Gift Certificate/Voucher": {
-          "amount": 294.0,
+          "amount": 500.0,
+          "count": 3
+        },
+        "Cash": {
+          "amount": 937.5,
+          "count": 3
+        },
+        "American Express": {
+          "amount": 220.5,
           "count": 1
         }
-      }
+      },
+      "active_count": 20,
+      "active_total": 17051.63
     },
     "May 2026": {
-      "prepayment_count": 13,
-      "prepayment_total": 7584.1,
-      "applied_amount": 5052.6,
+      "prepayment_count": 109,
+      "prepayment_total": 55766.2,
+      "applied_amount": 53234.7,
       "refunds_issued": 921.9,
-      "net_collected": 6662.2,
+      "net_collected": 54844.3,
       "still_unused": 1609.6,
       "by_method": {
         "Visa": {
-          "amount": 2174.0,
-          "count": 6
+          "amount": 24036.7,
+          "count": 49
         },
         "E-Transfer": {
-          "amount": 1138.2,
-          "count": 2
+          "amount": 13930.1,
+          "count": 31
         },
         "Cheque": {
-          "amount": 347.0,
-          "count": 2
+          "amount": 3418.0,
+          "count": 7
         },
         "American Express": {
           "amount": 2478.0,
           "count": 1
         },
         "MasterCard": {
-          "amount": 1446.9,
-          "count": 2
-        }
-      }
-    },
-    "Jun 2026": {
-      "prepayment_count": 14,
-      "prepayment_total": 7941.94,
-      "applied_amount": 4239.5,
-      "refunds_issued": 1837.62,
-      "net_collected": 6104.32,
-      "still_unused": 1864.82,
-      "by_method": {
-        "Visa": {
-          "amount": 1513.65,
-          "count": 4
+          "amount": 9059.9,
+          "count": 11
         },
         "Terminal Payment": {
-          "amount": 497.0,
-          "count": 2
-        },
-        "E-Transfer": {
-          "amount": 2901.11,
-          "count": 4
-        },
-        "Cheque": {
-          "amount": 775.95,
-          "count": 2
+          "amount": 2616.5,
+          "count": 8
         },
         "Cash": {
-          "amount": 350.0,
-          "count": 1
+          "amount": 227.0,
+          "count": 2
+        }
+      },
+      "active_count": 13,
+      "active_total": 7584.1
+    },
+    "Jun 2026": {
+      "prepayment_count": 60,
+      "prepayment_total": 49131.06,
+      "applied_amount": 45607.12,
+      "refunds_issued": 1837.62,
+      "net_collected": 47293.44,
+      "still_unused": 1686.32,
+      "by_method": {
+        "Visa": {
+          "amount": 16490.51,
+          "count": 18
+        },
+        "Terminal Payment": {
+          "amount": 728.0,
+          "count": 3
+        },
+        "E-Transfer": {
+          "amount": 26572.24,
+          "count": 25
+        },
+        "Cheque": {
+          "amount": 2306.33,
+          "count": 7
+        },
+        "Cash": {
+          "amount": 510.0,
+          "count": 2
         },
         "EFT Payment": {
-          "amount": 1904.23,
+          "amount": 2056.48,
+          "count": 2
+        },
+        "American Express": {
+          "amount": 252.0,
           "count": 1
+        },
+        "MasterCard": {
+          "amount": 215.5,
+          "count": 2
         }
-      }
+      },
+      "active_count": 13,
+      "active_total": 7763.44
     },
     "Jul 2026": {
-      "prepayment_count": 8,
-      "prepayment_total": 6977.64,
-      "applied_amount": 2667.74,
+      "prepayment_count": 34,
+      "prepayment_total": 23607.77,
+      "applied_amount": 19297.87,
       "refunds_issued": 231.0,
-      "net_collected": 6746.64,
+      "net_collected": 23376.77,
       "still_unused": 4078.9,
       "by_method": {
         "Visa": {
-          "amount": 2012.14,
-          "count": 3
+          "amount": 2652.64,
+          "count": 6
         },
         "E-Transfer": {
-          "amount": 3681.09,
-          "count": 2
+          "amount": 14783.29,
+          "count": 12
         },
         "Cheque": {
-          "amount": 696.41,
-          "count": 1
+          "amount": 1532.41,
+          "count": 5
         },
         "Terminal Payment": {
-          "amount": 588.0,
-          "count": 2
+          "amount": 892.5,
+          "count": 4
+        },
+        "MasterCard": {
+          "amount": 3114.43,
+          "count": 4
+        },
+        "Cash": {
+          "amount": 632.5,
+          "count": 3
         }
-      }
+      },
+      "active_count": 8,
+      "active_total": 6977.64
     },
     "Aug 2026": {
-      "prepayment_count": 6,
-      "prepayment_total": 3723.18,
-      "applied_amount": -4766.49,
+      "prepayment_count": 19,
+      "prepayment_total": 17520.7,
+      "applied_amount": 9031.03,
       "refunds_issued": 5358.7,
-      "net_collected": -1635.52,
+      "net_collected": 12162.0,
       "still_unused": 3130.97,
       "by_method": {
         "E-Transfer": {
-          "amount": 643.98,
-          "count": 3
+          "amount": 10147.53,
+          "count": 8
         },
         "Cheque": {
-          "amount": 157.5,
-          "count": 1
+          "amount": 661.5,
+          "count": 2
         },
         "Visa": {
-          "amount": 1000.0,
-          "count": 1
+          "amount": 4070.47,
+          "count": 5
         },
         "EFT Payment": {
-          "amount": 1921.7,
-          "count": 1
+          "amount": 2401.7,
+          "count": 2
+        },
+        "Cash": {
+          "amount": 239.5,
+          "count": 2
         }
-      }
+      },
+      "active_count": 6,
+      "active_total": 3723.18
     },
     "Sep 2026": {
-      "prepayment_count": 8,
-      "prepayment_total": 5455.77,
-      "applied_amount": 4047.58,
+      "prepayment_count": 18,
+      "prepayment_total": 7037.07,
+      "applied_amount": 5628.88,
       "refunds_issued": 280.35,
-      "net_collected": 5175.42,
+      "net_collected": 6756.72,
       "still_unused": 1127.84,
       "by_method": {
         "Visa": {
-          "amount": 147.5,
-          "count": 1
+          "amount": 389.0,
+          "count": 3
         },
         "E-Transfer": {
-          "amount": 178.5,
-          "count": 1
+          "amount": 808.5,
+          "count": 5
         },
         "Cash": {
           "amount": 190.0,
@@ -908,17 +992,23 @@
           "count": 2
         },
         "MasterCard": {
-          "amount": 302.93,
+          "amount": 823.73,
+          "count": 4
+        },
+        "Terminal Payment": {
+          "amount": 189.0,
           "count": 1
         }
-      }
+      },
+      "active_count": 8,
+      "active_total": 5455.77
     },
     "Oct 2026": {
-      "prepayment_count": 13,
-      "prepayment_total": 15797.62,
-      "applied_amount": -285.6,
+      "prepayment_count": 15,
+      "prepayment_total": 16123.12,
+      "applied_amount": 39.9,
       "refunds_issued": 285.6,
-      "net_collected": 15512.02,
+      "net_collected": 15837.52,
       "still_unused": 15797.62,
       "by_method": {
         "Authorize.net": {
@@ -928,8 +1018,14 @@
         "Cheque": {
           "amount": 136.5,
           "count": 1
+        },
+        "E-Transfer": {
+          "amount": 325.5,
+          "count": 2
         }
-      }
+      },
+      "active_count": 13,
+      "active_total": 15797.62
     }
   },
   "DIRECT": {
@@ -1203,9 +1299,9 @@
       }
     },
     "May 2026": {
-      "invoice_count": 1696,
-      "total": 294725.93,
-      "gst_total": 14034.64,
+      "invoice_count": 1697,
+      "total": 294839.33,
+      "gst_total": 14040.04,
       "refund_total": 0.0,
       "service_credit_total": 760.0,
       "services": {
@@ -1230,9 +1326,9 @@
           "gst": 0.0
         },
         "FW Round 1": {
-          "revenue": 131440.9,
-          "count": 1012,
-          "gst": 6259.12
+          "revenue": 131554.3,
+          "count": 1013,
+          "gst": 6264.52
         },
         "General Clean Up - Landscape": {
           "revenue": 1678.5,
@@ -1566,9 +1662,9 @@
       }
     },
     "Jul 2026": {
-      "invoice_count": 1710,
-      "total": 350711.38,
-      "gst_total": 16678.82,
+      "invoice_count": 1711,
+      "total": 350824.78,
+      "gst_total": 16684.22,
       "refund_total": 0.0,
       "service_credit_total": 720.0,
       "services": {
@@ -1588,9 +1684,9 @@
           "gst": 1490.33
         },
         "FW Round 2": {
-          "revenue": 117336.95,
-          "count": 636,
-          "gst": 5582.73
+          "revenue": 117450.35,
+          "count": 637,
+          "gst": 5588.13
         },
         "Vegetation Control": {
           "revenue": 33055.03,
@@ -1735,9 +1831,9 @@
       }
     },
     "Aug 2026": {
-      "invoice_count": 1776,
-      "total": 307449.48,
-      "gst_total": 14640.62,
+      "invoice_count": 1777,
+      "total": 307562.88,
+      "gst_total": 14646.02,
       "refund_total": 0.0,
       "service_credit_total": 880.0,
       "services": {
@@ -1757,9 +1853,9 @@
           "gst": 1041.91
         },
         "FW Round 3": {
-          "revenue": 112038.36,
-          "count": 793,
-          "gst": 5335.2
+          "revenue": 112151.76,
+          "count": 794,
+          "gst": 5340.6
         },
         "Horticulture Labour": {
           "revenue": 1464.46,
@@ -1919,9 +2015,9 @@
       }
     },
     "Sep 2026": {
-      "invoice_count": 1250,
-      "total": 256964.65,
-      "gst_total": 12236.5,
+      "invoice_count": 1251,
+      "total": 257078.05,
+      "gst_total": 12241.9,
       "refund_total": 0.0,
       "service_credit_total": 560.0,
       "services": {
@@ -1941,9 +2037,9 @@
           "gst": 1260.11
         },
         "FW Round 4": {
-          "revenue": 98125.84,
-          "count": 775,
-          "gst": 4672.67
+          "revenue": 98239.24,
+          "count": 776,
+          "gst": 4678.07
         },
         "Insect Control Turf": {
           "revenue": 871.5,
@@ -2093,9 +2189,9 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 282,
-      "total": 63647.42,
-      "gst_total": 3030.84,
+      "invoice_count": 285,
+      "total": 64130.42,
+      "gst_total": 3053.84,
       "refund_total": 0.0,
       "service_credit_total": 885.0,
       "services": {
@@ -2120,9 +2216,9 @@
           "gst": 685.21
         },
         "Irrigation System Winterize": {
-          "revenue": 16196.76,
-          "count": 93,
-          "gst": 771.28
+          "revenue": 16501.26,
+          "count": 95,
+          "gst": 785.78
         },
         "Fall Granular Fertilizer": {
           "revenue": 12218.33,
@@ -2135,9 +2231,9 @@
           "gst": 107.25
         },
         "Aeration - Fall": {
-          "revenue": 6011.25,
-          "count": 27,
-          "gst": 286.25
+          "revenue": 6189.75,
+          "count": 28,
+          "gst": 294.75
         },
         "General Clean Up - Landscape": {
           "revenue": 445.7,
@@ -2163,10 +2259,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 10255,
-    "sap_grand_total": 1962394.6999999997,
-    "combined_revenue": 1962394.7,
-    "combined_gst": 93404.87,
+    "invoice_count": 10259,
+    "sap_grand_total": 1962877.6999999997,
+    "combined_revenue": 1962877.7,
+    "combined_gst": 93427.87,
     "refund_total": 9444.37,
     "service_credit_total": 5339.89,
     "refund_rows": [
