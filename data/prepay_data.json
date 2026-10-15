@@ -662,9 +662,9 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 139,
-      "total": 22072.91,
-      "gst_total": 1051.1,
+      "invoice_count": 141,
+      "total": 22324.91,
+      "gst_total": 1063.1,
       "refund_total": 0.0,
       "service_credit_total": 50.0,
       "services": {
@@ -684,9 +684,9 @@
           "gst": 412.39
         },
         "Irrigation System Winterize": {
-          "revenue": 6469.09,
-          "count": 42,
-          "gst": 308.05
+          "revenue": 6721.09,
+          "count": 44,
+          "gst": 320.05
         },
         "Aeration - Fall": {
           "revenue": 1328.25,
@@ -710,10 +710,10 @@
     "Nov 2025": {
       "prepayment_count": 263,
       "prepayment_total": 124265.0,
-      "applied_amount": 118449.73,
+      "applied_amount": 118575.73,
       "refunds_issued": 0.0,
       "net_collected": 124265.0,
-      "still_unused": 5815.27,
+      "still_unused": 5689.27,
       "by_method": {
         "E-Transfer": {
           "amount": 39743.7,
@@ -750,10 +750,10 @@
     "Dec 2025": {
       "prepayment_count": 351,
       "prepayment_total": 186172.15,
-      "applied_amount": 180963.7,
+      "applied_amount": 181089.7,
       "refunds_issued": 0.0,
       "net_collected": 186172.15,
-      "still_unused": 5208.45,
+      "still_unused": 5082.45,
       "by_method": {
         "E-Transfer": {
           "amount": 48304.45,
@@ -780,8 +780,8 @@
           "count": 2
         }
       },
-      "active_count": 37,
-      "active_total": 28634.8
+      "active_count": 36,
+      "active_total": 28414.3
     },
     "Jan 2026": {
       "prepayment_count": 24,
@@ -2219,9 +2219,9 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 214,
-      "total": 52697.89,
-      "gst_total": 2509.43,
+      "invoice_count": 216,
+      "total": 53065.39,
+      "gst_total": 2526.93,
       "refund_total": 0.0,
       "service_credit_total": 885.0,
       "services": {
@@ -2246,9 +2246,9 @@
           "gst": 685.21
         },
         "Irrigation System Winterize": {
-          "revenue": 13766.52,
-          "count": 78,
-          "gst": 655.55
+          "revenue": 13892.52,
+          "count": 79,
+          "gst": 661.55
         },
         "Mowing - Weekly Schedule": {
           "revenue": 3060.75,
@@ -2256,9 +2256,9 @@
           "gst": 145.75
         },
         "Fall Granular Fertilizer": {
-          "revenue": 6273.65,
-          "count": 47,
-          "gst": 298.75
+          "revenue": 6515.15,
+          "count": 48,
+          "gst": 310.25
         },
         "General Clean Up - Landscape": {
           "revenue": 445.7,
@@ -2289,10 +2289,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 10286,
-    "sap_grand_total": 1968223.99,
-    "combined_revenue": 1968223.99,
-    "combined_gst": 93682.46,
+    "invoice_count": 10290,
+    "sap_grand_total": 1968843.49,
+    "combined_revenue": 1968843.49,
+    "combined_gst": 93711.96,
     "refund_total": 9444.37,
     "service_credit_total": 5339.89,
     "refund_rows": [
@@ -3040,9 +3040,9 @@
       }
     ],
     "detail_errors": [],
-    "contract_version": "2026-08-07.1",
+    "contract_version": "2026-10-14.1",
     "refund_source": "verified_invoice_refund_lines",
-    "prepay_classification": "invoice_prepayment_balance_display_only",
+    "prepay_classification": "prepayment_applied_invoices_display_only",
     "gst_source": "invoice_overlay_sales_tax",
     "cash_bridge": "gross_collected=applied_to_invoices+refunds_issued+currently_unused"
   }

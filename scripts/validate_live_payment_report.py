@@ -13,16 +13,11 @@ import sys
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
-# Transition validator (2026-10-14): accepts both the legacy provenance set
-# and the post-migration set. The prepay/direct invoice classification basis
-# moved from client PrepaymentBalance to actual prepay payment applications
-# (contract 2026-10-14.1). Once the migration release is on main, tighten this
-# back to the single new set.
-ALLOWED_CONTRACT_VERSIONS = {"2026-08-07.1", "2026-10-14.1"}
-ALLOWED_PREPAY_CLASSIFICATIONS = {
-    "invoice_prepayment_balance_display_only",        # legacy basis
-    "prepayment_applied_invoices_display_only",      # 2026-10-14: application-based
-}
+# Strict post-migration validator (2026-10-14): the application-based prepay
+# classification migration has landed on main. Accept only the post-migration
+# contract 2026-10-14.1 and application-based prepay classification.
+ALLOWED_CONTRACT_VERSIONS = {"2026-10-14.1"}
+ALLOWED_PREPAY_CLASSIFICATIONS = {"prepayment_applied_invoices_display_only"}
 REQUIRED_PROVENANCE = {
     "refund_source": "verified_invoice_refund_lines",
     "gst_source": "invoice_overlay_sales_tax",
