@@ -2321,26 +2321,6 @@
         "sales_tax": 0.0
       },
       {
-        "date": "2026-10-09",
-        "invoice": "140955",
-        "client": "Murphy, Patrick",
-        "name": "Refund",
-        "amount": 113.4,
-        "absolute": 113.4,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-10-15",
-        "invoice": "141065",
-        "client": "Poirier, Dan",
-        "name": "Refund",
-        "amount": 262.49,
-        "absolute": 262.49,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
         "date": "2026-04-01",
         "invoice": "REFUND 130259",
         "client": "Jenkins, Madeleine",
@@ -2561,36 +2541,6 @@
         "sales_tax": 0.0
       },
       {
-        "date": "2026-10-02",
-        "invoice": "REFUND 140697",
-        "client": "Fabro, Virginia",
-        "name": "Refund",
-        "amount": 14.7,
-        "absolute": 14.7,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-10-07",
-        "invoice": "REFUND 140886",
-        "client": "Lindquist, John & Mary",
-        "name": "Refund",
-        "amount": 115.5,
-        "absolute": 115.5,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-10-07",
-        "invoice": "REFUND 140887",
-        "client": "Reed, Jeremy",
-        "name": "Refund",
-        "amount": 42.0,
-        "absolute": 42.0,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
         "date": "2026-06-23",
         "invoice": "REFUND 121687467515",
         "client": "Barry, Derick",
@@ -2617,6 +2567,56 @@
         "name": "Refund",
         "amount": 147.0,
         "absolute": 147.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-09",
+        "invoice": "140955",
+        "client": "Murphy, Patrick",
+        "name": "Refund",
+        "amount": 113.4,
+        "absolute": 113.4,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-15",
+        "invoice": "141065",
+        "client": "Poirier, Dan",
+        "name": "Refund",
+        "amount": 262.49,
+        "absolute": 262.49,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-02",
+        "invoice": "REFUND 140697",
+        "client": "Fabro, Virginia",
+        "name": "Refund",
+        "amount": 14.7,
+        "absolute": 14.7,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-07",
+        "invoice": "REFUND 140886",
+        "client": "Lindquist, John & Mary",
+        "name": "Refund",
+        "amount": 115.5,
+        "absolute": 115.5,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-07",
+        "invoice": "REFUND 140887",
+        "client": "Reed, Jeremy",
+        "name": "Refund",
+        "amount": 42.0,
+        "absolute": 42.0,
         "taxable": "E",
         "sales_tax": 0.0
       }
