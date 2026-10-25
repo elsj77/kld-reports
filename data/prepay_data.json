@@ -1135,16 +1135,16 @@
       "active_total": 5025.27
     },
     "Oct 2026": {
-      "prepayment_count": 22,
-      "prepayment_total": 24520.86,
+      "prepayment_count": 23,
+      "prepayment_total": 26918.8,
       "applied_amount": 134.91,
       "refunds_issued": 674.09,
-      "net_collected": 23846.77,
-      "still_unused": 23711.86,
+      "net_collected": 26244.71,
+      "still_unused": 26109.8,
       "by_method": {
         "Authorize.net": {
-          "amount": 22264.58,
-          "count": 16
+          "amount": 24662.52,
+          "count": 17
         },
         "Visa": {
           "amount": 1507.28,
@@ -1163,8 +1163,8 @@
           "count": 1
         }
       },
-      "active_count": 17,
-      "active_total": 23771.86
+      "active_count": 18,
+      "active_total": 26169.8
     }
   },
   "DIRECT": {
@@ -2314,7 +2314,7 @@
   },
   "AUDIT": {
     "invoice_count": 10458,
-    "sap_grand_total": 1994614.0500000003,
+    "sap_grand_total": 1994614.05,
     "combined_revenue": 1994614.05,
     "combined_gst": 94951.65,
     "refund_total": 9832.86,
@@ -2337,26 +2337,6 @@
         "name": "Refund",
         "amount": 205.8,
         "absolute": 205.8,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-10-09",
-        "invoice": "140955",
-        "client": "Murphy, Patrick",
-        "name": "Refund",
-        "amount": 113.4,
-        "absolute": 113.4,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-10-15",
-        "invoice": "141065",
-        "client": "Poirier, Dan",
-        "name": "Refund",
-        "amount": 262.49,
-        "absolute": 262.49,
         "taxable": "E",
         "sales_tax": 0.0
       },
@@ -2581,6 +2561,56 @@
         "sales_tax": 0.0
       },
       {
+        "date": "2026-06-23",
+        "invoice": "REFUND 121687467515",
+        "client": "Barry, Derick",
+        "name": "Refund",
+        "amount": 220.5,
+        "absolute": 220.5,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-08-05",
+        "invoice": "REFUND 121758193276",
+        "client": "Fabro, Virginia",
+        "name": "Refund",
+        "amount": 147.0,
+        "absolute": 147.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-08-05",
+        "invoice": "REFUND 121758210109",
+        "client": "Tim Horton's (Creston)",
+        "name": "Refund",
+        "amount": 147.0,
+        "absolute": 147.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-09",
+        "invoice": "140955",
+        "client": "Murphy, Patrick",
+        "name": "Refund",
+        "amount": 113.4,
+        "absolute": 113.4,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-15",
+        "invoice": "141065",
+        "client": "Poirier, Dan",
+        "name": "Refund",
+        "amount": 262.49,
+        "absolute": 262.49,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
         "date": "2026-10-02",
         "invoice": "REFUND 140697",
         "client": "Fabro, Virginia",
@@ -2617,36 +2647,6 @@
         "name": "Refund",
         "amount": 126.0,
         "absolute": 126.0,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-06-23",
-        "invoice": "REFUND 121687467515",
-        "client": "Barry, Derick",
-        "name": "Refund",
-        "amount": 220.5,
-        "absolute": 220.5,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-08-05",
-        "invoice": "REFUND 121758193276",
-        "client": "Fabro, Virginia",
-        "name": "Refund",
-        "amount": 147.0,
-        "absolute": 147.0,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-08-05",
-        "invoice": "REFUND 121758210109",
-        "client": "Tim Horton's (Creston)",
-        "name": "Refund",
-        "amount": 147.0,
-        "absolute": 147.0,
         "taxable": "E",
         "sales_tax": 0.0
       }
