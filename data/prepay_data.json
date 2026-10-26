@@ -1135,16 +1135,16 @@
       "active_total": 5025.27
     },
     "Oct 2026": {
-      "prepayment_count": 23,
-      "prepayment_total": 26918.8,
+      "prepayment_count": 24,
+      "prepayment_total": 28768.64,
       "applied_amount": 134.91,
       "refunds_issued": 674.09,
-      "net_collected": 26244.71,
-      "still_unused": 26109.8,
+      "net_collected": 28094.55,
+      "still_unused": 27959.64,
       "by_method": {
         "Authorize.net": {
-          "amount": 24662.52,
-          "count": 17
+          "amount": 26512.36,
+          "count": 18
         },
         "Visa": {
           "amount": 1507.28,
@@ -1163,8 +1163,8 @@
           "count": 1
         }
       },
-      "active_count": 18,
-      "active_total": 26169.8
+      "active_count": 19,
+      "active_total": 28019.64
     }
   },
   "DIRECT": {
