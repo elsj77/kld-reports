@@ -662,9 +662,9 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 209,
-      "total": 32507.9,
-      "gst_total": 1548.01,
+      "invoice_count": 207,
+      "total": 31108.77,
+      "gst_total": 1481.38,
       "refund_total": 0.0,
       "service_credit_total": 50.0,
       "services": {
@@ -674,9 +674,9 @@
           "gst": 25.91
         },
         "Property Maintenance": {
-          "revenue": 1956.38,
-          "count": 4,
-          "gst": 93.17
+          "revenue": 557.25,
+          "count": 2,
+          "gst": 26.54
         },
         "Fall Granular Fertilizer": {
           "revenue": 10587.11,
@@ -1135,16 +1135,16 @@
       "active_total": 5025.27
     },
     "Oct 2026": {
-      "prepayment_count": 25,
-      "prepayment_total": 31166.58,
-      "applied_amount": 134.91,
+      "prepayment_count": 22,
+      "prepayment_total": 31136.58,
+      "applied_amount": 74.91,
       "refunds_issued": 674.09,
-      "net_collected": 30492.49,
-      "still_unused": 30357.58,
+      "net_collected": 30462.49,
+      "still_unused": 30387.58,
       "by_method": {
         "Authorize.net": {
-          "amount": 28910.3,
-          "count": 19
+          "amount": 28880.3,
+          "count": 16
         },
         "Visa": {
           "amount": 1507.28,
@@ -1163,8 +1163,8 @@
           "count": 1
         }
       },
-      "active_count": 20,
-      "active_total": 30417.58
+      "active_count": 17,
+      "active_total": 30387.58
     }
   },
   "DIRECT": {
@@ -2238,9 +2238,9 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 340,
-      "total": 69949.96,
-      "gst_total": 3330.97,
+      "invoice_count": 349,
+      "total": 71645.75,
+      "gst_total": 3345.1,
       "refund_total": 0.0,
       "service_credit_total": 1065.0,
       "services": {
@@ -2255,8 +2255,8 @@
           "gst": 307.56
         },
         "(Unknown)": {
-          "revenue": 0.0,
-          "count": 39,
+          "revenue": 1399.13,
+          "count": 47,
           "gst": 0.0
         },
         "Property Maintenance": {
@@ -2265,9 +2265,9 @@
           "gst": 685.21
         },
         "Irrigation System Winterize": {
-          "revenue": 26861.19,
-          "count": 164,
-          "gst": 1279.11
+          "revenue": 27157.85,
+          "count": 165,
+          "gst": 1293.24
         },
         "Mowing - Weekly Schedule": {
           "revenue": 3060.75,
@@ -2313,10 +2313,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 10482,
-    "sap_grand_total": 1996016.0600000003,
-    "combined_revenue": 1996016.06,
-    "combined_gst": 95018.41,
+    "invoice_count": 10489,
+    "sap_grand_total": 1996312.72,
+    "combined_revenue": 1996312.72,
+    "combined_gst": 94965.91,
     "refund_total": 9832.86,
     "service_credit_total": 5519.89,
     "refund_rows": [
@@ -2561,6 +2561,36 @@
         "sales_tax": 0.0
       },
       {
+        "date": "2026-06-23",
+        "invoice": "REFUND 121687467515",
+        "client": "Barry, Derick",
+        "name": "Refund",
+        "amount": 220.5,
+        "absolute": 220.5,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-08-05",
+        "invoice": "REFUND 121758193276",
+        "client": "Fabro, Virginia",
+        "name": "Refund",
+        "amount": 147.0,
+        "absolute": 147.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-08-05",
+        "invoice": "REFUND 121758210109",
+        "client": "Tim Horton's (Creston)",
+        "name": "Refund",
+        "amount": 147.0,
+        "absolute": 147.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
         "date": "2026-10-02",
         "invoice": "REFUND 140697",
         "client": "Fabro, Virginia",
@@ -2617,36 +2647,6 @@
         "name": "Refund",
         "amount": 126.0,
         "absolute": 126.0,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-06-23",
-        "invoice": "REFUND 121687467515",
-        "client": "Barry, Derick",
-        "name": "Refund",
-        "amount": 220.5,
-        "absolute": 220.5,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-08-05",
-        "invoice": "REFUND 121758193276",
-        "client": "Fabro, Virginia",
-        "name": "Refund",
-        "amount": 147.0,
-        "absolute": 147.0,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-08-05",
-        "invoice": "REFUND 121758210109",
-        "client": "Tim Horton's (Creston)",
-        "name": "Refund",
-        "amount": 147.0,
-        "absolute": 147.0,
         "taxable": "E",
         "sales_tax": 0.0
       }
