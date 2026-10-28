@@ -1135,12 +1135,12 @@
       "active_total": 5025.27
     },
     "Oct 2026": {
-      "prepayment_count": 26,
-      "prepayment_total": 31292.58,
+      "prepayment_count": 25,
+      "prepayment_total": 31166.58,
       "applied_amount": 134.91,
       "refunds_issued": 674.09,
-      "net_collected": 30618.49,
-      "still_unused": 30483.58,
+      "net_collected": 30492.49,
+      "still_unused": 30357.58,
       "by_method": {
         "Authorize.net": {
           "amount": 28910.3,
@@ -1151,8 +1151,8 @@
           "count": 1
         },
         "Cheque": {
-          "amount": 262.5,
-          "count": 2
+          "amount": 136.5,
+          "count": 1
         },
         "E-Transfer": {
           "amount": 465.5,
@@ -1163,8 +1163,8 @@
           "count": 1
         }
       },
-      "active_count": 21,
-      "active_total": 30543.58
+      "active_count": 20,
+      "active_total": 30417.58
     }
   },
   "DIRECT": {
@@ -2238,9 +2238,9 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 326,
-      "total": 69765.95,
-      "gst_total": 3322.21,
+      "invoice_count": 340,
+      "total": 69949.96,
+      "gst_total": 3330.97,
       "refund_total": 0.0,
       "service_credit_total": 1065.0,
       "services": {
@@ -2256,7 +2256,7 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 26,
+          "count": 39,
           "gst": 0.0
         },
         "Property Maintenance": {
@@ -2265,9 +2265,9 @@
           "gst": 685.21
         },
         "Irrigation System Winterize": {
-          "revenue": 26677.18,
-          "count": 163,
-          "gst": 1270.35
+          "revenue": 26861.19,
+          "count": 164,
+          "gst": 1279.11
         },
         "Mowing - Weekly Schedule": {
           "revenue": 3060.75,
@@ -2313,53 +2313,13 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 10468,
-    "sap_grand_total": 1995832.0500000003,
-    "combined_revenue": 1995832.05,
-    "combined_gst": 95009.65,
+    "invoice_count": 10482,
+    "sap_grand_total": 1996016.0600000003,
+    "combined_revenue": 1996016.06,
+    "combined_gst": 95018.41,
     "refund_total": 9832.86,
     "service_credit_total": 5519.89,
     "refund_rows": [
-      {
-        "date": "2026-08-05",
-        "invoice": "137363",
-        "client": "Lerose, Perry",
-        "name": "Refund",
-        "amount": 103.95,
-        "absolute": 103.95,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-08-11",
-        "invoice": "137873",
-        "client": "Allen, Debbie",
-        "name": "Refund",
-        "amount": 205.8,
-        "absolute": 205.8,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-10-09",
-        "invoice": "140955",
-        "client": "Murphy, Patrick",
-        "name": "Refund",
-        "amount": 113.4,
-        "absolute": 113.4,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-10-15",
-        "invoice": "141065",
-        "client": "Poirier, Dan",
-        "name": "Refund",
-        "amount": 262.49,
-        "absolute": 262.49,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
       {
         "date": "2026-04-01",
         "invoice": "REFUND 130259",
@@ -2481,12 +2441,32 @@
         "sales_tax": 0.0
       },
       {
+        "date": "2026-08-05",
+        "invoice": "#REFUND 137363",
+        "client": "Lerose, Perry",
+        "name": "Refund",
+        "amount": 103.95,
+        "absolute": 103.95,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
         "date": "2026-08-06",
         "invoice": "REFUND 137499",
         "client": "Willis, Claire",
         "name": "Refund",
         "amount": 2000.0,
         "absolute": 2000.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-08-11",
+        "invoice": "#REFUND 137873",
+        "client": "Allen, Debbie",
+        "name": "Refund",
+        "amount": 205.8,
+        "absolute": 205.8,
         "taxable": "E",
         "sales_tax": 0.0
       },
@@ -2607,6 +2587,26 @@
         "name": "Refund",
         "amount": 42.0,
         "absolute": 42.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-09",
+        "invoice": "#REFUND 140955",
+        "client": "Murphy, Patrick",
+        "name": "Refund",
+        "amount": 113.4,
+        "absolute": 113.4,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-10-15",
+        "invoice": "#REFUND 141065",
+        "client": "Poirier, Dan",
+        "name": "Refund",
+        "amount": 262.49,
+        "absolute": 262.49,
         "taxable": "E",
         "sales_tax": 0.0
       },
