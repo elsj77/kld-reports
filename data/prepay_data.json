@@ -2084,8 +2084,8 @@
       }
     },
     "Sep 2026": {
-      "invoice_count": 822,
-      "total": 160230.17,
+      "invoice_count": 819,
+      "total": 160227.17,
       "gst_total": 7642.42,
       "refund_total": 0.0,
       "service_credit_total": 560.0,
@@ -2215,11 +2215,6 @@
           "count": 1,
           "gst": 2.6
         },
-        "Education Services": {
-          "revenue": 3.0,
-          "count": 3,
-          "gst": 0.0
-        },
         "Supply & Install Aggregates": {
           "revenue": 6209.7,
           "count": 1,
@@ -2238,8 +2233,8 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 349,
-      "total": 71645.75,
+      "invoice_count": 368,
+      "total": 70246.62,
       "gst_total": 3345.1,
       "refund_total": 0.0,
       "service_credit_total": 1065.0,
@@ -2255,8 +2250,8 @@
           "gst": 307.56
         },
         "(Unknown)": {
-          "revenue": 1399.13,
-          "count": 47,
+          "revenue": 0.0,
+          "count": 66,
           "gst": 0.0
         },
         "Property Maintenance": {
@@ -2313,9 +2308,9 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 10489,
-    "sap_grand_total": 1996312.72,
-    "combined_revenue": 1996312.72,
+    "invoice_count": 10505,
+    "sap_grand_total": 1994910.59,
+    "combined_revenue": 1994910.59,
     "combined_gst": 94965.91,
     "refund_total": 9832.86,
     "service_credit_total": 5519.89,
@@ -2561,36 +2556,6 @@
         "sales_tax": 0.0
       },
       {
-        "date": "2026-06-23",
-        "invoice": "REFUND 121687467515",
-        "client": "Barry, Derick",
-        "name": "Refund",
-        "amount": 220.5,
-        "absolute": 220.5,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-08-05",
-        "invoice": "REFUND 121758193276",
-        "client": "Fabro, Virginia",
-        "name": "Refund",
-        "amount": 147.0,
-        "absolute": 147.0,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-08-05",
-        "invoice": "REFUND 121758210109",
-        "client": "Tim Horton's (Creston)",
-        "name": "Refund",
-        "amount": 147.0,
-        "absolute": 147.0,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
         "date": "2026-10-02",
         "invoice": "REFUND 140697",
         "client": "Fabro, Virginia",
@@ -2647,6 +2612,36 @@
         "name": "Refund",
         "amount": 126.0,
         "absolute": 126.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-06-23",
+        "invoice": "REFUND 121687467515",
+        "client": "Barry, Derick",
+        "name": "Refund",
+        "amount": 220.5,
+        "absolute": 220.5,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-08-05",
+        "invoice": "REFUND 121758193276",
+        "client": "Fabro, Virginia",
+        "name": "Refund",
+        "amount": 147.0,
+        "absolute": 147.0,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-08-05",
+        "invoice": "REFUND 121758210109",
+        "client": "Tim Horton's (Creston)",
+        "name": "Refund",
+        "amount": 147.0,
+        "absolute": 147.0,
         "taxable": "E",
         "sales_tax": 0.0
       }
