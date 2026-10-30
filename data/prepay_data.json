@@ -1906,15 +1906,15 @@
     },
     "Aug 2026": {
       "invoice_count": 1137,
-      "total": 206853.87,
-      "gst_total": 9850.29,
+      "total": 206709.4,
+      "gst_total": 9843.41,
       "refund_total": 0.0,
       "service_credit_total": 780.0,
       "services": {
         "Mowing - Elk Valley": {
-          "revenue": 26659.1,
+          "revenue": 26514.63,
           "count": 196,
-          "gst": 1269.46
+          "gst": 1262.58
         },
         "Property Maintenance": {
           "revenue": 22359.69,
@@ -2233,9 +2233,9 @@
       }
     },
     "Oct 2026": {
-      "invoice_count": 368,
-      "total": 70246.62,
-      "gst_total": 3345.1,
+      "invoice_count": 398,
+      "total": 73231.46,
+      "gst_total": 3487.24,
       "refund_total": 0.0,
       "service_credit_total": 1065.0,
       "services": {
@@ -2251,13 +2251,13 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 66,
+          "count": 95,
           "gst": 0.0
         },
         "Property Maintenance": {
-          "revenue": 14389.2,
-          "count": 18,
-          "gst": 685.21
+          "revenue": 17374.04,
+          "count": 19,
+          "gst": 827.35
         },
         "Irrigation System Winterize": {
           "revenue": 27157.85,
@@ -2308,10 +2308,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 10505,
-    "sap_grand_total": 1994910.59,
-    "combined_revenue": 1994910.59,
-    "combined_gst": 94965.91,
+    "invoice_count": 10535,
+    "sap_grand_total": 1997750.9600000002,
+    "combined_revenue": 1997750.96,
+    "combined_gst": 95101.17,
     "refund_total": 9832.86,
     "service_credit_total": 5519.89,
     "refund_rows": [
