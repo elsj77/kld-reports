@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Payment Report — Kootenay Lawn Doctor (Updated November 3, 2026)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f0e8; color: #1a1a1a; font-size: 14px; }
+  .page { max-width: 860px; margin: 0 auto; padding: 24px 20px 48px; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+
+  .report-tabs { display: flex; gap: 0; margin-bottom: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #d6cfc0; width: fit-content; }
+  .report-tab { padding: 8px 20px; border: none; background: #ede8df; color: #666; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .report-tab:not(:last-child) { border-right: 1px solid #d6cfc0; }
+  .report-tab.active-prepay   { background: #c1440e; color: #fff; }
+  .report-tab.active-direct   { background: #2563eb; color: #fff; }
+  .report-tab.active-combined { background: #6b21a8; color: #fff; }
+  .report-tab.active-gst      { background: #0f7955; color: #fff; }
+  .report-tab:not([class*="active"]):hover { background: #ddd6c8; }
+
+  .period-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .period-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+  .period-group { display: flex; gap: 0; border-radius: 20px; overflow: hidden; border: 1px solid #d6cfc0; }
+  .period-btn { padding: 5px 13px; border: none; background: #ede8df; color: #555; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .period-btn:not(:last-child) { border-right: 1px solid #d6cfc0; }
+  .period-btn:hover:not(.active) { background: #ddd6c8; }
+  .period-btn.active { background: #1a1a1a; color: #fff; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .tab { padding: 5px 13px; border-radius: 20px; border: none; background: #e8e2d6; color: #555; font-size: 12px; cursor: pointer; font-weight: 500; transition: all 0.15s; }
+  .tab:hover { background: #ddd6c8; }
+  .tab.active-prepay   { background: #c1440e; color: #fff; }
+  .tab.active-direct   { background: #2563eb; color: #fff; }
+  .tab.active-combined { background: #6b21a8; color: #fff; }
+  .tab.active-gst      { background: #0f7955; color: #fff; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: #fff; border-radius: 10px; padding: 14px 16px; border: 1px solid #e8e2d6; }
+  .stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; color: #888; text-transform: uppercase; margin-bottom: 4px; }
+  .stat-value { font-size: 20px; font-weight: 700; color: #1a1a1a; line-height: 1.1; }
+  .stat-sub { font-size: 11px; color: #999; margin-top: 3px; }
+
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .chart-card { background: #fff; border-radius: 10px; padding: 18px; border: 1px solid #e8e2d6; }
+  .chart-full { grid-column: 1 / -1; }
+  .chart-title { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; color: #888; text-transform: uppercase; margin-bottom: 14px; }
+
+  /* Trend chart — always full width, standalone card */
+  .trend-card { background: #fff; border-radius: 10px; padding: 18px; border: 1px solid #e8e2d6; margin-bottom: 12px; }
+  .trend-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+
+  .stack-legend { display: flex; gap: 16px; flex-wrap: wrap; }
+  .stack-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #555; font-weight: 600; }
+  .stack-legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+  /* Payment method table card */
+  .pay-method-card { background: #fff; border-radius: 10px; padding: 18px; border: 1px solid #e8e2d6; margin-bottom: 12px; }
+
+  /* Service table */
+  .table-card { background: #fff; border-radius: 10px; padding: 18px; border: 1px solid #e8e2d6; }
+  .table-title { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; color: #888; text-transform: uppercase; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 11px; color: #999; font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid #f0ebe0; }
+  th:not(:first-child) { text-align: right; }
+  td { padding: 8px 0; border-bottom: 1px solid #f5f0e8; font-size: 13px; }
+  td:not(:first-child) { text-align: right; }
+  td.svc-name { color: #1a1a1a; font-weight: 500; max-width: 240px; }
+  td.svc-bar { width: 80px; padding-left: 12px; }
+  .mini-bar-bg { height: 5px; background: #f0ebe0; border-radius: 3px; overflow: hidden; }
+  .mini-bar-fill { height: 100%; border-radius: 3px; }
+  tfoot td { padding: 9px 0; font-weight: 700; font-size: 13px; border-top: 2px solid #e8e2d6; border-bottom: none; }
+  tfoot td:not(:first-child) { text-align: right; }
+
+  .combined-prepay { color: #c1440e !important; font-weight: 600; }
+  .combined-direct { color: #2563eb !important; font-weight: 600; }
+  .combined-total  { color: #6b21a8 !important; font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: repeat(2,1fr); }
+    .charts-row { grid-template-columns: 1fr; }
+    .stat-value { font-size: 16px; }
+    .charts-row .chart-full { grid-column: 1; }
+    .trend-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Payment Report — Kootenay Lawn Doctor (Updated November 3, 2026)</h1>
+  <div style="font-size:12px;color:#6b6b6b;margin:-8px 0 16px">Archived FY2025-26 · <a href="../index.html" style="color:#1154CC">View current report</a></div>
+
+  <div class="report-tabs">
+    <button class="report-tab active-prepay" onclick="setReport('prepay')">Prepayments</button>
+    <button class="report-tab" onclick="setReport('direct')">Direct Payments</button>
+    <button class="report-tab" onclick="setReport('combined')">Combined</button>
+    <button class="report-tab" onclick="setReport('gst')">GST</button>
+  </div>
+
+  <div class="period-row">
+    <span class="period-label">View by</span>
+    <div class="period-group">
+      <button class="period-btn active" id="btn-monthly"   onclick="setPeriod('monthly')">Monthly</button>
+      <button class="period-btn"        id="btn-quarterly" onclick="setPeriod('quarterly')">Quarterly</button>
+    </div>
+  </div>
+
+  <div class="tabs" id="tab-container"></div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card"><div class="stat-label" id="lbl-a">—</div><div class="stat-value" id="s-a">—</div><div class="stat-sub" id="s-a2">—</div></div>
+    <div class="stat-card" id="card-b"><div class="stat-label" id="lbl-b">—</div><div class="stat-value" id="s-b">—</div><div class="stat-sub" id="s-b2">—</div></div>
+    <div class="stat-card" id="card-c"><div class="stat-label" id="lbl-c">—</div><div class="stat-value" id="s-c">—</div><div class="stat-sub" id="s-c2">—</div></div>
+    <div class="stat-card"><div class="stat-label" id="lbl-d">—</div><div class="stat-value" id="s-d">—</div><div class="stat-sub" id="s-d2">—</div></div>
+  </div>
+
+  <!-- Service bar + donut/method panel -->
+  <div class="charts-row" id="charts-row">
+    <div class="chart-card" id="bar-card">
+      <div class="chart-title" id="bar-title">—</div>
+      <canvas id="barChart" height="220"></canvas>
+    </div>
+    <div class="chart-card" id="donut-card">
+      <div class="chart-title">Prepayments Collected by Method</div>
+      <canvas id="donutChart" height="160"></canvas>
+      <div id="donut-legend" style="display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px"></div>
+    </div>
+    <!-- Combined stacked bar -->
+    <div class="chart-card chart-full" id="stack-card" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+        <div class="chart-title" style="margin:0">REVENUE BY SERVICE — COMBINED</div>
+        <div class="stack-legend">
+          <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e"></div>Prepay-Classified</div>
+          <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#2563eb"></div>Direct Billed</div>
+        </div>
+      </div>
+      <canvas id="stackChart" height="260"></canvas>
+    </div>
+  </div>
+
+  <!-- Month-over-Month Trend -->
+  <div class="trend-card">
+    <div class="trend-header">
+      <div class="chart-title" style="margin:0" id="trend-title">MONTH-OVER-MONTH REVENUE TREND</div>
+      <div class="stack-legend" id="trend-legend"></div>
+    </div>
+    <canvas id="trendChart" height="110"></canvas>
+  </div>
+
+  <!-- Payment Method Breakdown (prepay only) -->
+  <div class="pay-method-card" id="pay-method-card" style="display:none">
+    <div class="table-title">Prepayments Collected by Payment Method</div>
+    <table>
+      <thead><tr><th>Method</th><th>Payments</th><th>Amount</th><th>% of Total</th><th></th></tr></thead>
+      <tbody id="pay-method-tbody"></tbody>
+      <tfoot id="pay-method-tfoot"></tfoot>
+    </table>
+  </div>
+
+  <!-- Service Breakdown Table -->
+  <div class="table-card">
+    <div class="table-title" id="tbl-title">Service Breakdown — Alphabetical</div>
+    <table>
+      <thead id="tbl-head"></thead>
+      <tbody id="svc-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// Audit: {"invoice_count": 10585, "refund_total": 9832.86, "service_credit_total": 5519.89, "combined_revenue": 2031331.87, "combined_gst": 96700.28}
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const APPLIED = {"Nov 2025":{"invoice_count":0,"total":0.0,"gst_total":0.0,"refund_total":0.0,"service_credit_total":0.0,"services":{}},"Dec 2025":{"invoice_count":1,"total":168.0,"gst_total":8.0,"refund_total":0.0,"service_credit_total":0.0,"services":{"Vegetation Control":{"revenue":168.0,"count":1,"gst":8.0}}},"Jan 2026":{"invoice_count":0,"total":0.0,"gst_total":0.0,"refund_total":0.0,"service_credit_total":0.0,"services":{}},"Feb 2026":{"invoice_count":0,"total":0.0,"gst_total":0.0,"refund_total":0.0,"service_credit_total":0.0,"services":{}},"Mar 2026":{"invoice_count":30,"total":6351.4,"gst_total":302.45,"refund_total":0.0,"service_credit_total":0.0,"services":{"Insect Control Tree - Dormant Oil":{"revenue":4304.2,"count":25,"gst":204.96},"Kick Start Program":{"revenue":2047.2,"count":5,"gst":97.49}}},"Apr 2026":{"invoice_count":260,"total":57739.5,"gst_total":2749.5,"refund_total":0.0,"service_credit_total":104.89,"services":{"Mowing - Elk Valley":{"revenue":210.0,"count":1,"gst":10.0},"Property Maintenance":{"revenue":1290.12,"count":4,"gst":61.44},"Kick Start Program":{"revenue":27321.53,"count":61,"gst":1301.03},"Aeration - Spring":{"revenue":2728.75,"count":21,"gst":129.94},"FW Round 1":{"revenue":16120.68,"count":127,"gst":767.65},"Irrigation System Start-Up":{"revenue":2636.17,"count":28,"gst":125.53},"Spring Granular Fertilizer":{"revenue":802.07,"count":7,"gst":38.19},"Deep Root Fertilization":{"revenue":987.0,"count":5,"gst":47.0},"Irrigation Part(s)":{"revenue":147.0,"count":4,"gst":7.0},"Power Broom":{"revenue":1252.6,"count":9,"gst":59.64},"Spring Aeration + Granular":{"revenue":273.0,"count":1,"gst":13.0},"Dethatch Elk Valley":{"revenue":493.6,"count":3,"gst":23.5},"General Clean Up - Landscape":{"revenue":3108.0,"count":2,"gst":148.0},"Horticulture Labour":{"revenue":368.98,"count":1,"gst":17.57}}},"May 2026":{"invoice_count":928,"total":138414.31,"gst_total":6591.13,"refund_total":0.0,"service_credit_total":0.0,"services":{"Property Maintenance":{"revenue":4623.66,"count":6,"gst":220.18},"FW Round 1":{"revenue":86655.66,"count":728,"gst":4126.48},"Irrigation System Start-Up":{"revenue":4228.63,"count":41,"gst":201.36},"Aeration - Spring":{"revenue":887.25,"count":6,"gst":42.25},"Kick Start Program":{"revenue":2976.75,"count":5,"gst":141.75},"Insect Control Tree -  Leaf Roller 1":{"revenue":4893.0,"count":32,"gst":233.0},"Mowing - Weekly Schedule":{"revenue":1621.03,"count":26,"gst":77.18},"Vegetation Control":{"revenue":15319.5,"count":51,"gst":729.5},"Power Broom":{"revenue":190.46,"count":2,"gst":9.07},"Re-Spray Veg Control":{"revenue":0.0,"count":1,"gst":0.0},"Dethatch Elk Valley":{"revenue":178.55,"count":1,"gst":8.5},"Mowing - Bill Hourly":{"revenue":308.07,"count":2,"gst":14.67},"Mowing - Elk Valley":{"revenue":5181.78,"count":60,"gst":246.71},"Irrigation System Installation":{"revenue":5649.23,"count":1,"gst":269.01},"Irrigation System Upgrade":{"revenue":2055.8,"count":2,"gst":97.9},"Irrigation Part(s)":{"revenue":433.65,"count":8,"gst":20.65},"Spring Granular Fertilizer":{"revenue":517.0,"count":6,"gst":24.62},"Weed Control 1":{"revenue":313.95,"count":3,"gst":14.95},"Re-Spray FW":{"revenue":0.0,"count":1,"gst":0.0},"Invasive Weed Application":{"revenue":1617.0,"count":4,"gst":77.0},"Supply & Install Topsoil & Seed":{"revenue":763.35,"count":1,"gst":36.35}}},"Jun 2026":{"invoice_count":930,"total":153161.17,"gst_total":7293.41,"refund_total":0.0,"service_credit_total":0.0,"services":{"Property Maintenance":{"revenue":3542.09,"count":3,"gst":168.68},"Spring Granular Fertilizer":{"revenue":4445.69,"count":4,"gst":211.7},"Mowing - Elk Valley":{"revenue":8198.94,"count":98,"gst":390.38},"General Clean Up - Landscape":{"revenue":66.43,"count":1,"gst":3.16},"Mowing - Weekly Schedule":{"revenue":2302.7,"count":37,"gst":109.67},"FW Round 1":{"revenue":13668.38,"count":108,"gst":650.88},"FW Round 2":{"revenue":66761.13,"count":570,"gst":3179.11},"Irrigation Part(s)":{"revenue":535.5,"count":5,"gst":25.5},"Vegetation Control":{"revenue":8949.8,"count":42,"gst":426.19},"Mowing - Bill Hourly":{"revenue":570.16,"count":4,"gst":27.16},"Weed Control 1":{"revenue":239.4,"count":2,"gst":11.4},"Irrigation System Start-Up":{"revenue":693.0,"count":6,"gst":33.0},"Insect Control Turf":{"revenue":11831.93,"count":88,"gst":563.43},"Irrigation System Installation":{"revenue":18519.9,"count":2,"gst":881.9},"Invasive Weed Application":{"revenue":6769.22,"count":19,"gst":322.34},"Insect Control Tree -  Leaf Roller 1":{"revenue":777.0,"count":4,"gst":37.0},"Irrigation System Repair":{"revenue":189.0,"count":2,"gst":9.0},"Lawn Spraying Package":{"revenue":63.0,"count":1,"gst":3.0},"Supply & Install Sod":{"revenue":5037.9,"count":1,"gst":239.9}}},"Jul 2026":{"invoice_count":786,"total":122337.17,"gst_total":5825.57,"refund_total":0.0,"service_credit_total":0.0,"services":{"Property Maintenance":{"revenue":3542.09,"count":3,"gst":168.68},"FW Round 2":{"revenue":49179.55,"count":385,"gst":2341.9},"Vegetation Control":{"revenue":6219.66,"count":24,"gst":296.17},"Mowing - Weekly Schedule":{"revenue":1089.29,"count":18,"gst":51.89},"Mowing - Elk Valley":{"revenue":9591.44,"count":102,"gst":456.68},"Irrigation System Installation":{"revenue":14059.5,"count":3,"gst":669.5},"Insect Control Tree -  Leaf Roller 2":{"revenue":210.0,"count":1,"gst":10.0},"Invasive Weed Application":{"revenue":357.0,"count":2,"gst":17.0},"Kick Start Program":{"revenue":388.5,"count":1,"gst":18.5},"Aeration - Spring":{"revenue":115.5,"count":1,"gst":5.5},"Tree/Shrub Trimming":{"revenue":656.62,"count":1,"gst":31.27},"Mowing - Bill Hourly":{"revenue":198.98,"count":1,"gst":9.48},"Insect Control Turf":{"revenue":771.84,"count":7,"gst":36.75},"Irrigation System Start-Up":{"revenue":210.0,"count":2,"gst":10.0},"FW Round 3":{"revenue":32531.35,"count":271,"gst":1549.11},"Irrigation System Repair":{"revenue":828.63,"count":3,"gst":39.46},"Irrigation Part(s)":{"revenue":213.98,"count":2,"gst":10.19},"Insect Control Tree -  Tent Caterpillar":{"revenue":779.9,"count":4,"gst":37.14},"Irrigation Parts":{"revenue":1393.35,"count":1,"gst":66.35}}},"Aug 2026":{"invoice_count":853,"total":124048.17,"gst_total":5907.07,"refund_total":0.0,"service_credit_total":100.0,"services":{"Property Maintenance":{"revenue":3922.19,"count":4,"gst":186.78},"FW Round 3":{"revenue":63022.81,"count":546,"gst":3001.11},"Mowing - Elk Valley":{"revenue":5176.78,"count":61,"gst":246.48},"Irrigation System Repair":{"revenue":696.42,"count":2,"gst":33.17},"Irrigation Part(s)":{"revenue":875.7,"count":4,"gst":41.7},"Invasive Weed Application":{"revenue":628.95,"count":4,"gst":29.95},"Mowing - Weekly Schedule":{"revenue":1008.0,"count":16,"gst":48.0},"Tree/Shrub Trimming":{"revenue":84.0,"count":1,"gst":4.0},"Vegetation Control":{"revenue":556.5,"count":2,"gst":26.5},"Summer Granular Fertilizer":{"revenue":718.73,"count":7,"gst":34.23},"Insect Control Turf":{"revenue":73.5,"count":1,"gst":3.5},"Insect Control Turf Round 2":{"revenue":122.85,"count":1,"gst":5.85},"Irrigation System Installation":{"revenue":15804.6,"count":2,"gst":752.6},"FW Round 4":{"revenue":25110.73,"count":223,"gst":1195.75},"Irrigation System Upgrade":{"revenue":5362.37,"count":1,"gst":255.35},"Supply & Install Aggregates":{"revenue":761.49,"count":2,"gst":36.26},"Veg Control Follow-up":{"revenue":122.55,"count":1,"gst":5.84}}},"Sep 2026":{"invoice_count":615,"total":114755.22,"gst_total":5464.52,"refund_total":0.0,"service_credit_total":0.0,"services":{"Property Maintenance":{"revenue":557.25,"count":2,"gst":26.54},"FW Round 4":{"revenue":63326.65,"count":539,"gst":3015.56},"Mowing - Elk Valley":{"revenue":4539.28,"count":56,"gst":216.13},"Vegetation Control":{"revenue":525.0,"count":3,"gst":25.0},"Summer Granular Fertilizer":{"revenue":113.4,"count":1,"gst":5.4},"Mowing - Weekly Schedule":{"revenue":760.52,"count":13,"gst":36.22},"Weed Control 2":{"revenue":412.65,"count":4,"gst":19.65},"General Clean Up - Landscape":{"revenue":0.0,"count":1,"gst":0.0},"Invasive Weed Application":{"revenue":189.0,"count":1,"gst":9.0},"Aeration - Spring":{"revenue":109.06,"count":1,"gst":5.19},"Supply & Install Topsoil & Seed":{"revenue":421.19,"count":1,"gst":20.06},"Irrigation System Installation":{"revenue":10365.6,"count":1,"gst":493.6},"Supply & Install Topsoil & Sod":{"revenue":27528.9,"count":1,"gst":1310.9},"Supply & Install Aggregates":{"revenue":825.3,"count":1,"gst":39.3},"Supply & Install Topsoil":{"revenue":2263.8,"count":1,"gst":107.8},"General Labour":{"revenue":1662.15,"count":1,"gst":79.15},"Irrigation System Winterize":{"revenue":1155.47,"count":7,"gst":55.02}}},"Oct 2026":{"invoice_count":214,"total":39351.27,"gst_total":1873.88,"refund_total":0.0,"service_credit_total":50.0,"services":{"Mowing - Elk Valley":{"revenue":544.09,"count":7,"gst":25.91},"Property Maintenance":{"revenue":557.25,"count":2,"gst":26.54},"Fall Granular Fertilizer":{"revenue":11164.61,"count":83,"gst":531.65},"Irrigation System Winterize":{"revenue":14039.59,"count":96,"gst":668.55},"Aeration - Fall":{"revenue":1454.25,"count":11,"gst":69.25},"Mowing - Bill Hourly":{"revenue":198.98,"count":1,"gst":9.48},"Fall Aeration + Granular":{"revenue":3738.0,"count":15,"gst":178.0},"Tree/Shrub Trimming - Fall":{"revenue":84.0,"count":1,"gst":4.0},"Misc. Material":{"revenue":287.7,"count":1,"gst":13.7},"Fall Clean-Up":{"revenue":7188.3,"count":1,"gst":342.3},"Garden Bed Maintenance":{"revenue":94.5,"count":1,"gst":4.5}}}};
+
+const COLLECTED = {"Nov 2025":{"prepayment_count":263,"prepayment_total":124265.0,"applied_amount":121552.48,"refunds_issued":0.0,"net_collected":124265.0,"still_unused":2712.52,"by_method":{"E-Transfer":{"amount":39743.7,"count":88},"Visa":{"amount":63307.0,"count":117},"MasterCard":{"amount":8400.0,"count":20},"Cash":{"amount":491.4,"count":1},"Cheque":{"amount":10246.9,"count":23},"Gift Certificate/Voucher":{"amount":900.0,"count":9},"Terminal Payment":{"amount":1176.0,"count":5}},"active_count":23,"active_total":12796.5},"Dec 2025":{"prepayment_count":351,"prepayment_total":186172.15,"applied_amount":183952.0,"refunds_issued":0.0,"net_collected":186172.15,"still_unused":2220.15,"by_method":{"E-Transfer":{"amount":48304.45,"count":95},"Visa":{"amount":101166.55,"count":190},"Cheque":{"amount":6400.8,"count":18},"MasterCard":{"amount":23219.15,"count":40},"Terminal Payment":{"amount":4981.2,"count":6},"Cash":{"amount":2100.0,"count":2}},"active_count":19,"active_total":13358.35},"Jan 2026":{"prepayment_count":24,"prepayment_total":12859.35,"applied_amount":12483.45,"refunds_issued":0.0,"net_collected":12859.35,"still_unused":375.9,"by_method":{"Visa":{"amount":7608.3,"count":15},"E-Transfer":{"amount":3419.85,"count":6},"Cheque":{"amount":1831.2,"count":3}},"active_count":3,"active_total":2213.4},"Feb 2026":{"prepayment_count":68,"prepayment_total":33015.5,"applied_amount":32175.45,"refunds_issued":0.0,"net_collected":33015.5,"still_unused":840.05,"by_method":{"E-Transfer":{"amount":13245.35,"count":29},"Visa":{"amount":13558.35,"count":24},"Terminal Payment":{"amount":604.8,"count":2},"Cheque":{"amount":1461.6,"count":5},"MasterCard":{"amount":4145.4,"count":8}},"active_count":8,"active_total":5428.7},"Mar 2026":{"prepayment_count":187,"prepayment_total":112012.65,"applied_amount":106641.18,"refunds_issued":0.0,"net_collected":112012.65,"still_unused":5371.47,"by_method":{"Cheque":{"amount":4795.83,"count":7},"Visa":{"amount":43776.61,"count":77},"E-Transfer":{"amount":45901.62,"count":67},"MasterCard":{"amount":14569.19,"count":28},"Terminal Payment":{"amount":1877.4,"count":6},"American Express":{"amount":724.5,"count":1},"Cash":{"amount":367.5,"count":1}},"active_count":20,"active_total":26062.52},"Apr 2026":{"prepayment_count":145,"prepayment_total":79770.52,"applied_amount":75440.26,"refunds_issued":529.2,"net_collected":79241.32,"still_unused":3801.06,"by_method":{"E-Transfer":{"amount":24405.47,"count":47},"MasterCard":{"amount":9940.5,"count":11},"EFT Payment":{"amount":2337.73,"count":1},"Visa":{"amount":27705.75,"count":53},"Cheque":{"amount":7539.57,"count":12},"Gift Certificate/Voucher":{"amount":500.0,"count":3},"Terminal Payment":{"amount":6183.5,"count":14},"Cash":{"amount":937.5,"count":3},"American Express":{"amount":220.5,"count":1}},"active_count":14,"active_total":13366.13},"May 2026":{"prepayment_count":109,"prepayment_total":55766.2,"applied_amount":53699.85,"refunds_issued":921.9,"net_collected":54844.3,"still_unused":1144.45,"by_method":{"E-Transfer":{"amount":13930.1,"count":31},"Cheque":{"amount":3418.0,"count":7},"American Express":{"amount":2478.0,"count":1},"MasterCard":{"amount":9059.9,"count":11},"Visa":{"amount":24036.7,"count":49},"Terminal Payment":{"amount":2616.5,"count":8},"Cash":{"amount":227.0,"count":2}},"active_count":12,"active_total":6901.6},"Jun 2026":{"prepayment_count":60,"prepayment_total":49131.06,"applied_amount":46381.62,"refunds_issued":1837.62,"net_collected":47293.44,"still_unused":911.82,"by_method":{"Visa":{"amount":16490.51,"count":18},"Terminal Payment":{"amount":728.0,"count":3},"E-Transfer":{"amount":26572.24,"count":25},"Cheque":{"amount":2306.33,"count":7},"Cash":{"amount":510.0,"count":2},"EFT Payment":{"amount":2056.48,"count":2},"American Express":{"amount":252.0,"count":1},"MasterCard":{"amount":215.5,"count":2}},"active_count":11,"active_total":6457.24},"Jul 2026":{"prepayment_count":34,"prepayment_total":23607.77,"applied_amount":19950.87,"refunds_issued":231.0,"net_collected":23376.77,"still_unused":3425.9,"by_method":{"E-Transfer":{"amount":14783.29,"count":12},"Cheque":{"amount":1532.41,"count":5},"Visa":{"amount":2652.64,"count":6},"MasterCard":{"amount":3114.43,"count":4},"Terminal Payment":{"amount":892.5,"count":4},"Cash":{"amount":632.5,"count":3}},"active_count":5,"active_total":5833.14},"Aug 2026":{"prepayment_count":18,"prepayment_total":15599.0,"applied_amount":9031.03,"refunds_issued":5358.7,"net_collected":10240.3,"still_unused":1209.27,"by_method":{"E-Transfer":{"amount":10147.53,"count":8},"Cheque":{"amount":661.5,"count":2},"Visa":{"amount":4070.47,"count":5},"EFT Payment":{"amount":480.0,"count":1},"Cash":{"amount":239.5,"count":2}},"active_count":5,"active_total":1801.48},"Sep 2026":{"prepayment_count":17,"prepayment_total":4244.04,"applied_amount":3858.24,"refunds_issued":280.35,"net_collected":3963.69,"still_unused":105.45,"by_method":{"Visa":{"amount":389.0,"count":3},"Cash":{"amount":190.0,"count":1},"MasterCard":{"amount":823.73,"count":4},"E-Transfer":{"amount":808.5,"count":5},"Cheque":{"amount":252.0,"count":2},"Terminal Payment":{"amount":189.0,"count":1},"EFT Payment":{"amount":1591.81,"count":1}},"active_count":3,"active_total":640.43},"Oct 2026":{"prepayment_count":24,"prepayment_total":34256.92,"applied_amount":5351.17,"refunds_issued":674.09,"net_collected":33582.83,"still_unused":28231.66,"by_method":{"Authorize.net":{"amount":30150.8,"count":17},"Visa":{"amount":1507.28,"count":1},"E-Transfer":{"amount":2315.34,"count":4},"Cheque":{"amount":136.5,"count":1},"MasterCard":{"amount":147.0,"count":1}},"active_count":19,"active_total":33507.92}};
+
+const DIRECT = {"Nov 2025":{"invoice_count":33,"total":11864.48,"gst_total":564.98,"refund_total":0.0,"service_credit_total":0.0,"services":{"Education Services":{"revenue":1512.0,"count":3,"gst":72.0},"(Unknown)":{"revenue":0.0,"count":16,"gst":0.0},"Property Maintenance":{"revenue":9950.85,"count":12,"gst":473.85},"Fall Clean-Up":{"revenue":401.63,"count":3,"gst":19.13}}},"Dec 2025":{"invoice_count":15,"total":10287.9,"gst_total":489.9,"refund_total":0.0,"service_credit_total":0.0,"services":{"Property Maintenance":{"revenue":10140.9,"count":12,"gst":482.9},"Snow Removal - Shovel":{"revenue":147.0,"count":4,"gst":7.0}}},"Jan 2026":{"invoice_count":18,"total":11592.0,"gst_total":552.0,"refund_total":0.0,"service_credit_total":0.0,"services":{"Property Maintenance":{"revenue":10140.9,"count":12,"gst":482.9},"Snow Removal - Plow":{"revenue":886.2,"count":3,"gst":42.2},"Snow Removal - Shovel":{"revenue":273.0,"count":7,"gst":13.0},"Snow Removal - Sanding":{"revenue":291.9,"count":1,"gst":13.9},"(Unknown)":{"revenue":0.0,"count":1,"gst":0.0}}},"Feb 2026":{"invoice_count":19,"total":11910.15,"gst_total":567.15,"refund_total":0.0,"service_credit_total":0.0,"services":{"Property Maintenance":{"revenue":10140.9,"count":12,"gst":482.9},"Snow Removal - Plow":{"revenue":1171.8,"count":4,"gst":55.8},"Snow Removal - Shovel":{"revenue":597.45,"count":11,"gst":28.45}}},"Mar 2026":{"invoice_count":32,"total":13017.7,"gst_total":619.89,"refund_total":0.0,"service_credit_total":0.0,"services":{"Property Maintenance":{"revenue":10393.95,"count":13,"gst":494.95},"(Unknown)":{"revenue":0.0,"count":6,"gst":0.0},"Insect Control Tree - Dormant Oil":{"revenue":1495.0,"count":11,"gst":71.19},"Tree/Shrub Trimming":{"revenue":78.75,"count":1,"gst":3.75},"Mowing - Weekly Schedule":{"revenue":1050.0,"count":1,"gst":50.0}}},"Apr 2026":{"invoice_count":213,"total":62082.24,"gst_total":2952.52,"refund_total":0.0,"service_credit_total":140.0,"services":{"Education Services":{"revenue":2457.0,"count":3,"gst":117.0},"Property Maintenance":{"revenue":7267.01,"count":14,"gst":346.06},"Mowing - Elk Valley":{"revenue":299.53,"count":1,"gst":14.26},"(Unknown)":{"revenue":0.0,"count":26,"gst":0.0},"Kick Start Program":{"revenue":26974.71,"count":65,"gst":1284.52},"FW Round 1":{"revenue":4181.1,"count":35,"gst":199.1},"Aeration - Spring":{"revenue":6699.51,"count":20,"gst":319.02},"Irrigation System Start-Up":{"revenue":1743.0,"count":18,"gst":83.0},"Irrigation System Repair":{"revenue":850.5,"count":2,"gst":40.5},"Lawn Spraying Package":{"revenue":80.0,"count":1,"gst":0.0},"Spring Granular Fertilizer":{"revenue":483.0,"count":5,"gst":23.0},"Spring Aeration + Granular":{"revenue":504.0,"count":2,"gst":24.0},"Deep Root Fertilization":{"revenue":3496.5,"count":6,"gst":166.5},"Power Broom":{"revenue":1643.33,"count":14,"gst":78.26},"General Clean Up - Landscape":{"revenue":3064.6,"count":8,"gst":145.94},"Tree/Shrub Trimming":{"revenue":650.48,"count":2,"gst":30.98},"Dethatch Elk Valley":{"revenue":354.47,"count":2,"gst":16.88},"Horticulture Labour":{"revenue":26.25,"count":1,"gst":1.25},"General Clean Up - Paved":{"revenue":236.25,"count":1,"gst":11.25},"Machine + Operator":{"revenue":199.5,"count":1,"gst":9.5},"Mowing - Weekly Schedule":{"revenue":525.0,"count":1,"gst":25.0},"Irrigation Part(s)":{"revenue":204.75,"count":5,"gst":9.75},"Mowing - Bill Hourly":{"revenue":141.75,"count":1,"gst":6.75}}},"May 2026":{"invoice_count":998,"total":183277.05,"gst_total":8727.54,"refund_total":0.0,"service_credit_total":990.0,"services":{"Property Maintenance":{"revenue":18233.66,"count":24,"gst":868.29},"Mowing - Elk Valley":{"revenue":22733.85,"count":164,"gst":1082.56},"Mowing - Weekly Schedule":{"revenue":26820.88,"count":320,"gst":1277.19},"(Unknown)":{"revenue":0.0,"count":74,"gst":0.0},"FW Round 1":{"revenue":57178.07,"count":392,"gst":2722.77},"General Clean Up - Landscape":{"revenue":1678.5,"count":7,"gst":79.93},"Aeration - Spring":{"revenue":2660.49,"count":11,"gst":126.69},"Kick Start Program":{"revenue":10137.51,"count":15,"gst":482.73},"Irrigation System Start-Up":{"revenue":7083.25,"count":43,"gst":337.31},"Power Broom":{"revenue":1016.29,"count":5,"gst":48.4},"Education Services":{"revenue":1890.0,"count":3,"gst":90.0},"General Clean Up - Paved":{"revenue":476.46,"count":3,"gst":22.69},"Spring Granular Fertilizer":{"revenue":6053.13,"count":15,"gst":288.25},"Vegetation Control":{"revenue":16380.77,"count":55,"gst":780.04},"Irrigation Part(s)":{"revenue":1903.13,"count":26,"gst":90.63},"Deep Root Fertilization":{"revenue":661.5,"count":2,"gst":31.5},"Mowing - Bill Hourly":{"revenue":1810.63,"count":15,"gst":86.23},"Spring Aeration + Granular":{"revenue":567.0,"count":2,"gst":27.0},"Irrigation System Repair":{"revenue":1772.51,"count":17,"gst":84.41},"Insect Control Tree -  Leaf Roller 1":{"revenue":1333.5,"count":11,"gst":63.5},"Irrigation Parts":{"revenue":26.25,"count":1,"gst":1.25},"Garden Bed Maintenance":{"revenue":94.5,"count":1,"gst":4.5},"Weed Control 1":{"revenue":357.0,"count":3,"gst":17.0},"Supply & Install Topsoil & Seed":{"revenue":616.35,"count":1,"gst":29.35},"Tree/Shrub Trimming":{"revenue":94.5,"count":1,"gst":4.5},"Dethatch Elk Valley":{"revenue":398.48,"count":2,"gst":18.98},"Misc. Parking Lot Maintenance":{"revenue":397.95,"count":1,"gst":18.95},"Misc. Material":{"revenue":105.0,"count":1,"gst":5.0},"Machine + Operator":{"revenue":795.9,"count":1,"gst":37.9}}},"Jun 2026":{"invoice_count":1101,"total":253312.07,"gst_total":12045.46,"refund_total":0.0,"service_credit_total":1010.0,"services":{"Property Maintenance":{"revenue":22844.79,"count":29,"gst":1087.87},"Mowing - Elk Valley":{"revenue":38752.9,"count":283,"gst":1845.4},"Mowing - Weekly Schedule":{"revenue":34364.25,"count":401,"gst":1619.25},"Spring Granular Fertilizer":{"revenue":626.11,"count":5,"gst":29.82},"Vegetation Control":{"revenue":19067.35,"count":61,"gst":907.97},"FW Round 1":{"revenue":40665.22,"count":109,"gst":1936.44},"Mowing - Bill Hourly":{"revenue":3548.38,"count":17,"gst":169.0},"Tree/Shrub Trimming":{"revenue":3103.72,"count":4,"gst":147.79},"Irrigation System Repair":{"revenue":5844.59,"count":28,"gst":278.34},"(Unknown)":{"revenue":0.0,"count":89,"gst":0.0},"Aeration - Spring":{"revenue":4667.25,"count":6,"gst":222.25},"Over Seeding":{"revenue":9765.0,"count":3,"gst":465.0},"General Clean Up - Landscape":{"revenue":2932.49,"count":11,"gst":139.65},"Irrigation System Start-Up":{"revenue":1881.49,"count":7,"gst":89.6},"Irrigation Part(s)":{"revenue":2669.63,"count":19,"gst":127.13},"Irrigation System Labour":{"revenue":691.42,"count":3,"gst":32.92},"Horticulture Labour":{"revenue":2069.39,"count":4,"gst":98.55},"Supply & Install Trees/Shrubs":{"revenue":571.54,"count":1,"gst":27.22},"Irrigation Parts":{"revenue":1644.3,"count":14,"gst":78.3},"Insect Control Turf":{"revenue":6601.5,"count":47,"gst":314.36},"FW Round 2":{"revenue":29891.31,"count":256,"gst":1423.4},"Invasive Weed Application":{"revenue":8862.0,"count":26,"gst":422.0},"General Clean Up - Paved":{"revenue":1050.89,"count":4,"gst":50.04},"General Labour":{"revenue":1552.69,"count":1,"gst":73.94},"Misc. Material":{"revenue":1090.0,"count":4,"gst":51.9},"FW Round 3":{"revenue":115.5,"count":1,"gst":5.5},"Parking Lot Sweeping":{"revenue":614.82,"count":1,"gst":29.28},"Insect Control Tree -  Leaf Roller 1":{"revenue":409.5,"count":3,"gst":19.5},"Deer Repellant":{"revenue":367.5,"count":1,"gst":17.5},"Supply & Install Topsoil & Sod":{"revenue":1131.9,"count":1,"gst":53.9},"Supply & Install Sod":{"revenue":3525.9,"count":2,"gst":167.9},"Supply & Install Topsoil & Seed":{"revenue":210.0,"count":1,"gst":10.0},"Irrigation System Upgrade":{"revenue":1989.75,"count":1,"gst":94.75},"Garden Bed Maintenance":{"revenue":189.0,"count":1,"gst":9.0}}},"Jul 2026":{"invoice_count":1141,"total":251635.09,"gst_total":11960.84,"refund_total":0.0,"service_credit_total":720.0,"services":{"Property Maintenance":{"revenue":22992.84,"count":30,"gst":1094.92},"Mowing - Elk Valley":{"revenue":35569.28,"count":283,"gst":1693.71},"Mowing - Weekly Schedule":{"revenue":34956.18,"count":412,"gst":1647.44},"FW Round 2":{"revenue":74284.14,"count":303,"gst":3532.58},"Vegetation Control":{"revenue":27927.38,"count":59,"gst":1329.88},"(Unknown)":{"revenue":0.0,"count":106,"gst":0.0},"Mowing - Bill Hourly":{"revenue":1887.39,"count":13,"gst":89.89},"Irrigation System Repair":{"revenue":13871.71,"count":53,"gst":660.67},"Lawn Spraying Package":{"revenue":693.0,"count":2,"gst":33.0},"Irrigation System Winterize":{"revenue":252.0,"count":2,"gst":12.0},"Fall Granular Fertilizer":{"revenue":136.5,"count":1,"gst":6.5},"Insect Control Turf":{"revenue":3748.5,"count":28,"gst":178.5},"Garden Bed Maintenance":{"revenue":806.79,"count":4,"gst":38.42},"Insect Control Tree -  Leaf Roller 1":{"revenue":409.5,"count":3,"gst":19.5},"Re-Spray Insect Tree":{"revenue":0.0,"count":1,"gst":0.0},"Irrigation Part(s)":{"revenue":3329.72,"count":29,"gst":158.57},"General Clean Up - Landscape":{"revenue":1922.99,"count":6,"gst":91.57},"Tree/Shrub Trimming":{"revenue":1339.11,"count":2,"gst":63.77},"General Clean Up - Paved":{"revenue":189.0,"count":2,"gst":9.0},"Irrigation System Upgrade":{"revenue":397.95,"count":1,"gst":18.95},"Irrigation Timer Adjustment":{"revenue":89.26,"count":4,"gst":4.26},"Invasive Weed Application":{"revenue":4814.25,"count":15,"gst":229.25},"FW Round 1":{"revenue":3402.0,"count":2,"gst":162.0},"Irrigation Parts":{"revenue":2268.53,"count":10,"gst":108.03},"Insect Control Turf Round 2":{"revenue":420.0,"count":3,"gst":20.0},"FW Round 3":{"revenue":14250.6,"count":120,"gst":678.6},"Irrigation System Start-Up":{"revenue":1109.47,"count":2,"gst":52.83},"Insect Control Tree -  Tent Caterpillar":{"revenue":567.0,"count":4,"gst":27.0}}},"Aug 2026":{"invoice_count":1137,"total":206709.4,"gst_total":9843.41,"refund_total":0.0,"service_credit_total":780.0,"services":{"Mowing - Elk Valley":{"revenue":26514.63,"count":196,"gst":1262.58},"Property Maintenance":{"revenue":22359.69,"count":27,"gst":1064.77},"Mowing - Weekly Schedule":{"revenue":24116.51,"count":285,"gst":1148.41},"FW Round 3":{"revenue":59063.53,"count":331,"gst":2812.57},"Horticulture Labour":{"revenue":1464.46,"count":2,"gst":69.74},"Irrigation System Repair":{"revenue":22308.06,"count":27,"gst":1062.32},"Irrigation Part(s)":{"revenue":2825.59,"count":19,"gst":134.56},"(Unknown)":{"revenue":0.0,"count":252,"gst":0.0},"FW Round 4":{"revenue":11323.11,"count":99,"gst":539.2},"Insect Control Turf":{"revenue":5145.0,"count":9,"gst":245.0},"Over Seeding":{"revenue":6195.0,"count":2,"gst":295.0},"Insect Control Turf Round 2":{"revenue":1606.5,"count":2,"gst":76.5},"Invasive Weed Application":{"revenue":2173.5,"count":10,"gst":103.5},"Irrigation System Upgrade":{"revenue":248.72,"count":1,"gst":11.84},"Irrigation Parts":{"revenue":3970.67,"count":13,"gst":189.08},"General Clean Up - Landscape":{"revenue":3228.45,"count":7,"gst":153.74},"Summer Granular Fertilizer":{"revenue":1058.23,"count":7,"gst":50.39},"Veg Control Follow-up":{"revenue":1065.32,"count":9,"gst":50.73},"Vegetation Control":{"revenue":1407.0,"count":5,"gst":67.0},"General Clean Up - Paved":{"revenue":94.5,"count":1,"gst":4.5},"Mowing - Bill Hourly":{"revenue":1150.8,"count":8,"gst":54.81},"Re-Spray Herb Only":{"revenue":0.0,"count":1,"gst":0.0},"Tree/Shrub Trimming":{"revenue":513.36,"count":1,"gst":24.45},"Insect Control Tree -  Tent Caterpillar":{"revenue":472.5,"count":4,"gst":22.5},"General Labour":{"revenue":3675.0,"count":3,"gst":175.0},"Misc. Material":{"revenue":239.4,"count":2,"gst":11.4},"Property Assessment":{"revenue":1372.93,"count":1,"gst":65.38},"Irrigation System Start-Up":{"revenue":221.29,"count":1,"gst":10.54},"Grass Seed":{"revenue":262.5,"count":1,"gst":12.5},"Misc. Spring Excavation":{"revenue":210.0,"count":1,"gst":10.0},"Machine + Operator":{"revenue":596.93,"count":1,"gst":28.43},"Supply & Install Topsoil":{"revenue":1533.0,"count":1,"gst":73.0},"Insect Control Tree -  Leaf Roller 2":{"revenue":94.5,"count":1,"gst":4.5},"Garden Bed Maintenance":{"revenue":198.71,"count":1,"gst":9.46}}},"Sep 2026":{"invoice_count":820,"total":160630.11,"gst_total":7661.61,"refund_total":0.0,"service_credit_total":560.0,"services":{"Property Maintenance":{"revenue":25724.63,"count":29,"gst":1225.01},"Mowing - Elk Valley":{"revenue":16150.48,"count":139,"gst":769.05},"Mowing - Weekly Schedule":{"revenue":29148.0,"count":294,"gst":1388.0},"Insect Control Turf":{"revenue":987.0,"count":7,"gst":47.0},"(Unknown)":{"revenue":0.0,"count":91,"gst":0.0},"FW Round 4":{"revenue":45164.54,"count":322,"gst":2150.7},"Veg Control Follow-up":{"revenue":0.0,"count":2,"gst":0.0},"Irrigation System Repair":{"revenue":1171.17,"count":8,"gst":59.37},"Irrigation Part(s)":{"revenue":551.39,"count":5,"gst":35.18},"Vegetation Control":{"revenue":1533.0,"count":6,"gst":73.0},"Irrigation System Winterize":{"revenue":3488.73,"count":10,"gst":166.13},"General Clean Up - Landscape":{"revenue":283.5,"count":3,"gst":13.5},"Over Seeding":{"revenue":325.5,"count":2,"gst":15.5},"Insect Control Turf Round 2":{"revenue":304.5,"count":2,"gst":14.5},"Mowing - Bill Hourly":{"revenue":932.94,"count":7,"gst":44.44},"Weed Control 2":{"revenue":357.0,"count":3,"gst":17.0},"Weed Control 4":{"revenue":189.0,"count":1,"gst":9.0},"General Clean Up - Paved":{"revenue":94.5,"count":1,"gst":4.5},"Misc. Material":{"revenue":1306.2,"count":1,"gst":62.2},"Supply & Install Topsoil":{"revenue":1037.4,"count":1,"gst":49.4},"Supply & Install Mulch/Bark/Stone":{"revenue":1530.9,"count":1,"gst":72.9},"Irrigation System Upgrade":{"revenue":1058.4,"count":1,"gst":50.4},"General Labour":{"revenue":8633.63,"count":1,"gst":411.13},"Supply & Install Sod":{"revenue":1400.7,"count":2,"gst":66.7},"Irrigation Parts":{"revenue":54.6,"count":1,"gst":2.6},"Supply & Install Aggregates":{"revenue":6209.7,"count":1,"gst":295.7},"Garden Bed Maintenance":{"revenue":8267.7,"count":1,"gst":393.7},"Supply & Install Trees/Shrubs":{"revenue":4725.0,"count":1,"gst":225.0}}},"Oct 2026":{"invoice_count":441,"total":98687.47,"gst_total":4699.45,"refund_total":0.0,"service_credit_total":1065.0,"services":{"FW Round 4":{"revenue":2971.5,"count":2,"gst":141.5},"Mowing - Elk Valley":{"revenue":7726.9,"count":48,"gst":367.94},"(Unknown)":{"revenue":0.0,"count":100,"gst":0.0},"Property Maintenance":{"revenue":31419.4,"count":26,"gst":1496.18},"Irrigation System Winterize":{"revenue":29150.12,"count":174,"gst":1388.12},"Mowing - Weekly Schedule":{"revenue":3680.25,"count":50,"gst":175.25},"General Clean Up - Landscape":{"revenue":1492.73,"count":7,"gst":71.09},"Fall Granular Fertilizer":{"revenue":11750.44,"count":64,"gst":559.56},"Aeration - Fall":{"revenue":7707.0,"count":26,"gst":367.0},"Garden Bed Maintenance":{"revenue":198.71,"count":1,"gst":9.46},"Training":{"revenue":99.49,"count":1,"gst":4.74},"Fall Aeration + Granular":{"revenue":1029.0,"count":5,"gst":49.0},"Tree/Shrub Trimming - Fall":{"revenue":671.29,"count":2,"gst":31.97},"Snow Removal - Shovel":{"revenue":311.85,"count":1,"gst":14.85},"Salt - Bag":{"revenue":0.0,"count":1,"gst":0.0},"Snow Removal - Sanding":{"revenue":478.8,"count":1,"gst":22.8},"Sand - Yards":{"revenue":0.0,"count":1,"gst":0.0}}}};
+
+const DONUT_COLORS = {
+  "American Express":"#8b6914","Cash":"#b5a080","Cheque":"#8b7355",
+  "E-Transfer":"#b5651d","EFT Payment":"#a0856b","Gift Certificate/Voucher":"#7a9e7e",
+  "MasterCard":"#6b4c2a","Terminal Payment":"#d4a96a","Visa":"#4a3728"
+};
+
+const ALL_MONTHS = ["Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026", "May 2026", "Jun 2026", "Jul 2026", "Aug 2026", "Sep 2026", "Oct 2026"];
+const QUARTERS = {"Q1 2026 (Jan 1–Mar 31)": ["Jan 2026", "Feb 2026", "Mar 2026"], "Q2 2026 (Apr 1–Jun 30)": ["Apr 2026", "May 2026", "Jun 2026"], "Q3 2026 (Jul 1–Sep 30)": ["Jul 2026", "Aug 2026", "Sep 2026"], "Q4 2026 (Oct 1–Dec 31)": ["Oct 2026"]};
+const QUARTER_KEYS = Object.keys(QUARTERS);
+
+// ── State ────────────────────────────────────────────────────────────────────
+let currentReport = 'prepay';
+let currentPeriod = 'monthly';
+let currentTab    = 'Oct 2026';
+let barChart = null, donutChart = null, stackChart = null, trendChart = null;
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+const fmt  = n => '$' + Number(n).toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtK = n => n >= 1000 ? '$' + (n/1000).toFixed(0) + 'k' : '$' + Number(n).toFixed(0);
+const r2   = n => Math.round(n*100)/100;
+const show = (id, v=true) => { const el=document.getElementById(id); if(el) el.style.display=v?'':'none'; };
+const hide = id => show(id, false);
+
+function acumSvcs(dest, src) {
+  for (const [s,v] of Object.entries(src||{})) {
+    if (!dest[s]) dest[s]={revenue:0,count:0,gst:0};
+    dest[s].revenue += v.revenue||0;
+    dest[s].gst     += v.gst||0;
+    dest[s].count   += v.count||0;
+  }
+}
+
+function mergeMonths(months) {
+  const a={total:0,gst_total:0,refund_total:0,service_credit_total:0,invoice_count:0,services:{}};
+  const c={prepayment_count:0,prepayment_total:0,applied_amount:0,refunds_issued:0,net_collected:0,still_unused:0,by_method:{}};
+  const d={total:0,gst_total:0,refund_total:0,service_credit_total:0,invoice_count:0,services:{}};
+  for (const m of months) {
+    const ad=APPLIED[m]||{}, cd=COLLECTED[m]||{}, dd=DIRECT[m]||{};
+    a.total += ad.total||0; a.gst_total += ad.gst_total||0; a.refund_total += ad.refund_total||0; a.service_credit_total += ad.service_credit_total||0; a.invoice_count += ad.invoice_count||0;
+    acumSvcs(a.services, ad.services);
+    c.prepayment_count += cd.prepayment_count||0;
+    c.prepayment_total += cd.prepayment_total||0;
+    c.applied_amount   += cd.applied_amount||0;
+    c.refunds_issued  += cd.refunds_issued||0;
+    c.net_collected   += cd.net_collected ?? ((cd.prepayment_total||0)-(cd.refunds_issued||0));
+    c.still_unused     += cd.still_unused||0;
+    for (const [mt,v] of Object.entries(cd.by_method||{})) {
+      if (!c.by_method[mt]) c.by_method[mt]={amount:0,count:0};
+      c.by_method[mt].amount += v.amount;
+      c.by_method[mt].count  += v.count;
+    }
+    d.total += dd.total||0; d.gst_total += dd.gst_total||0; d.refund_total += dd.refund_total||0; d.service_credit_total += dd.service_credit_total||0; d.invoice_count += dd.invoice_count||0;
+    acumSvcs(d.services, dd.services);
+  }
+  return {applied:a, collected:c, direct:d};
+}
+
+function getMonthsForTab(tab) {
+  if (currentPeriod === 'quarterly') {
+    if (tab === 'All') return ALL_MONTHS;
+    return QUARTERS[tab] || [];
+  }
+  if (tab === 'All Months') return ALL_MONTHS;
+  return [tab];
+}
+
+function setCard(lId, l, vId, v, sId, s) {
+  document.getElementById(lId).textContent = l;
+  document.getElementById(vId).textContent = v;
+  document.getElementById(sId).textContent = s;
+}
+
+// ── Main render ──────────────────────────────────────────────────────────────
+function render() {
+  const months = getMonthsForTab(currentTab);
+  const {applied:a, collected:c, direct:d} = mergeMonths(months);
+  const rp  = currentReport;
+  const col = rp==='prepay' ? '#c1440e' : rp==='direct' ? '#2563eb' : '#6b21a8';
+
+  // ── Stat tiles ──
+  if (rp === 'prepay') {
+    setCard('lbl-a','GROSS PREPAYS COLLECTED','s-a',fmt(c.prepayment_total), 's-a2', c.prepayment_count+' payments in selected cohort');
+    setCard('lbl-b','APPLIED TO INVOICES','s-b',fmt(c.applied_amount), 's-b2', 'SAP derived: gross − refunds − current unused');
+    setCard('lbl-c','REFUNDS ISSUED',   's-c',fmt(c.refunds_issued), 's-c2', 'verified Refund invoice lines — cash/prepayment refunds');
+    setCard('lbl-d','CURRENTLY UNUSED',  's-d',fmt(c.still_unused), 's-d2', 'current remaining balance for selected cohort');
+    show('card-b'); show('card-c');
+  } else if (rp === 'direct') {
+    setCard('lbl-a','DIRECT INVOICED',   's-a', fmt(d.total),            's-a2', d.invoice_count+' invoices');
+    setCard('lbl-b','AVG PER INVOICE',   's-b', d.invoice_count>0?fmt(r2(d.total/d.invoice_count)):'—', 's-b2', 'per invoice');
+    hide('card-c');
+    setCard('lbl-d','TOTAL INVOICED',    's-d', fmt(d.total),            's-d2', 'direct billing');
+    show('card-b');
+  } else {
+    const comb = a.total + d.total;
+    setCard('lbl-a','PREPAY-CLASSIFIED REVENUE','s-a',fmt(a.total),      's-a2', a.invoice_count+' invoices');
+    setCard('lbl-b','DIRECT-CLASSIFIED REVENUE','s-b',fmt(d.total),          's-b2', d.invoice_count+' invoices');
+    setCard('lbl-c','REFUNDS ISSUED',    's-c', fmt(c.refunds_issued),       's-c2', fmt(a.service_credit_total+d.service_credit_total)+' service credits tracked separately');
+    setCard('lbl-d','TOTAL INVOICE REVENUE','s-d',fmt(comb),                 's-d2', 'single control total — no double counting');
+    show('card-b'); show('card-c');
+  }
+
+  // ── GST tab ──
+  if (rp === 'gst') {
+    const prepayGST   = a.gst_total||0;
+    const directGST   = d.gst_total||0;
+    const combinedGST = prepayGST + directGST;
+    const prepayNet   = a.total - prepayGST;
+    const directNet   = d.total - directGST;
+    setCard('lbl-a','GST ON PREPAY',    's-a', fmt(prepayGST),   's-a2', fmt(prepayNet)+' net');
+    setCard('lbl-b','GST ON DIRECT',    's-b', fmt(directGST),   's-b2', fmt(directNet)+' net');
+    setCard('lbl-c','TOTAL GST',        's-c', fmt(combinedGST), 's-c2', 'exact SAP SalesTax — refunds untaxed');
+    setCard('lbl-d','GROSS REVENUE',    's-d', fmt(a.total+d.total), 's-d2', 'refund-only invoices excluded');
+    show('card-b'); show('card-c');
+    hide('bar-card'); hide('donut-card'); hide('stack-card');
+    hide('pay-method-card');
+    renderGSTTrend();
+    renderGSTTable(a.services, d.services, a.gst_total||0, d.gst_total||0, a.total+d.total);
+    return;
+  }
+
+  // ── Service bar / stacked ──
+  if (rp === 'combined') {
+    hide('bar-card'); hide('donut-card');
+    show('stack-card');
+    renderStackChart(a.services, d.services);
+  } else {
+    show('bar-card'); hide('stack-card');
+    const title = rp==='prepay'
+      ? 'PREPAY-CLASSIFIED INVOICE REVENUE BY SERVICE'
+      : 'REVENUE BY SERVICE';
+    document.getElementById('bar-title').textContent = title;
+    renderBarChart(rp==='prepay' ? a.services : d.services, col);
+    if (rp==='prepay') { show('donut-card'); renderDonut(c); }
+    else { hide('donut-card'); if(donutChart){donutChart.destroy();donutChart=null;} }
+  }
+
+  // ── MoM trend (always visible, adapts to report type) ──
+  renderTrendChart(rp);
+
+  // ── Payment method table (prepay only) ──
+  if (rp === 'prepay') { show('pay-method-card'); renderPayMethodTable(c); }
+  else hide('pay-method-card');
+
+  // ── Service breakdown table ──
+  if (rp === 'combined') renderCombinedTable(a.services, d.services);
+  else renderTable(rp==='prepay' ? a.services : d.services, col, rp==='prepay');
+}
+
+// ── Chart renderers ──────────────────────────────────────────────────────────
+function renderBarChart(svcData, col) {
+  const top = Object.entries(svcData).sort((a,b)=>b[1].revenue-a[1].revenue).slice(0,10);
+  if (barChart) barChart.destroy();
+  barChart = new Chart(document.getElementById('barChart'),{
+    type:'bar',
+    data:{
+      labels: top.map(([n])=>n.length>24?n.slice(0,24)+'…':n),
+      datasets:[{data:top.map(([,v])=>v.revenue),backgroundColor:col,borderRadius:3,barThickness:14,hoverBackgroundColor:col,borderWidth:0}]
+    },
+    options:{indexAxis:'y',responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+fmt(ctx.raw)}}},
+      scales:{
+        x:{ticks:{callback:v=>fmtK(v),font:{size:10},color:'#999'},grid:{color:'#f0ebe0'},border:{display:false}},
+        y:{ticks:{font:{size:11},color:'#444'},grid:{display:false},border:{display:false}}
+      }}
+  });
+}
+
+function renderStackChart(aSvcs, dSvcs) {
+  const all = new Set([...Object.keys(aSvcs),...Object.keys(dSvcs)]);
+  const rows = [...all].map(s=>({
+    name:s, prepay:aSvcs[s]?.revenue||0, direct:dSvcs[s]?.revenue||0,
+    total:(aSvcs[s]?.revenue||0)+(dSvcs[s]?.revenue||0)
+  })).sort((a,b)=>b.total-a.total).slice(0,12);
+  if (stackChart) stackChart.destroy();
+  stackChart = new Chart(document.getElementById('stackChart'),{
+    type:'bar',
+    data:{
+      labels: rows.map(r=>r.name.length>26?r.name.slice(0,26)+'…':r.name),
+      datasets:[
+        {label:'Prepay-Classified',data:rows.map(r=>r.prepay),backgroundColor:'#c1440e',borderRadius:0,barThickness:16,borderWidth:0,hoverBackgroundColor:'#c1440e'},
+        {label:'Direct Billed', data:rows.map(r=>r.direct),backgroundColor:'#2563eb',borderRadius:3,barThickness:16,borderWidth:0,hoverBackgroundColor:'#2563eb'}
+      ]
+    },
+    options:{indexAxis:'y',responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': '+fmt(ctx.raw)}}},
+      scales:{
+        x:{stacked:true,ticks:{callback:v=>fmtK(v),font:{size:10},color:'#999'},grid:{color:'#f0ebe0'},border:{display:false}},
+        y:{stacked:true,ticks:{font:{size:11},color:'#444'},grid:{display:false},border:{display:false}}
+      }}
+  });
+}
+
+function renderDonut(c) {
+  const methods = Object.entries(c.by_method).sort((a,b)=>b[1].amount-a[1].amount);
+  const dL=methods.map(([n])=>n), dV=methods.map(([,v])=>v.amount), dC=dL.map(l=>DONUT_COLORS[l]||'#ccc');
+  if (donutChart) donutChart.destroy();
+  donutChart = new Chart(document.getElementById('donutChart'),{
+    type:'doughnut',
+    data:{labels:dL,datasets:[{data:dV,backgroundColor:dC,borderWidth:0,hoverBorderWidth:0}]},
+    options:{cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.label+': '+fmt(ctx.raw)}}}}
+  });
+  document.getElementById('donut-legend').innerHTML = dL.map((l,i)=>
+    `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#555">
+      <div style="width:10px;height:10px;border-radius:2px;background:${dC[i]};flex-shrink:0"></div>${l}
+    </div>`).join('');
+}
+
+function renderTrendChart(rp) {
+  const shortLabels = ALL_MONTHS.map(m => m.replace(' 20', " '"));
+  let datasets = [];
+
+  if (rp === 'prepay') {
+    document.getElementById('trend-title').textContent = 'CURRENT DISPOSITION BY PAYMENT-ORIGIN MONTH';
+    const appliedVals   = ALL_MONTHS.map(m => COLLECTED[m]?.applied_amount||0);
+    const collectedVals = ALL_MONTHS.map(m => COLLECTED[m]?.prepayment_total||0);
+    datasets = [
+      {label:'Applied to Invoices', data:appliedVals,   borderColor:'#c1440e', backgroundColor:'rgba(193,68,14,0.08)',  tension:0.35, fill:true,  pointRadius:4, pointBackgroundColor:'#c1440e', borderWidth:2, borderDash:[]},
+      {label:'Collected (Cash In)', data:collectedVals, borderColor:'#b5651d', backgroundColor:'transparent',           tension:0.35, fill:false, pointRadius:4, pointBackgroundColor:'#b5651d', borderWidth:2, borderDash:[5,3]}
+    ];
+    document.getElementById('trend-legend').innerHTML = `
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e"></div>Applied to Invoices</div>
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#b5651d;opacity:0.8"></div>Collected (Cash In)</div>`;
+  } else if (rp === 'direct') {
+    document.getElementById('trend-title').textContent = 'MONTH-OVER-MONTH TREND — DIRECT PAYMENTS';
+    datasets = [{
+      label:'Direct Invoiced', data:ALL_MONTHS.map(m=>DIRECT[m]?.total||0),
+      borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,0.08)', tension:0.35, fill:true,
+      pointRadius:4, pointBackgroundColor:'#2563eb', borderWidth:2, borderDash:[]
+    }];
+    document.getElementById('trend-legend').innerHTML = `<div class="stack-legend-item"><div class="stack-legend-dot" style="background:#2563eb"></div>Direct Invoiced</div>`;
+  } else {
+    document.getElementById('trend-title').textContent = 'MONTH-OVER-MONTH TREND — COMBINED';
+    const app = ALL_MONTHS.map(m=>APPLIED[m]?.total||0);
+    const dir = ALL_MONTHS.map(m=>DIRECT[m]?.total||0);
+    const com = ALL_MONTHS.map((_,i)=>app[i]+dir[i]);
+    datasets = [
+      {label:'Combined',      data:com, borderColor:'#6b21a8', backgroundColor:'rgba(107,33,168,0.08)', tension:0.35, fill:true,  pointRadius:4, pointBackgroundColor:'#6b21a8', borderWidth:2.5, borderDash:[]},
+      {label:'Prepay-Classified',data:app, borderColor:'#c1440e', backgroundColor:'transparent',           tension:0.35, fill:false, pointRadius:3, pointBackgroundColor:'#c1440e', borderWidth:1.5, borderDash:[4,3]},
+      {label:'Direct Billed', data:dir, borderColor:'#2563eb', backgroundColor:'transparent',           tension:0.35, fill:false, pointRadius:3, pointBackgroundColor:'#2563eb', borderWidth:1.5, borderDash:[4,3]}
+    ];
+    document.getElementById('trend-legend').innerHTML = `
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#6b21a8"></div>Combined</div>
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e;opacity:0.8"></div>Prepay</div>
+      <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#2563eb;opacity:0.8"></div>Direct</div>`;
+  }
+
+  if (trendChart) trendChart.destroy();
+  trendChart = new Chart(document.getElementById('trendChart'),{
+    type:'line',
+    data:{labels:shortLabels, datasets},
+    options:{
+      responsive:true,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': '+fmt(ctx.raw)}}},
+      scales:{
+        x:{ticks:{font:{size:11},color:'#888'},grid:{color:'#f0ebe0'},border:{display:false}},
+        y:{ticks:{callback:v=>fmtK(v),font:{size:10},color:'#999'},grid:{color:'#f0ebe0'},border:{display:false}}
+      }
+    }
+  });
+}
+
+function renderPayMethodTable(c) {
+  if (!c || c.prepayment_total === 0) return;
+  const methods = Object.entries(c.by_method).sort((a,b)=>b[1].amount-a[1].amount);
+  const total   = c.prepayment_total;
+  const max     = methods.length ? methods[0][1].amount : 1;
+  document.getElementById('pay-method-tbody').innerHTML = methods.map(([name,v])=>{
+    const pct  = total>0 ? (v.amount/total*100).toFixed(1) : '0.0';
+    const barW = Math.round(v.amount/max*100);
+    return `<tr>
+      <td class="svc-name">${name}</td>
+      <td style="color:#888">${v.count}</td>
+      <td style="font-weight:700;color:#b5651d">${fmt(v.amount)}</td>
+      <td style="color:#999">${pct}%</td>
+      <td class="svc-bar"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${barW}%;background:#b5651d"></div></div></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('pay-method-tfoot').innerHTML = `<tr>
+    <td>Total</td>
+    <td style="color:#888">${c.prepayment_count}</td>
+    <td style="color:#c1440e">${fmt(total)}</td>
+    <td style="color:#999">100%</td>
+    <td></td>
+  </tr>`;
+}
+
+function renderTable(svcData, col, isPrepay=false) {
+  document.getElementById('tbl-title').textContent = isPrepay ? 'Prepay-Classified Invoice Revenue — Alphabetical' : 'Service Breakdown — Alphabetical';
+  document.getElementById('tbl-head').innerHTML = `<tr><th>Service</th><th>Jobs</th><th>Revenue</th><th></th></tr>`;
+  const all = Object.entries(svcData).sort((a,b)=>a[0].localeCompare(b[0]));
+  const max = all.reduce((m,[,v])=>Math.max(m,v.revenue),1);
+  document.getElementById('svc-tbody').innerHTML = all.map(([name,v])=>`
+    <tr>
+      <td class="svc-name">${name}</td>
+      <td style="color:#888">${v.count}</td>
+      <td style="font-weight:700;color:${col}">${fmt(v.revenue)}</td>
+      <td class="svc-bar"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${Math.round(v.revenue/max*100)}%;background:${col}"></div></div></td>
+    </tr>`).join('');
+}
+
+function renderCombinedTable(aSvcs, dSvcs) {
+  document.getElementById('tbl-title').textContent = 'Combined Service Breakdown — Alphabetical';
+  document.getElementById('tbl-head').innerHTML = `<tr>
+    <th>Service</th>
+    <th style="text-align:right;color:#c1440e">Prepay-Classified</th>
+    <th style="text-align:right;color:#2563eb">Direct Billed</th>
+    <th style="text-align:right;color:#6b21a8">Total</th>
+    <th></th>
+  </tr>`;
+  const all = new Set([...Object.keys(aSvcs),...Object.keys(dSvcs)]);
+  const rows = [...all].sort().map(s=>({
+    name:s, prepay:aSvcs[s]?.revenue||0, direct:dSvcs[s]?.revenue||0,
+    total:(aSvcs[s]?.revenue||0)+(dSvcs[s]?.revenue||0)
+  }));
+  const max = rows.reduce((m,r)=>Math.max(m,r.total),1);
+  document.getElementById('svc-tbody').innerHTML = rows.map(r=>`
+    <tr>
+      <td class="svc-name">${r.name}</td>
+      <td class="combined-prepay">${r.prepay>0?fmt(r.prepay):'—'}</td>
+      <td class="combined-direct">${r.direct>0?fmt(r.direct):'—'}</td>
+      <td class="combined-total">${fmt(r.total)}</td>
+      <td class="svc-bar"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${Math.round(r.total/max*100)}%;background:#6b21a8"></div></div></td>
+    </tr>`).join('');
+}
+
+
+// ── GST Renderers ─────────────────────────────────────────────────────────────
+// GST is sourced from SAP invoice SalesTax; no blanket rate is applied.
+
+function renderGSTTrend() {
+  document.getElementById('trend-title').textContent = 'MONTH-OVER-MONTH GST COLLECTED';
+  const shortLabels = ALL_MONTHS.map(m => m.replace(' 20', " '"));
+  const prepayGST = ALL_MONTHS.map(m => APPLIED[m]?.gst_total||0);
+  const directGST = ALL_MONTHS.map(m => DIRECT[m]?.gst_total||0);
+  const totalGST  = ALL_MONTHS.map((_,i) => prepayGST[i] + directGST[i]);
+  document.getElementById('trend-legend').innerHTML = `
+    <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#0f7955"></div>Total GST</div>
+    <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#c1440e;opacity:0.8"></div>GST on Prepay</div>
+    <div class="stack-legend-item"><div class="stack-legend-dot" style="background:#2563eb;opacity:0.8"></div>GST on Direct</div>`;
+  if (trendChart) trendChart.destroy();
+  trendChart = new Chart(document.getElementById('trendChart'),{
+    type:'line',
+    data:{labels:shortLabels, datasets:[
+      {label:'Total GST',    data:totalGST,  borderColor:'#0f7955', backgroundColor:'rgba(15,121,85,0.08)', tension:0.35, fill:true,  pointRadius:4, pointBackgroundColor:'#0f7955', borderWidth:2.5, borderDash:[]},
+      {label:'GST on Prepay',data:prepayGST, borderColor:'#c1440e', backgroundColor:'transparent',          tension:0.35, fill:false, pointRadius:3, pointBackgroundColor:'#c1440e', borderWidth:1.5, borderDash:[4,3]},
+      {label:'GST on Direct',data:directGST, borderColor:'#2563eb', backgroundColor:'transparent',          tension:0.35, fill:false, pointRadius:3, pointBackgroundColor:'#2563eb', borderWidth:1.5, borderDash:[4,3]}
+    ]},
+    options:{
+      responsive:true,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.dataset.label+': '+fmt(ctx.raw)}}},
+      scales:{
+        x:{ticks:{font:{size:11},color:'#888'},grid:{color:'#f0ebe0'},border:{display:false}},
+        y:{ticks:{callback:v=>fmtK(v),font:{size:10},color:'#999'},grid:{color:'#f0ebe0'},border:{display:false}}
+      }
+    }
+  });
+}
+
+function renderGSTTable(aSvcs, dSvcs, exactPrepayGST, exactDirectGST, exactGross) {
+  document.getElementById('tbl-title').textContent = 'GST by Service — Exact SAP SalesTax Allocation';
+  document.getElementById('tbl-head').innerHTML = `<tr>
+    <th>Service</th>
+    <th style="text-align:right;color:#c1440e">Prepay GST</th>
+    <th style="text-align:right;color:#2563eb">Direct GST</th>
+    <th style="text-align:right;color:#0f7955">Total GST</th>
+    <th style="text-align:right">Gross Revenue</th>
+    <th style="text-align:right;color:#555">Net Revenue</th>
+    <th></th>
+  </tr>`;
+  const all = new Set([...Object.keys(aSvcs),...Object.keys(dSvcs)]);
+  const rows = [...all].sort().map(s=>({
+    name:    s,
+    prepay:  aSvcs[s]?.revenue||0,
+    direct:  dSvcs[s]?.revenue||0,
+    gross:   (aSvcs[s]?.revenue||0)+(dSvcs[s]?.revenue||0),
+    prepayGST: aSvcs[s]?.gst||0,
+    directGST: dSvcs[s]?.gst||0,
+    totalGST:  (aSvcs[s]?.gst||0)+(dSvcs[s]?.gst||0)
+  }));
+  const maxGST = rows.reduce((m,r)=>Math.max(m,r.totalGST),1);
+
+  // Totals row
+  // Footer uses exact invoice-level controls, not the sum of rounded service allocations.
+  const totPrepayGST = exactPrepayGST;
+  const totDirectGST = exactDirectGST;
+  const totGST       = exactPrepayGST + exactDirectGST;
+  const totGross     = exactGross;
+
+  document.getElementById('svc-tbody').innerHTML = rows.map(r=>`
+    <tr>
+      <td class="svc-name">${r.name}</td>
+      <td style="color:#c1440e;font-weight:600">${r.prepayGST>0?fmt(r.prepayGST):'—'}</td>
+      <td style="color:#2563eb;font-weight:600">${r.directGST>0?fmt(r.directGST):'—'}</td>
+      <td style="color:#0f7955;font-weight:700">${fmt(r.totalGST)}</td>
+      <td style="color:#888">${fmt(r.gross)}</td>
+      <td style="color:#555;font-weight:600">${fmt(r.gross - r.totalGST)}</td>
+      <td class="svc-bar"><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${Math.round(r.totalGST/maxGST*100)}%;background:#0f7955"></div></div></td>
+    </tr>`).join('')
+  + `<tr style="border-top:2px solid #e8e2d6;font-weight:700">
+      <td class="svc-name">Total</td>
+      <td style="color:#c1440e;font-weight:700">${fmt(totPrepayGST)}</td>
+      <td style="color:#2563eb;font-weight:700">${fmt(totDirectGST)}</td>
+      <td style="color:#0f7955;font-weight:700">${fmt(totGST)}</td>
+      <td style="color:#888;font-weight:700">${fmt(totGross)}</td>
+      <td style="color:#555;font-weight:700">${fmt(totGross - totGST)}</td>
+      <td></td>
+    </tr>`;
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function buildTabs() {
+  const cls = `active-${currentReport}`;
+  const tabs = currentPeriod==='monthly' ? ['All Months',...ALL_MONTHS] : ['All',...QUARTER_KEYS];
+  document.getElementById('tab-container').innerHTML = tabs.map(t=>
+    `<button class="tab ${t===currentTab?cls:''}" onclick="selectTab('${t}')">${t}</button>`).join('');
+}
+
+function selectTab(t)  { currentTab=t; buildTabs(); render(); }
+
+function setPeriod(p) {
+  currentPeriod = p;
+  currentTab = p==='monthly' ? ALL_MONTHS[ALL_MONTHS.length-1] : (QUARTER_KEYS.find(k=>k.startsWith('Q'+(Math.floor(new Date().getMonth()/3)+1)+' ')) || QUARTER_KEYS[0]);
+  document.getElementById('btn-monthly').classList.toggle('active',   p==='monthly');
+  document.getElementById('btn-quarterly').classList.toggle('active', p==='quarterly');
+  buildTabs(); render();
+}
+
+function setReport(r) {
+  currentReport = r;
+  document.querySelectorAll('.report-tab').forEach((btn,i)=>{
+    btn.className = 'report-tab';
+    if ((i===0&&r==='prepay')||(i===1&&r==='direct')||(i===2&&r==='combined')||(i===3&&r==='gst'))
+      btn.classList.add('active-'+r);
+  });
+  buildTabs(); render();
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+buildTabs();
+render();
+</script>
+</body>
+</html>

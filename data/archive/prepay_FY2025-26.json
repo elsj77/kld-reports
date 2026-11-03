@@ -2328,11 +2328,11 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 10673,
-    "sap_grand_total": 2094534.4300000002,
-    "combined_revenue": 2094534.43,
-    "combined_gst": 99709.85,
-    "refund_total": 10232.51,
+    "invoice_count": 10585,
+    "sap_grand_total": 2031331.87,
+    "combined_revenue": 2031331.87,
+    "combined_gst": 96700.28,
+    "refund_total": 9832.86,
     "service_credit_total": 5519.89,
     "refund_rows": [
       {
@@ -2632,16 +2632,6 @@
         "name": "Refund",
         "amount": 126.0,
         "absolute": 126.0,
-        "taxable": "E",
-        "sales_tax": 0.0
-      },
-      {
-        "date": "2026-11-01",
-        "invoice": "REFUND 141396",
-        "client": "Pollock, John & Janice",
-        "name": "Refund",
-        "amount": 399.65,
-        "absolute": 399.65,
         "taxable": "E",
         "sales_tax": 0.0
       },
