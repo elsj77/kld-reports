@@ -13,9 +13,9 @@
     "Nov 2026": {
       "prepayment_count": 3,
       "prepayment_total": 4548.08,
-      "applied_amount": -399.65,
-      "refunds_issued": 399.65,
-      "net_collected": 4148.43,
+      "applied_amount": -707.95,
+      "refunds_issued": 707.95,
+      "net_collected": 3840.13,
       "still_unused": 4548.08,
       "by_method": {
         "Authorize.net": {
@@ -29,16 +29,16 @@
   },
   "DIRECT": {
     "Nov 2026": {
-      "invoice_count": 88,
-      "total": 63202.56,
-      "gst_total": 3009.57,
+      "invoice_count": 89,
+      "total": 70604.83,
+      "gst_total": 3362.06,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
         "Property Maintenance": {
-          "revenue": 60986.09,
-          "count": 83,
-          "gst": 2904.03
+          "revenue": 60677.79,
+          "count": 82,
+          "gst": 2889.35
         },
         "(Unknown)": {
           "revenue": 0.0,
@@ -46,9 +46,9 @@
           "gst": 0.0
         },
         "Fall Clean-Up": {
-          "revenue": 1661.02,
-          "count": 8,
-          "gst": 79.09
+          "revenue": 8111.59,
+          "count": 9,
+          "gst": 386.26
         },
         "Mowing - Elk Valley": {
           "revenue": 397.95,
@@ -59,16 +59,21 @@
           "revenue": 157.5,
           "count": 1,
           "gst": 7.5
+        },
+        "Education Services": {
+          "revenue": 1260.0,
+          "count": 1,
+          "gst": 60.0
         }
       }
     }
   },
   "AUDIT": {
-    "invoice_count": 88,
-    "sap_grand_total": 63202.56,
-    "combined_revenue": 63202.56,
-    "combined_gst": 3009.57,
-    "refund_total": 399.65,
+    "invoice_count": 89,
+    "sap_grand_total": 70604.83,
+    "combined_revenue": 70604.83,
+    "combined_gst": 3362.06,
+    "refund_total": 707.95,
     "service_credit_total": 0,
     "refund_rows": [
       {
@@ -78,6 +83,16 @@
         "name": "Refund",
         "amount": 399.65,
         "absolute": 399.65,
+        "taxable": "E",
+        "sales_tax": 0.0
+      },
+      {
+        "date": "2026-11-01",
+        "invoice": "REFUND 141398",
+        "client": "White, Dan",
+        "name": "Refund",
+        "amount": 308.3,
+        "absolute": 308.3,
         "taxable": "E",
         "sales_tax": 0.0
       }
