@@ -29,26 +29,26 @@
   },
   "DIRECT": {
     "Nov 2026": {
-      "invoice_count": 101,
-      "total": 66431.48,
-      "gst_total": 3163.33,
+      "invoice_count": 102,
+      "total": 64562.72,
+      "gst_total": 3074.34,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
         "Property Maintenance": {
-          "revenue": 60392.33,
-          "count": 81,
-          "gst": 2875.76
+          "revenue": 60141.12,
+          "count": 80,
+          "gst": 2863.8
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 13,
+          "count": 16,
           "gst": 0.0
         },
         "Fall Clean-Up": {
-          "revenue": 4223.7,
-          "count": 11,
-          "gst": 201.12
+          "revenue": 2606.15,
+          "count": 10,
+          "gst": 124.09
         },
         "Mowing - Elk Valley": {
           "revenue": 397.95,
@@ -69,10 +69,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 101,
-    "sap_grand_total": 66431.48,
-    "combined_revenue": 66431.48,
-    "combined_gst": 3163.33,
+    "invoice_count": 102,
+    "sap_grand_total": 64562.72,
+    "combined_revenue": 64562.72,
+    "combined_gst": 3074.34,
     "refund_total": 993.41,
     "service_credit_total": 0,
     "refund_rows": [
