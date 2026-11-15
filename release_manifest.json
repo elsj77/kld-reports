@@ -1,32 +1,32 @@
 {
-  "release_version": "20261113T130837Z-6da8509",
-  "generated_at": "2026-11-13T13:08:37Z",
+  "release_version": "20261115T131306Z-5078361",
+  "generated_at": "2026-11-15T13:13:06Z",
   "contract_version": "2026-10-14.1",
   "source_repository": "elsj77/kld-automations",
-  "source_commit": "6da8509057a354f6ce315f74fa13490fa034ca2b",
+  "source_commit": "5078361b854bccf86ff778327287c2f7d37a8bad",
   "publication_mode": "validated_pull_request",
   "artifacts": {
     "data/prepay_data.json": {
-      "sha256": "ae35082b9cffcbad2e7ca9627b8fad17426bb7f81755865ef69a401dcb67984d",
-      "size_bytes": 4334
+      "sha256": "13cfea826de7a4b955190f76492b4fd68100aac8fb2ca4a83cab54ab6d8206e1",
+      "size_bytes": 4333
     },
     "prepay_report.html": {
-      "sha256": "8c09094114ea28bae9394eb130c38db62572860b2c3b11d55ef5e8c2f900a6c9",
-      "size_bytes": 36363
+      "sha256": "5614c001d0668982fa1690ad2c8af1628b55af577dc0663adfc2e56b18b7577c",
+      "size_bytes": 36362
     },
     "index.html": {
-      "sha256": "8c09094114ea28bae9394eb130c38db62572860b2c3b11d55ef5e8c2f900a6c9",
-      "size_bytes": 36363
+      "sha256": "5614c001d0668982fa1690ad2c8af1628b55af577dc0663adfc2e56b18b7577c",
+      "size_bytes": 36362
     },
     "reports/prepay_report.html": {
-      "sha256": "8c09094114ea28bae9394eb130c38db62572860b2c3b11d55ef5e8c2f900a6c9",
-      "size_bytes": 36363
+      "sha256": "5614c001d0668982fa1690ad2c8af1628b55af577dc0663adfc2e56b18b7577c",
+      "size_bytes": 36362
     }
   },
   "accounting_controls": {
-    "invoice_count": 180,
-    "combined_revenue": 86990.86,
-    "combined_gst": 4142.36,
+    "invoice_count": 184,
+    "combined_revenue": 89236.52,
+    "combined_gst": 4249.3,
     "refund_total": 993.41,
     "service_credit_total": 0.0
   }
