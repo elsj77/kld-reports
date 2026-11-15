@@ -1,9 +1,9 @@
 {
-  "release_version": "20261115T131643Z-0d6063b",
-  "generated_at": "2026-11-15T13:16:43Z",
+  "release_version": "20261115T132104Z-ce58ab5",
+  "generated_at": "2026-11-15T13:21:04Z",
   "contract_version": "2026-10-14.1",
   "source_repository": "elsj77/kld-automations",
-  "source_commit": "0d6063b66ea88aea08645f77dafe09c16c274552",
+  "source_commit": "ce58ab56104e7acd673c18163a997c232a5ff6e1",
   "publication_mode": "validated_pull_request",
   "artifacts": {
     "data/prepay_data.json": {
