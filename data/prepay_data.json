@@ -17,20 +17,20 @@
   },
   "COLLECTED": {
     "Nov 2026": {
-      "prepayment_count": 84,
-      "prepayment_total": 59431.67,
+      "prepayment_count": 96,
+      "prepayment_total": 66022.52,
       "applied_amount": 653.2,
       "refunds_issued": 993.41,
-      "net_collected": 58438.26,
-      "still_unused": 57785.06,
+      "net_collected": 65029.11,
+      "still_unused": 64375.91,
       "by_method": {
         "Authorize.net": {
-          "amount": 40066.14,
-          "count": 59
+          "amount": 42040.14,
+          "count": 63
         },
         "Visa": {
-          "amount": 12548.7,
-          "count": 15
+          "amount": 16661.55,
+          "count": 22
         },
         "MasterCard": {
           "amount": 1050.0,
@@ -49,19 +49,19 @@
           "count": 2
         },
         "Cheque": {
-          "amount": 1646.83,
-          "count": 1
+          "amount": 2150.83,
+          "count": 2
         }
       },
-      "active_count": 84,
-      "active_total": 59431.67
+      "active_count": 96,
+      "active_total": 66022.52
     }
   },
   "DIRECT": {
     "Nov 2026": {
-      "invoice_count": 179,
-      "total": 85344.25,
-      "gst_total": 4063.95,
+      "invoice_count": 183,
+      "total": 87589.91,
+      "gst_total": 4170.89,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -96,9 +96,9 @@
           "gst": 97.5
         },
         "Property Maintenance": {
-          "revenue": 63244.01,
-          "count": 81,
-          "gst": 3011.56
+          "revenue": 65489.67,
+          "count": 85,
+          "gst": 3118.5
         },
         "Fall Clean-Up": {
           "revenue": 3220.4,
@@ -134,10 +134,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 180,
-    "sap_grand_total": 86990.86,
-    "combined_revenue": 86990.86,
-    "combined_gst": 4142.36,
+    "invoice_count": 184,
+    "sap_grand_total": 89236.52,
+    "combined_revenue": 89236.52,
+    "combined_gst": 4249.3,
     "refund_total": 993.41,
     "service_credit_total": 0,
     "refund_rows": [
