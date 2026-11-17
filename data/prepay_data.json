@@ -17,20 +17,20 @@
   },
   "COLLECTED": {
     "Nov 2026": {
-      "prepayment_count": 96,
-      "prepayment_total": 66022.52,
+      "prepayment_count": 103,
+      "prepayment_total": 70976.68,
       "applied_amount": 653.2,
       "refunds_issued": 993.41,
-      "net_collected": 65029.11,
-      "still_unused": 64375.91,
+      "net_collected": 69983.27,
+      "still_unused": 69330.07,
       "by_method": {
         "Authorize.net": {
-          "amount": 42040.14,
-          "count": 63
+          "amount": 43752.95,
+          "count": 64
         },
         "Visa": {
-          "amount": 16661.55,
-          "count": 22
+          "amount": 19449.3,
+          "count": 27
         },
         "MasterCard": {
           "amount": 1050.0,
@@ -45,23 +45,23 @@
           "count": 1
         },
         "E-Transfer": {
-          "amount": 1323.0,
-          "count": 2
+          "amount": 1776.6,
+          "count": 3
         },
         "Cheque": {
           "amount": 2150.83,
           "count": 2
         }
       },
-      "active_count": 96,
-      "active_total": 66022.52
+      "active_count": 103,
+      "active_total": 70976.68
     }
   },
   "DIRECT": {
     "Nov 2026": {
-      "invoice_count": 183,
-      "total": 87589.91,
-      "gst_total": 4170.89,
+      "invoice_count": 184,
+      "total": 87870.61,
+      "gst_total": 4184.27,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -101,9 +101,9 @@
           "gst": 3118.5
         },
         "Fall Clean-Up": {
-          "revenue": 3220.4,
-          "count": 11,
-          "gst": 153.34
+          "revenue": 3501.1,
+          "count": 12,
+          "gst": 166.72
         },
         "Education Services": {
           "revenue": 1260.0,
@@ -134,10 +134,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 184,
-    "sap_grand_total": 89236.52,
-    "combined_revenue": 89236.52,
-    "combined_gst": 4249.3,
+    "invoice_count": 185,
+    "sap_grand_total": 89517.22,
+    "combined_revenue": 89517.22,
+    "combined_gst": 4262.68,
     "refund_total": 993.41,
     "service_credit_total": 0,
     "refund_rows": [
