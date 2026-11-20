@@ -1,36 +1,36 @@
 {
   "APPLIED": {
     "Nov 2026": {
-      "invoice_count": 1,
-      "total": 1646.61,
-      "gst_total": 78.41,
+      "invoice_count": 2,
+      "total": 1932.07,
+      "gst_total": 92.0,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
         "Property Maintenance": {
-          "revenue": 1646.61,
-          "count": 1,
-          "gst": 78.41
+          "revenue": 1932.07,
+          "count": 2,
+          "gst": 92.0
         }
       }
     }
   },
   "COLLECTED": {
     "Nov 2026": {
-      "prepayment_count": 116,
-      "prepayment_total": 79628.47,
-      "applied_amount": 653.2,
+      "prepayment_count": 120,
+      "prepayment_total": 82757.47,
+      "applied_amount": 938.66,
       "refunds_issued": 993.41,
-      "net_collected": 78635.06,
-      "still_unused": 77981.86,
+      "net_collected": 81764.06,
+      "still_unused": 80825.4,
       "by_method": {
         "Authorize.net": {
-          "amount": 46546.74,
-          "count": 70
+          "amount": 47344.74,
+          "count": 71
         },
         "Visa": {
-          "amount": 22860.8,
-          "count": 31
+          "amount": 25191.8,
+          "count": 34
         },
         "MasterCard": {
           "amount": 1050.0,
@@ -53,15 +53,15 @@
           "count": 3
         }
       },
-      "active_count": 116,
-      "active_total": 79628.47
+      "active_count": 120,
+      "active_total": 82757.47
     }
   },
   "DIRECT": {
     "Nov 2026": {
-      "invoice_count": 187,
-      "total": 88280.64,
-      "gst_total": 4203.8,
+      "invoice_count": 192,
+      "total": 89494.84,
+      "gst_total": 4261.62,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -96,9 +96,9 @@
           "gst": 97.5
         },
         "Property Maintenance": {
-          "revenue": 65489.67,
-          "count": 85,
-          "gst": 3118.5
+          "revenue": 66433.41,
+          "count": 89,
+          "gst": 3163.44
         },
         "Fall Clean-Up": {
           "revenue": 3911.13,
@@ -129,15 +129,20 @@
           "revenue": 525.0,
           "count": 1,
           "gst": 25.0
+        },
+        "Snow Removal - Shovel": {
+          "revenue": 270.46,
+          "count": 1,
+          "gst": 12.88
         }
       }
     }
   },
   "AUDIT": {
-    "invoice_count": 188,
-    "sap_grand_total": 89927.25,
-    "combined_revenue": 89927.25,
-    "combined_gst": 4282.21,
+    "invoice_count": 194,
+    "sap_grand_total": 91426.91,
+    "combined_revenue": 91426.91,
+    "combined_gst": 4353.62,
     "refund_total": 993.41,
     "service_credit_total": 0,
     "refund_rows": [
