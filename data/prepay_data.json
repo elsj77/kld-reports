@@ -1,36 +1,36 @@
 {
   "APPLIED": {
     "Nov 2026": {
-      "invoice_count": 2,
-      "total": 1932.07,
-      "gst_total": 92.0,
+      "invoice_count": 4,
+      "total": 4368.89,
+      "gst_total": 208.04,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
         "Property Maintenance": {
-          "revenue": 1932.07,
-          "count": 2,
-          "gst": 92.0
+          "revenue": 4368.89,
+          "count": 4,
+          "gst": 208.04
         }
       }
     }
   },
   "COLLECTED": {
     "Nov 2026": {
-      "prepayment_count": 124,
-      "prepayment_total": 85835.81,
-      "applied_amount": 938.66,
+      "prepayment_count": 129,
+      "prepayment_total": 90207.83,
+      "applied_amount": 3375.48,
       "refunds_issued": 993.41,
-      "net_collected": 84842.4,
-      "still_unused": 83903.74,
+      "net_collected": 89214.42,
+      "still_unused": 85838.94,
       "by_method": {
         "Authorize.net": {
           "amount": 50087.08,
           "count": 74
         },
         "Visa": {
-          "amount": 25191.8,
-          "count": 34
+          "amount": 27824.32,
+          "count": 36
         },
         "MasterCard": {
           "amount": 1050.0,
@@ -45,23 +45,23 @@
           "count": 1
         },
         "E-Transfer": {
-          "amount": 3351.6,
-          "count": 6
+          "amount": 3453.1,
+          "count": 8
         },
         "Cheque": {
-          "amount": 3358.33,
-          "count": 3
+          "amount": 4996.33,
+          "count": 4
         }
       },
-      "active_count": 124,
-      "active_total": 85835.81
+      "active_count": 128,
+      "active_total": 88079.31
     }
   },
   "DIRECT": {
     "Nov 2026": {
-      "invoice_count": 199,
-      "total": 91146.33,
-      "gst_total": 4340.27,
+      "invoice_count": 203,
+      "total": 89017.81,
+      "gst_total": 4238.91,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -72,7 +72,7 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 69,
+          "count": 74,
           "gst": 0.0
         },
         "Mowing - Weekly Schedule": {
@@ -96,9 +96,9 @@
           "gst": 97.5
         },
         "Property Maintenance": {
-          "revenue": 67599.23,
-          "count": 90,
-          "gst": 3218.96
+          "revenue": 65470.71,
+          "count": 89,
+          "gst": 3117.6
         },
         "Fall Clean-Up": {
           "revenue": 3911.13,
@@ -144,10 +144,10 @@
     }
   },
   "AUDIT": {
-    "invoice_count": 201,
-    "sap_grand_total": 93078.4,
-    "combined_revenue": 93078.4,
-    "combined_gst": 4432.27,
+    "invoice_count": 207,
+    "sap_grand_total": 93386.7,
+    "combined_revenue": 93386.7,
+    "combined_gst": 4446.95,
     "refund_total": 993.41,
     "service_credit_total": 0,
     "refund_rows": [
