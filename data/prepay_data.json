@@ -17,20 +17,20 @@
   },
   "COLLECTED": {
     "Nov 2026": {
-      "prepayment_count": 140,
-      "prepayment_total": 98226.15,
+      "prepayment_count": 141,
+      "prepayment_total": 99733.43,
       "applied_amount": 3625.73,
       "refunds_issued": 993.41,
-      "net_collected": 97232.74,
-      "still_unused": 93607.01,
+      "net_collected": 98740.02,
+      "still_unused": 95114.29,
       "by_method": {
         "Authorize.net": {
           "amount": 54881.9,
           "count": 80
         },
         "Visa": {
-          "amount": 30638.32,
-          "count": 40
+          "amount": 32145.6,
+          "count": 41
         },
         "MasterCard": {
           "amount": 1050.0,
@@ -53,15 +53,15 @@
           "count": 5
         }
       },
-      "active_count": 139,
-      "active_total": 96097.63
+      "active_count": 140,
+      "active_total": 97604.91
     }
   },
   "DIRECT": {
     "Nov 2026": {
-      "invoice_count": 224,
-      "total": 92994.56,
-      "gst_total": 4428.28,
+      "invoice_count": 229,
+      "total": 93338.96,
+      "gst_total": 4444.68,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -72,7 +72,7 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 92,
+          "count": 95,
           "gst": 0.0
         },
         "Mowing - Weekly Schedule": {
@@ -131,9 +131,9 @@
           "gst": 25.0
         },
         "Snow Removal - Shovel": {
-          "revenue": 540.92,
-          "count": 2,
-          "gst": 25.76
+          "revenue": 645.92,
+          "count": 3,
+          "gst": 30.76
         },
         "General Clean Up - Landscape": {
           "revenue": 215.21,
@@ -144,15 +144,30 @@
           "revenue": 1180.34,
           "count": 1,
           "gst": 56.21
+        },
+        "Pre-Snow Season Inspection": {
+          "revenue": 0.0,
+          "count": 1,
+          "gst": 0.0
+        },
+        "Snow Removal - On-Site Ice Melt Tote": {
+          "revenue": 157.5,
+          "count": 1,
+          "gst": 7.5
+        },
+        "Snow Removal - Sanding": {
+          "revenue": 81.9,
+          "count": 1,
+          "gst": 3.9
         }
       }
     }
   },
   "AUDIT": {
-    "invoice_count": 229,
-    "sap_grand_total": 97613.7,
-    "combined_revenue": 97613.7,
-    "combined_gst": 4648.24,
+    "invoice_count": 234,
+    "sap_grand_total": 97958.1,
+    "combined_revenue": 97958.1,
+    "combined_gst": 4664.64,
     "refund_total": 993.41,
     "service_credit_total": 0,
     "refund_rows": [
