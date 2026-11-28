@@ -17,12 +17,12 @@
   },
   "COLLECTED": {
     "Nov 2026": {
-      "prepayment_count": 141,
-      "prepayment_total": 99733.43,
+      "prepayment_count": 143,
+      "prepayment_total": 100699.43,
       "applied_amount": 3625.73,
       "refunds_issued": 993.41,
-      "net_collected": 98740.02,
-      "still_unused": 95114.29,
+      "net_collected": 99706.02,
+      "still_unused": 96080.29,
       "by_method": {
         "Authorize.net": {
           "amount": 54881.9,
@@ -45,23 +45,23 @@
           "count": 1
         },
         "E-Transfer": {
-          "amount": 3453.1,
-          "count": 8
+          "amount": 4041.1,
+          "count": 9
         },
         "Cheque": {
-          "amount": 5405.83,
-          "count": 5
+          "amount": 5783.83,
+          "count": 6
         }
       },
-      "active_count": 140,
-      "active_total": 97604.91
+      "active_count": 142,
+      "active_total": 98570.91
     }
   },
   "DIRECT": {
     "Nov 2026": {
-      "invoice_count": 229,
-      "total": 93338.96,
-      "gst_total": 4444.68,
+      "invoice_count": 234,
+      "total": 190065.25,
+      "gst_total": 9050.69,
       "refund_total": 0.0,
       "service_credit_total": 0.0,
       "services": {
@@ -72,7 +72,7 @@
         },
         "(Unknown)": {
           "revenue": 0.0,
-          "count": 95,
+          "count": 97,
           "gst": 0.0
         },
         "Mowing - Weekly Schedule": {
@@ -96,9 +96,9 @@
           "gst": 97.5
         },
         "Property Maintenance": {
-          "revenue": 68267.12,
-          "count": 91,
-          "gst": 3250.76
+          "revenue": 68666.8,
+          "count": 92,
+          "gst": 3269.79
         },
         "Fall Clean-Up": {
           "revenue": 3911.13,
@@ -155,19 +155,49 @@
           "count": 1,
           "gst": 7.5
         },
-        "Snow Removal - Sanding": {
-          "revenue": 81.9,
+        "Supply & Install Topsoil": {
+          "revenue": 35826.22,
+          "count": 2,
+          "gst": 1706.01
+        },
+        "Supply & Install Trees/Shrubs": {
+          "revenue": 5478.9,
           "count": 1,
-          "gst": 3.9
+          "gst": 260.9
+        },
+        "Irrigation System Repair": {
+          "revenue": 2072.7,
+          "count": 1,
+          "gst": 98.7
+        },
+        "Irrigation System Installation": {
+          "revenue": 7468.65,
+          "count": 1,
+          "gst": 355.65
+        },
+        "Earthworks Service - Misc.": {
+          "revenue": 19384.22,
+          "count": 2,
+          "gst": 923.06
+        },
+        "Drainage - French Drain Installation": {
+          "revenue": 16342.26,
+          "count": 1,
+          "gst": 778.2
+        },
+        "Drainage - Backfill & Surface Aggregate": {
+          "revenue": 9835.56,
+          "count": 1,
+          "gst": 468.36
         }
       }
     }
   },
   "AUDIT": {
-    "invoice_count": 234,
-    "sap_grand_total": 97958.1,
-    "combined_revenue": 97958.1,
-    "combined_gst": 4664.64,
+    "invoice_count": 239,
+    "sap_grand_total": 194684.39,
+    "combined_revenue": 194684.39,
+    "combined_gst": 9270.65,
     "refund_total": 993.41,
     "service_credit_total": 0,
     "refund_rows": [
